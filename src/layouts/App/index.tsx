@@ -1,16 +1,37 @@
-import React, { lazy } from "react";
-import { Outlet } from "react-router-dom";
+import useAuth from "@/hooks/useAuth";
+import { useToggle } from "@tam11a/react-use-hooks";
+import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const AppHeader = lazy(() => import("./Header"));
-const AppFooter = lazy(() => import("./Footer"));
+// const AppHeader = lazy(() => import("./Header"));
+const AppDrawer = React.lazy(() => import("./Drawer"));
 
 const AppLayout: React.FC = () => {
-	return (
+	const location = useLocation();
+
+	const { state: open, toggleState: toggleDrawer, setState } = useToggle(false);
+
+	const { isLoggedIn } = useAuth();
+
+	React.useEffect(() => {
+		setState(false);
+	}, [location.pathname]);
+
+	return isLoggedIn ? (
 		<>
-			<AppHeader />
-			<Outlet />
-			<AppFooter />
+			{/* <AppHeader /> */}
+			<div className="flex flex-row">
+				<AppDrawer
+					open={open}
+					toggleDrawer={toggleDrawer}
+				/>
+				<div className="">
+					<Outlet />
+				</div>
+			</div>
 		</>
+	) : (
+		<Navigate to={`/?to=${location.pathname}`} />
 	);
 };
 

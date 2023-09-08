@@ -2,9 +2,16 @@ import React, { lazy } from "react";
 
 import theme from "@styles/theme";
 import ThemeProvider from "@mui/system/ThemeProvider";
-import { CssBaseline } from "@mui/material";
 import { ConfigProvider } from "antd";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const AuthProvider = lazy(() =>
+	import("@/contexts/AuthContext").then((module) => ({
+		default: module.AuthProvider,
+	}))
+);
+
+import { BrowserRouter } from "react-router-dom";
 
 const BaseRoutes = lazy(() => import("./routes"));
 
@@ -23,8 +30,11 @@ const App: React.FC = () => {
 						},
 					}}
 				>
-					<CssBaseline />
-					<BaseRoutes />
+					<BrowserRouter>
+						<AuthProvider>
+							<BaseRoutes />
+						</AuthProvider>
+					</BrowserRouter>
 				</ConfigProvider>
 			</ThemeProvider>
 		</QueryClientProvider>

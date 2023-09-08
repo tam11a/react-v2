@@ -25,22 +25,26 @@
 	z-index: 1220;
 }
 
+input.ant-input {
+	color: #4a6979 !important;
+}
+
 /* NProgess Color */
 #nprogress {
 	z-index: 1000000000 !important;
 }
 
 #nprogress .bar {
-	background: #664980 !important;
+	background: #178563 !important;
 	height: 4px !important;
 }
 
 #nprogress .spinner-icon {
-	border-top-color: #664980 !important;
-	border-left-color: #664980 !important;
+	border-top-color: #12684d !important;
+	border-left-color: #5fb49a !important;
 	/* z-index: 1000000000 !important; */
 }
 
 #nprogress .peg {
-	box-shadow: 0 0 10px #33164d, 0 0 5px #33164d !important;
+	box-shadow: 0 0 10px #105942, 0 0 5px #8dcab7 !important;
 }

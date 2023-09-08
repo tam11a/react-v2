@@ -10,4 +10,8 @@ export const privateRoutes = [
 		path: PRIVATE_ROUTES.NOTFOUND,
 		Component: lazy(() => import("@pages/NotFound")),
 	},
+	{
+		path: PRIVATE_ROUTES.LEADS,
+		Component: lazy(() => import("@pages/Lead")),
+	},
 ];
