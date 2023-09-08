@@ -1,5 +1,7 @@
+import { MdOutlineSettings } from "react-icons/md";
 import { IDrawerData } from "../types";
 import { Icon } from "@iconify/react";
+import { VscSignOut } from "react-icons/vsc";
 
 export const DrawerData = (logout?: () => void): IDrawerData[] => [
 	{
@@ -18,66 +20,54 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
 			{
 				name: "Leads",
 				icon: <Icon icon="iconamoon:funnel-light" />,
-				to: "/app/lead",
+				to: "/app/leads",
 			},
 			{
 				name: "Properties",
 				icon: <Icon icon="mdi:building" />,
 				to: "/app/properties",
-				disabled: true,
+			},
+			{
+				name: "Media",
+				icon: <Icon icon="material-symbols:person-play-outline" />,
+				to: "/app/media",
 			},
 		],
 	},
-	// {
-	//   title: t("drawer:Reservation"),
-	//   sublist: [
-	//     {
-	//       name: t("drawer:ListView"),
-	//       icon: <Icon icon="fluent:notepad-edit-20-regular" />,
-	//       to: "/app/reservation/list-view",
-	//     },
-	//     {
-	//       name: t("drawer:TimelineView"),
-	//       icon: <Icon icon="material-symbols:view-timeline-outline-rounded" />,
-	//       to: "/app/reservation/timeline-view",
-	//       disabled: true,
-	//       hide: true,
-	//     },
-	//   ],
-	// },
-	// {
-	//   title: t("drawer:Additional"),
-	//   sublist: [
-	//     {
-	//       name: t("drawer:Roles"),
-	//       icon: <Icon icon="fluent:phone-key-20-regular" />,
-	//       to: "/app/roles",
-	//     },
-	//     {
-	//       name: t("drawer:Employees"),
-	//       icon: <Icon icon="clarity:employee-group-line" />,
-	//       to: "/app/employees",
-	//     },
-	//   ],
-	// },
-	// {
-	//   title: t("drawer:Personal"),
-	//   sublist: [
-	//     {
-	//       name: t("drawer:Settings"),
-	//       icon: <MdOutlineSettings />,
-	//       to: "/app/settings",
-	//     },
-	//     {
-	//       name: t("drawer:Help"),
-	//       icon: <Icon icon="material-symbols:live-help-outline-rounded" />,
-	//       to: "/app/help",
-	//     },
-	//     {
-	//       name: t("drawer:SignOut"),
-	//       icon: <VscSignOut />,
-	//       function: logout,
-	//     },
-	//   ],
-	// },
+
+	{
+		title: "Additional",
+		sublist: [
+			{
+				name: "Roles",
+				icon: <Icon icon="fluent:phone-key-20-regular" />,
+				to: "/app/roles",
+			},
+			{
+				name: "Employees",
+				icon: <Icon icon="clarity:employee-group-line" />,
+				to: "/app/employees",
+			},
+		],
+	},
+	{
+		title: "Personal",
+		sublist: [
+			{
+				name: "Settings",
+				icon: <MdOutlineSettings />,
+				to: "/app/settings",
+			},
+			// {
+			// 	name: "Help",
+			// 	icon: <Icon icon="material-symbols:live-help-outline-rounded" />,
+			// 	to: "/app/help",
+			// },
+			{
+				name: "Logout",
+				icon: <VscSignOut />,
+				function: logout,
+			},
+		],
+	},
 ];
