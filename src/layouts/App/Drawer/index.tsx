@@ -111,7 +111,7 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 														minWidth: 0,
 														mr: open ? 1.5 : "auto",
 														justifyContent: "center",
-														bgcolor: "#f2f7f4",
+														bgcolor: "#fef6ea",
 														color: "primary.main",
 														fontSize: "1.5rem",
 														p: 1,
