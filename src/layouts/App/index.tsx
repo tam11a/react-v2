@@ -9,13 +9,17 @@ const AppDrawer = React.lazy(() => import("./Drawer"));
 const AppLayout: React.FC = () => {
 	const location = useLocation();
 
-	const { state: open, toggleState: toggleDrawer, setState } = useToggle(false);
+	const {
+		state: open,
+		toggleState: toggleDrawer,
+		// setState
+	} = useToggle(false);
 
 	const { isLoggedIn } = useAuth();
 
-	React.useEffect(() => {
-		setState(false);
-	}, [location.pathname]);
+	// React.useEffect(() => {
+	// 	setState(false);
+	// }, [location.pathname]);
 
 	return isLoggedIn ? (
 		<>
