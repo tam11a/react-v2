@@ -1,27 +1,40 @@
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@/types";
+import { IconButton } from "@mui/material";
+import { Icon } from "@iconify/react";
 
 const LeadColumn = (): GridColumns<IDataTable> => {
   return [
     {
       headerName: "ID",
       headerAlign: "center",
-      field: "_id",
+      field: "id",
       align: "center",
-      width: 200,
-      // flex: 1,
+      // width: 200,
+      flex: 1,
       sortable: false,
-      hide: true,
+      // hide: true,
     },
     {
       headerName: "Lead Title",
       headerAlign: "center",
       field: "firstName",
       align: "center",
+      width: 200,
+      minWidth: 150,
+      flex: 1,
+      renderCell: (data: any) => `${data.row.first_name} ${data.row.last_name}`,
+    },
+    {
+      headerName: "Assign Person",
+      headerAlign: "center",
+      field: "assignee",
+      align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) => `${data.row.firstName} ${data.row.lastName}`,
+      renderCell: (data: any) =>
+        `${data.row.assignee?.first_name} ${data.row.assignee?.last_name}`,
     },
 
     {
@@ -37,28 +50,35 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       headerName: "Email",
       headerAlign: "center",
       field: "email",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
+      width: 200,
+      minWidth: 200,
+      flex: 1,
       align: "center",
     },
     {
       headerName: "Gender",
       headerAlign: "center",
       field: "gender",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
+      minWidth: 100,
+      flex: 1,
       align: "center",
     },
     {
       headerName: "Priority",
       headerAlign: "center",
       field: "priority",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
+      minWidth: 100,
+      flex: 1,
       align: "center",
+    },
+    {
+      headerName: "Status",
+      headerAlign: "center",
+      field: "status",
+      minWidth: 100,
+      flex: 1,
+      align: "center",
+      renderCell: (data: any) => `${data.row.status.label}`,
     },
 
     {
@@ -70,6 +90,18 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       headerAlign: "center",
       align: "center",
+      renderCell: (data: any) => (
+        <>
+          <IconButton
+            sx={{ fontSize: "large" }}
+            color="primary"
+            // onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
+          >
+            <Icon icon="icon-park-solid:info" />
+          </IconButton>
+        </>
+      ),
     },
   ];
 };
