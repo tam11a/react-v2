@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 
 //Icons
-import { GrUserManager } from "react-icons/gr";
 import { RiMenuFoldLine, RiMenuUnfoldLine } from "react-icons/ri";
 
 import { Link } from "react-router-dom";
