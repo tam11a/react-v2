@@ -29,7 +29,7 @@ const AppLayout: React.FC = () => {
 					open={open}
 					toggleDrawer={toggleDrawer}
 				/>
-				<div className="">
+				<div className="w-full max-h-screen overflow-auto p-2">
 					<Outlet />
 				</div>
 			</div>
