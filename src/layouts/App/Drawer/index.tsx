@@ -27,6 +27,7 @@ import {
 import { DrawerData } from "./drawerData";
 import useUser from "@/hooks/useUser";
 import useAuth from "@/hooks/useAuth";
+import { stringAvatar } from "@/utilities/stringAvatar";
 
 const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 	open,
@@ -163,15 +164,11 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 								// 	user?.vendorId,
 								// 	user?.restaurant?.profileImage
 								// )}
+								{...stringAvatar(`${user?.first_name} ${user?.last_name}`)}
 								variant={"rounded"}
-								sx={{
-									bgcolor: "#fff",
-									color: "primary.main",
-								}}
-								// className="border-solid border-2 border-slate-300 mr-2"
-							>
-								<GrUserManager />
-							</Avatar>
+								className="text-xs"
+							/>
+
 							<ListItemText
 								primary={`${user?.first_name} ${user?.last_name}`}
 								secondary={`${user?.role?.name || "No Role Assigned"}`}
@@ -181,6 +178,7 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 										width: "165px",
 										overflow: "hidden",
 										textOverflow: "ellipsis",
+										fontWeight: "bold",
 									},
 								}}
 								secondaryTypographyProps={{
@@ -189,6 +187,8 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 										width: "165px",
 										overflow: "hidden",
 										textOverflow: "ellipsis",
+										marginTop: "-2px",
+										fontWeight: "medium",
 									},
 								}}
 							/>
