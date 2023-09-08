@@ -1,4 +1,5 @@
 export const LEAD_ROUTES = {
-	ROOT: "",
-	NOTFOUND: "*",
+  ROOT: "",
+  INFO: "/details/:id",
+  NOTFOUND: "*",
 };
