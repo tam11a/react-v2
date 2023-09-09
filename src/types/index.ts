@@ -23,7 +23,7 @@ export type GridAlignment = "left" | "right" | "center";
 export type IDataTable = {
   columns: GridColumns<any>;
   rows: any;
-  isLoading: boolean;
+  isLoading?: boolean;
   getRowId?: any;
   checked?: boolean;
   rowCount?: number;

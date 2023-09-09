@@ -2,8 +2,11 @@ import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@/types";
 import { IconButton } from "@mui/material";
 import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
 
 const LeadColumn = (): GridColumns<IDataTable> => {
+  const navigate = useNavigate();
+
   return [
     {
       headerName: "ID",
@@ -95,7 +98,7 @@ const LeadColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            // onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/leads/details/${data.row?.id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <Icon icon="icon-park-solid:info" />
