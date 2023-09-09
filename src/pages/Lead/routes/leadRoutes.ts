@@ -7,6 +7,10 @@ export const leadRoutes = [
     Component: lazy(() => import("../pages/All")),
   },
   {
+    path: LEAD_ROUTES.CREATE,
+    Component: lazy(() => import("../pages/Create")),
+  },
+  {
     path: LEAD_ROUTES.INFO,
     Component: lazy(() => import("../pages/Info")),
   },
