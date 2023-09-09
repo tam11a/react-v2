@@ -58,7 +58,7 @@ const Create: React.FC = () => {
         </Link>
       </div>
       {contextHolder}
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md m-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md m-4 mx-auto">
         <Label isRequired>Full Name</Label>
         <Input.Group compact>
           <Controller

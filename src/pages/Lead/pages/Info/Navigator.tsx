@@ -1,24 +1,25 @@
 import React from "react";
 import type { MenuProps } from "antd";
 import { Button, Menu, Dropdown } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const onMenuClick: MenuProps["onClick"] = (e) => {
   console.log("click", e);
 };
 
-const items: MenuProps["items"] = [
-  {
-    label: "View",
-    key: 1,
-  },
-  {
-    label: "Update",
-    key: 2,
-  },
-];
-
 const Navigator: React.FC = () => {
+  const { id } = useParams();
+
+  const items: MenuProps["items"] = [
+    {
+      label: "View",
+      key: `/app/leads/details/${id}`,
+    },
+    {
+      label: "Update",
+      key: `/app/leads/details/${id}/update`,
+    },
+  ];
   // To get the current location pathname
 
   let location = useLocation();
