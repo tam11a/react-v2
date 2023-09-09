@@ -1,6 +1,6 @@
 export const LEAD_ROUTES = {
   ROOT: "",
-  INFO: "/details/:id",
+  INFO: "/details/:id/*",
   CREATE: "/create",
   NOTFOUND: "*",
 };
