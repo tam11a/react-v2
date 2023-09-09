@@ -1,7 +1,7 @@
 import React from "react";
 
-const LogColumn = () => {
-  return <div>LogColumn</div>;
+const LogColumn: React.FC = () => {
+  return <div>log column</div>;
 };
 
 export default LogColumn;

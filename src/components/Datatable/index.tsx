@@ -43,7 +43,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 const DataTable: React.FC<IDataTable> = ({
   columns,
   rows,
-  isLoading,
+  isLoading = false,
   getRowId,
   rowCount,
   paginationMode,
