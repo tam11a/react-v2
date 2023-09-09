@@ -1,21 +1,20 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
+import { Button, Menu, Dropdown } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import DropDown from "./dropdown";
+
+const onMenuClick: MenuProps["onClick"] = (e) => {
+  console.log("click", e);
+};
 
 const items: MenuProps["items"] = [
   {
-    label: "New",
+    label: "View",
     key: 1,
   },
   {
-    label: "Highest",
+    label: "Update",
     key: 2,
-  },
-  {
-    label: "Transfer",
-    key: 3,
   },
 ];
 
@@ -30,13 +29,35 @@ const Navigator: React.FC = () => {
     navigate(e.key);
   };
 
+  const statusItems = [
+    {
+      key: "1",
+      label: "1st item",
+    },
+    {
+      key: "2",
+      label: "2nd item",
+    },
+    {
+      key: "3",
+      label: "3rd item",
+    },
+  ];
+
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
         <h1 className="text-2xl md:text-3xl font-bold">Lead Details</h1>
 
-        <div className="flex flex-row gap-2 md:items-center  justify-center ">
-          <DropDown />
+        <div className="flex flex-row gap-2 md:items-center  justify-end ">
+          <Dropdown.Button
+            type="primary"
+            size="large"
+            menu={{ items: statusItems, onClick: onMenuClick }}
+            className="bg-sky-400 rounded "
+          >
+            New
+          </Dropdown.Button>
           <Button
             type="primary"
             size="large"
@@ -58,7 +79,7 @@ const Navigator: React.FC = () => {
             selectedKeys={[location.pathname?.split?.("/")[3] || ""]}
             mode="horizontal"
             items={items}
-            className={"border-b-0 w-fit max-w-md"}
+            className={"border-b-0 max-w-[40px]"}
           />
         </div>
       </div>

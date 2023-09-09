@@ -7,7 +7,7 @@ import { usePaginate } from "@tam11a/react-use-hooks";
 import Label from "@components/Label";
 
 const DetailsInfo: React.FC = () => {
-  const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
+  const { page, setPage, limit, setLimit } = usePaginate();
 
   return (
     <>
