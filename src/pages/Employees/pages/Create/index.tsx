@@ -187,12 +187,10 @@ const Create: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Segmented
-              block
+            <Select
               placeholder={"Gender"}
               size={"large"}
               className="relative w-full"
-              allowFullScreen
               onChange={onChange}
               onBlur={onBlur}
               value={value}
@@ -201,8 +199,7 @@ const Create: React.FC = () => {
                 { value: "Female", label: "Female" },
                 { value: "Non Binary", label: "Non Binary" },
               ]}
-              onResize={undefined}
-              onResizeCapture={undefined}
+
               // status={error ? "error" : ""}
               // loading={isLoading}
             />

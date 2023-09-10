@@ -16,7 +16,7 @@ const PersonalInfo: React.FC = () => {
 
   return (
     <>
-      <Container className=" flex flex-col items-center mt-8">
+      <Container className=" flex flex-col items-center justify-center mt-8">
         <div className="flex flex-row gap-2 items-center">
           <Avatar
             variant="rounded"
@@ -41,11 +41,25 @@ const PersonalInfo: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 mt-2">
-          <p className="text-base font-bold text-text-light">Address :</p>
+        <div className="grid grid-cols-2 mt-2 max-w-lg gap-1">
+          <p className="text-base font-bold text-text-light">
+            Address Line 1 :
+          </p>
           <p className="text-base font-medium text-text-light">
             {employeeInfo?.address}
           </p>
+          {employeeInfo?.address2 ? (
+            <>
+              <p className="text-base font-bold text-text-light">
+                Address Line 2 :
+              </p>
+              <p className="text-base font-medium text-text-light">
+                {employeeInfo?.address2}
+              </p>
+            </>
+          ) : (
+            ""
+          )}
           <p className="text-base font-bold text-text-light">
             Contact Number :
           </p>
@@ -80,7 +94,7 @@ const PersonalInfo: React.FC = () => {
           <div>
             <Button
               variant="text"
-              className="underline"
+              className="underline p-0"
               endIcon={<Icon className="text-lg" icon="iconoir:import" />}
               component="a"
               href={previewAttachment(employeeInfo?.cv)}
