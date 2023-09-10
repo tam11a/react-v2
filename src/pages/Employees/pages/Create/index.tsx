@@ -5,7 +5,7 @@ import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
 import { Button } from "@mui/material";
-import { DatePicker, Input, Segmented, Select } from "antd";
+import { DatePicker, Input, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

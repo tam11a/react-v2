@@ -3,10 +3,10 @@ import React from "react";
 import EmployeeColumn from "./components/EmployeeColumn";
 import DataTable from "@components/Datatable";
 import { usePaginate } from "@tam11a/react-use-hooks";
-import { Button, Upload, Input, Select } from "antd";
+import { Upload, Input, Select } from "antd";
 import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Icon, InlineIcon } from "@iconify/react";
-import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Employees: React.FC = () => {
   const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
@@ -19,7 +19,7 @@ const Employees: React.FC = () => {
         <h1 className="text-2xl md:text-3xl font-bold">All Employees</h1>
 
         <div className="flex flex-row gap-2 items-center  justify-center ">
-          <Link to="/app/employees/create">
+          {/* <Link to="/app/employees/create">
             <Button
               type="primary"
               size="large"
@@ -28,10 +28,30 @@ const Employees: React.FC = () => {
             >
               Create New
             </Button>
-          </Link>
+          </Link> */}
+
+          <Button
+            variant="contained"
+            className="bg-[#FDE4BF] text-text"
+            endIcon={
+              <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+            }
+            disableElevation
+            component={"a"}
+            href="/app/employees/create"
+          >
+            Create New
+          </Button>
 
           <Upload>
-            <Button size="large">Click to Upload</Button>
+            <Button
+              variant="outlined"
+              className="border-[#FDE4BF] border-2 text-text"
+              endIcon={<Icon className="text-xl mr-1 " icon="uil:upload" />}
+              disableElevation
+            >
+              Upload
+            </Button>
           </Upload>
         </div>
       </div>
