@@ -11,6 +11,26 @@ import useAreYouSure from "@/hooks/useAreYouSure";
 const LeadColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
 
+  const { mutateAsync: deleteLead } = useDeleteLead();
+
+  const onDelete = async (id: any) => {
+    message.open({
+      type: "loading",
+      content: "Deleting Lead..",
+      duration: 0,
+    });
+
+    const res = await handleResponse(() => deleteLead({ id }));
+    message.destroy();
+    if (res.status) {
+      message.success("Lead deleted successfully!");
+      return true;
+    } else {
+      message.error(res.message);
+      return false;
+    }
+  };
+
   return [
     {
       headerName: "ID",
@@ -97,26 +117,6 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       align: "center",
       renderCell: (data: any) => {
-        const { mutateAsync: deleteLead } = useDeleteLead();
-
-        const onDelete = async () => {
-          message.open({
-            type: "loading",
-            content: "Deleting Lead..",
-            duration: 0,
-          });
-
-          const res = await handleResponse(() => deleteLead({ id: data.id }));
-          message.destroy();
-          if (res.status) {
-            message.success("Lead deleted successfully!");
-            return true;
-          } else {
-            message.error(res.message);
-            return false;
-          }
-        };
-
         const { contextHolder: delContextHolder, open: delOpen } =
           useAreYouSure({
             title: "Delete Lead?",
@@ -139,19 +139,7 @@ const LeadColumn = (): GridColumns<IDataTable> => {
             <IconButton
               sx={{ fontSize: "large" }}
               color="error"
-              onClick={() =>
-                delOpen(
-                  () => onDelete(),
-                  <>
-                    You are deleting a lead.
-                    <br />
-                    <br />
-                    Deleting a lead means the lead will move to trash folder.
-                    After deleting, this work can't be undone. You'll have to
-                    restore the lead to use again.
-                  </>
-                )
-              }
+              onClick={() => onDelete(data?.row.id)}
               // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
             >
               <Icon icon="mi:delete" />
