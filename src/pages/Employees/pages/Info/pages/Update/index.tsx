@@ -1,18 +1,18 @@
-import useLeadStatus from "@/hooks/useLeadStatus";
-import { useGetLeadsById, useUpdateLeadsById } from "@/queries/leads";
-import { useGetMediaById } from "@/queries/media";
+import useRole from "@/hooks/useRole";
+import {
+  useGetEmployeesById,
+  useUpdateEmployeesById,
+} from "@/queries/employees";
 import handleResponse from "@/utilities/handleResponse";
-import { stringAvatar } from "@/utilities/stringAvatar";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
-import { Icon } from "@iconify/react";
-import { Avatar, Button } from "@mui/material";
-import { Input, Segmented, Select, DatePicker } from "antd";
+import { Button } from "@mui/material";
+import { Select, DatePicker, Input } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Update: React.FC = () => {
   const params = useParams();
@@ -23,35 +23,38 @@ const Update: React.FC = () => {
     control,
     formState: { isDirty },
   } = useForm({});
-  const { data } = useGetLeadsById(params.id);
-  const [leadInfo, setLeadInfo] = React.useState<any>([]);
-  const { data: mediaData } = useGetMediaById(leadInfo?.media_id);
-  const { mutateAsync: updateLead, isLoading: isSubmitting } =
-    useUpdateLeadsById();
-  const { leadStatus, isLeadStatusLoading, searchLeadStatus } = useLeadStatus();
+  const { data } = useGetEmployeesById(params.id);
+  const [employeeInfo, setEmployeeInfo] = React.useState<any>([]);
+  const { mutateAsync: updateEmployee, isLoading: isSubmitting } =
+    useUpdateEmployeesById();
+  const { role, isRoleLoading, searchRole } = useRole();
 
   React.useEffect(() => {
     if (!data) return;
-    setLeadInfo(data?.data?.data);
+    setEmployeeInfo(data?.data?.data);
   }, [data]);
+  console.log(employeeInfo);
 
   React.useEffect(() => {
-    if (!leadInfo || isDirty) return;
+    if (!employeeInfo || isDirty) return;
     reset({
-      first_name: leadInfo?.firstName,
-      last_name: leadInfo?.lastName,
-      phone: leadInfo?.phone,
-      email: leadInfo?.email,
-      gender: leadInfo?.gender,
-      company: leadInfo?.company,
-      designation: leadInfo?.designation,
-      created_at: leadInfo?.dob,
-      status_id: leadInfo?.status_id,
-      priority: leadInfo?.priority,
-      address_line1: leadInfo?.address_line1,
-      display_picture: leadInfo?.assignee?.display_picture,
+      first_name: employeeInfo?.first_name,
+      last_name: employeeInfo?.last_name,
+      email: employeeInfo?.email,
+      gender: employeeInfo?.gender,
+      role_id: employeeInfo?.role_id,
+      display_picture: employeeInfo?.display_picture,
+      dob: employeeInfo?.dob,
+      max_session: employeeInfo?.max_session,
+      hired_date: employeeInfo?.hired_date,
+      work_hour: employeeInfo?.work_hour,
+      salary: employeeInfo?.salary,
+      bank: employeeInfo?.bank,
+      address: employeeInfo?.address,
+      address2: employeeInfo?.address2,
+      cv: employeeInfo?.cv,
     });
-  }, [leadInfo]);
+  }, [employeeInfo]);
 
   const onValid = async (d: FieldValues) => {
     messageApi.open({
@@ -61,7 +64,7 @@ const Update: React.FC = () => {
     });
     const res = await handleResponse(
       () =>
-        updateLead({
+        updateEmployee({
           id: params?.id,
           data: d,
         }),
@@ -75,91 +78,48 @@ const Update: React.FC = () => {
   return (
     <>
       {contextHolder}
-      <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-xl my-5">
-        <div className="flex flex-col gap-1 items-start my-2">
-          <p className="text-2xl font-bold text-text-light">
-            {`${leadInfo?.first_name} ${leadInfo?.last_name}`}
-          </p>
-          <div className="flex flex-row gap-2">
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="ic:twotone-person-pin"
-                className="text-md text-text-light"
+      <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-lg my-5">
+        <Label>Full Name</Label>
+        <Input.Group compact>
+          <Controller
+            control={control}
+            name={"first_name"}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                className="w-1/2"
+                placeholder={"Enter First Name"}
+                size={"large"}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                status={error ? "error" : ""}
+                //   suffix={<ErrorSuffix error={error} />}
               />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.designation}
-              </p>
-            </div>
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="fluent:building-20-filled"
-                className="text-md text-text-light"
+            )}
+          />
+          <Controller
+            control={control}
+            name={"last_name"}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                className="w-1/2"
+                placeholder={"Enter Last Name"}
+                size={"large"}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                status={error ? "error" : ""}
+                //   suffix={<ErrorSuffix error={error} />}
               />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.company}
-              </p>
-            </div>
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="octicon:location-24"
-                className="text-md text-text-light"
-              />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.address_line1}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <Label className=" my-1 ">Address</Label>
-        <Controller
-          control={control}
-          name={"address_line1"}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input.TextArea
-              className="text-text-light font-semibold text-sm min-h-[100px]"
-              placeholder="Address..."
-              size="large"
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-            />
-          )}
-        />
-
-        <Label className="my-1">Phone</Label>
-        <Controller
-          control={control}
-          name={"phone"}
-          // rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input
-              className="font-medium text-sm my-1"
-              placeholder={"Phone"}
-              prefix={
-                <Iconify
-                  icon={"ic:outline-phone"}
-                  className="text-text-light text-lg"
-                />
-              }
-              size={"large"}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
-            />
-          )}
-        />
-
+            )}
+          />
+        </Input.Group>
         <Label className="my-1">Email</Label>
         <Controller
           control={control}
@@ -187,7 +147,45 @@ const Update: React.FC = () => {
             />
           )}
         />
-
+        <Label className=" my-1 ">Address Line 1</Label>
+        <Controller
+          control={control}
+          name={"address"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input.TextArea
+              className="text-text-light font-semibold text-sm min-h-[100px]"
+              placeholder="Address..."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
+          )}
+        />
+        <Label className=" my-1 ">Address Line 2</Label>
+        <Controller
+          control={control}
+          name={"address2"}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input.TextArea
+              className="text-text-light font-semibold text-sm min-h-[100px]"
+              placeholder="Address..."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
+          )}
+        />
         <Label className="my-1">Gender</Label>
         <Controller
           control={control}
@@ -197,8 +195,7 @@ const Update: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Segmented
-              block
+            <Select
               placeholder={"Gender"}
               size={"large"}
               className="relative w-full  my-1"
@@ -210,82 +207,21 @@ const Update: React.FC = () => {
                 { value: "Female", label: "Female" },
                 { value: "Non Binary", label: "Non Binary" },
               ]}
-              onResize={undefined}
-              onResizeCapture={undefined}
               // status={error ? "error" : ""}
               // loading={isLoading}
             />
           )}
         />
-
-        <Label className="my-1">Status</Label>
+        <Label className="my-1">Date Of Birth</Label>
         <Controller
           control={control}
-          name={"status_id"}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Select
-              size="large"
-              placeholder="Search Status..."
-              allowClear={false}
-              value={value || undefined}
-              showSearch
-              options={leadStatus}
-              onSearch={searchLeadStatus}
-              loading={isLeadStatusLoading}
-              onChange={onChange}
-              onBlur={onBlur}
-              className="w-full my-1"
-              status={error ? "error" : ""}
-
-              //   disabled={isLoading}
-            />
-          )}
-        />
-
-        <Label className="my-1">Priority</Label>
-        <Controller
-          control={control}
-          name={"priority"}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Select
-              size="large"
-              placeholder="Priority..."
-              allowClear={false}
-              value={value || undefined}
-              options={[
-                { value: "HIGHEST", label: "Highest" },
-                { value: "HIGH", label: "High" },
-                { value: "MEDIUM", label: "Medium" },
-                { value: "LOW", label: "Low" },
-                { value: "LOWEST ", label: "Lowest" },
-              ]}
-              onChange={onChange}
-              onBlur={onBlur}
-              className="w-full my-1"
-              status={error ? "error" : ""}
-              //   disabled={isLoading}
-            />
-          )}
-        />
-
-        <Label className="my-1">Entry Date</Label>
-        <Controller
-          control={control}
-          name={"created_at"}
+          name={"dob"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <DatePicker
-              disabled
               size="large"
               placeholder="Date of Birth"
               className="text-text-light w-full my-1"
@@ -295,82 +231,152 @@ const Update: React.FC = () => {
             />
           )}
         />
-
-        <Label className="my-1">
-          Assignee &bull;{" "}
-          <Link to="#" className="text-sm ml-1 underline">
-            Change Assignee
-          </Link>
-        </Label>
-        <div className=" flex flex-row gap-2 items-center border border-[#d9d9d9] rounded my-2 p-2">
-          <Avatar
-            variant="rounded"
-            src={leadInfo?.display_picture}
-            {...stringAvatar(`${leadInfo?.first_name} ${leadInfo?.last_name}`)}
-            className="text-sm w-[25px] h-[25px] border"
-          />
-          <p className="text-sm font-bold text-text">
-            {leadInfo?.assignee?.first_name} {leadInfo?.assignee?.last_name}
-          </p>
-        </div>
-
-        <h1 className="text-xl font-bold text-text-light my-5">
-          Medial Information
-        </h1>
-
-        <div className="flex flex-row items-center">
-          <Link to={`/app/info/media/${mediaData?.data?.data?.id}`}>
-            <Avatar
-              variant="rounded"
-              src={leadInfo?.media?.display_picture}
-              {...stringAvatar(
-                `${leadInfo?.media?.first_name} ${leadInfo?.media?.last_name}`
-              )}
-              className="md:w-[75px] md:h-[75px] w-[60px] h-[60px] rounded-2xl mt-1"
+        <Label className="my-1">Role</Label>
+        <Controller
+          control={control}
+          name={"role_id"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Select
+              value={value}
+              size="large"
+              showSearch
+              className="w-full"
+              placeholder={"Select a Role..."}
+              suffixIcon={<Iconify icon={"mingcute:search-3-line"} />}
+              onChange={onChange}
+              options={role}
+              onSearch={searchRole}
+              loading={isRoleLoading}
+              status={error ? "error" : ""}
             />
-          </Link>
-          <span className="flex flex-col px-2">
-            <Link to={`/app/info/media/${leadInfo?.media?.id}`}>
-              <p className="text-lg font-bold text-text-light">{`${leadInfo?.media?.first_name} ${mediaData?.data?.data?.last_name}`}</p>
-            </Link>
-            <p className="text-sm font-medium text-text-light">
-              {leadInfo?.media?.gender}
-            </p>
-            <p className="text-sm font-medium text-text-light">
-              <b>ID No:</b> {leadInfo?.media?.id}
-              {leadInfo?.media?.first_name?.[0]}
-            </p>
-          </span>
-        </div>
-        <Label className="mt-4">Commision</Label>
-        {/* <Controller
-              control={control}
-              name={"media_commision"}
-              // rules={{ required: true }}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-              }) => ( */}
-        <Input
-          disabled
-          className="font-medium text-sm my-1"
-          prefix={
-            <Iconify
-              icon={"mdi:percent-box"}
-              className="text-text-light text-lg"
-            />
-          }
-          placeholder={"Enter percent rate"}
-          size={"large"}
-          // onChange={onChange}
-          // onBlur={onBlur}
-          value={leadInfo?.media_commision} /*needs to change*/
-          // status={error ? "error" : ""}
-          suffix={"%"}
+          )}
         />
-        {/* )}
-            /> */}
+        <Label className="my-1">Max Session</Label>
+        <Controller
+          control={control}
+          name={"max_session"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className=" font-medium text-sm my-1"
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
 
+        <Label className="my-1">Hire Date</Label>
+        <Controller
+          control={control}
+          name={"hire_date"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <DatePicker
+              size="large"
+              placeholder="Hire Date"
+              className="text-text-light w-full my-1"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={dayjs(value)}
+            />
+          )}
+        />
+        <Label className="my-1">Work Hour</Label>
+        <Controller
+          control={control}
+          name={"work_hour"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className=" font-medium text-sm my-1"
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label className="my-1">Salary</Label>
+        <Controller
+          control={control}
+          name={"salary"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className=" font-medium text-sm my-1"
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label className="my-1">Bank Details</Label>
+        <Controller
+          control={control}
+          name={"bank"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className=" font-medium text-sm my-1"
+              placeholder="Add Bank Details"
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label className="my-1">Curriculam Vitae</Label>
+        <Controller
+          control={control}
+          name={"cv"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className=" font-medium text-sm my-1"
+              placeholder="cv"
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
         <Button
           variant="contained"
           fullWidth

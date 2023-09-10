@@ -28,7 +28,7 @@ const Navigator: React.FC = () => {
     },
     {
       label: "Update",
-      key: `/app/leads/details/${id}/update`,
+      key: `/app/employees/details/${id}/update`,
     },
   ];
   // To get the current location pathname

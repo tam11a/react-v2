@@ -11,6 +11,10 @@ export const routes = [
   //   Component: lazy(() => import("../pages/payroll")),
   // },
   {
+    path: ROUTES.UPDATE,
+    Component: lazy(() => import("../pages/Update")),
+  },
+  {
     path: ROUTES.NOTFOUND,
     Component: lazy(() => import("@pages/NotFound")),
   },
