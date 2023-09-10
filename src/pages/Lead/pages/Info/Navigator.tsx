@@ -72,10 +72,10 @@ const Navigator: React.FC = () => {
             New
           </Dropdown.Button>
           <Select
+            dropdownMatchSelectWidth={false}
+            bordered={false}
             size="large"
             defaultValue="Highest"
-            style={{ width: 150 }}
-            bordered={false}
             onChange={handleChange}
             options={[
               { value: "Highest", label: "Highest" },

@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@iconify/react";
+import { Icon, InlineIcon } from "@iconify/react";
 import { Tag } from "antd";
 import { useGetLeadsById } from "@/queries/leads";
 import { useParams } from "react-router-dom";
@@ -15,58 +15,47 @@ const PersonalInfo: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col justify-between max-w-5xl p-6 gap-4">
-        <div>
-          <div className="flex flex-col gap-3 items-start">
-            <p className="text-4xl font-bold text-text-dark">{`${leadInfo?.first_name} ${leadInfo?.last_name}`}</p>
-            <div className="flex flex-row gap-2">
-              <div className="flex flex-row gap-1">
-                <Icon
-                  icon="ic:twotone-person-pin"
-                  className="text-md text-text-light"
-                />
-                <p className="text-sm font-bold text-text-light">
-                  {leadInfo?.designation}
-                </p>
-              </div>
-              <div className="flex flex-row gap-1">
-                <Icon
-                  icon="fluent:building-20-filled"
-                  className="text-md text-text-light"
-                />
-                <p className="text-sm font-bold text-text-light">
-                  {leadInfo?.company}
-                </p>
-              </div>
-              <div className="flex flex-row gap-1">
-                <Icon
-                  icon="octicon:location-24"
-                  className="text-md text-text-light"
-                />
-                <p className="text-sm font-bold text-text-light">
-                  {leadInfo?.address_line1}
-                </p>
-              </div>
-            </div>
+        <div className="flex flex-col gap-3 items-start">
+          <p className="text-4xl font-bold text-text-dark">{`${leadInfo?.first_name} ${leadInfo?.last_name}`}</p>
 
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="iconamoon:email-light"
+          <div className="flex flex-row gap-2">
+            <p className="flex items-center text-sm font-bold text-text-light gap-1">
+              <InlineIcon
+                icon="ic:twotone-person-pin"
                 className="text-md text-text-light"
               />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.email}
-              </p>
-            </div>
-            <div className="flex flex-row items-center gap-1">
-              <Icon
-                icon="ic:outline-phone"
-                className="text-lg text-text-light"
+              {leadInfo?.designation}
+            </p>
+            <p className="flex items-center text-sm font-bold text-text-light gap-1">
+              <InlineIcon
+                icon="fluent:building-20-filled"
+                className="text-md text-text-light"
               />
-              <p className="text-md font-bold text-text-light">
-                (+88) {leadInfo?.phone}
-              </p>
-            </div>
+              {leadInfo?.company}
+            </p>
+            <p className="flex items-center text-sm font-bold text-text-light gap-1">
+              <InlineIcon
+                icon="octicon:location-24"
+                className="text-md text-text-light"
+              />
+              {leadInfo?.address_line1}
+            </p>
           </div>
+
+          <p className="flex items-center text-md font-bold text-text-light gap-1">
+            <InlineIcon
+              icon="iconamoon:email-light"
+              className="text-md text-text-light"
+            />
+            {leadInfo?.email}
+          </p>
+          <p className="flex items-center text-md font-bold text-text-light gap-1">
+            <InlineIcon
+              icon="ic:outline-phone"
+              className="text-lg text-text-light"
+            />
+            (+88) {leadInfo?.phone}
+          </p>
         </div>
         <div className="flex flex-col gap-2  py-3 text-text-light">
           <p className="text-md font-bold">
