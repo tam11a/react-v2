@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "./infoRoutes";
 
-const LeadDetailsRoutes: React.FC = () => {
+const EmployeeDetailsRoutes: React.FC = () => {
   return (
     <Routes>
       {routes?.map?.(({ path, Component }) => (
@@ -21,4 +21,4 @@ const LeadDetailsRoutes: React.FC = () => {
   );
 };
 
-export default LeadDetailsRoutes;
+export default EmployeeDetailsRoutes;

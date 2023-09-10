@@ -1,19 +1,30 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Button, Menu, Dropdown } from "antd";
+import { Menu } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-const onMenuClick: MenuProps["onClick"] = (e) => {
-  console.log("click", e);
-};
+import { Icon } from "@iconify/react";
+import { ROUTES } from "./routes/paths";
 
 const Navigator: React.FC = () => {
   const { id } = useParams();
 
   const items: MenuProps["items"] = [
     {
-      label: "View",
-      key: `/app/leads/details/${id}`,
+      label: "Overview",
+      key: ROUTES.OVERVIEW,
+      icon: <Icon icon="ph:book-open-duotone" className="text-xl" />,
+    },
+    {
+      label: "Payroll",
+      key: ROUTES.PAYROLL,
+      disabled: true,
+      icon: <Icon icon="mdi:performance" className="text-xl" />,
+    },
+    {
+      label: "Attendance",
+      key: ROUTES.ATTENDANCE,
+      disabled: true,
+      icon: <Icon icon="ic:round-show-chart" className="text-xl" />,
     },
     {
       label: "Update",
@@ -30,59 +41,18 @@ const Navigator: React.FC = () => {
     navigate(e.key);
   };
 
-  const statusItems = [
-    {
-      key: "1",
-      label: "1st item",
-    },
-    {
-      key: "2",
-      label: "2nd item",
-    },
-    {
-      key: "3",
-      label: "3rd item",
-    },
-  ];
-
   return (
     <>
-      <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">Lead Details</h1>
+      <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 px-2 text-text border-b">
+        <p className="text-md font-bold">employees / {id}</p>
 
-        <div className="flex flex-row gap-2 md:items-center  justify-end ">
-          <Dropdown.Button
-            type="primary"
-            size="large"
-            menu={{ items: statusItems, onClick: onMenuClick }}
-            className="bg-sky-400 rounded "
-          >
-            New
-          </Dropdown.Button>
-          <Button
-            type="primary"
-            size="large"
-            className="bg-[#E7F5FC] text-text-light"
-            block
-          >
-            Highest
-          </Button>
-          <Button
-            type="primary"
-            size="large"
-            className="bg-[#E7F5FC]  text-text-light"
-            block
-          >
-            Transfer
-          </Button>
-          <Menu
-            onClick={onClick}
-            selectedKeys={[location.pathname?.split?.("/")[3] || ""]}
-            mode="horizontal"
-            items={items}
-            className={"border-b-0 max-w-[40px]"}
-          />
-        </div>
+        <Menu
+          onClick={onClick}
+          selectedKeys={[location.pathname?.split?.("/")[3] || ""]}
+          mode="horizontal"
+          items={items}
+          className={"border-b-0 w-full max-w-[450px]"}
+        />
       </div>
     </>
   );

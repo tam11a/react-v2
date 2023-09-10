@@ -3,20 +3,20 @@ import React from "react";
 import PersonalInfo from "./personalInfo";
 import Label from "@components/Label";
 import DataTable from "@components/Datatable";
-import PropertiesColumn from "../../components/PropertiesColumn";
+// import LeadsLogCol from "../../components/LeadsLogCol";
 
-const Details: React.FC = () => {
+const Overview: React.FC = () => {
   const { page, setPage, limit, setLimit } = usePaginate();
   return (
     <>
       {/* details */}
       <PersonalInfo />
       <>
-        <div className=" mx-auto m-8">
+        <div className="mx-auto m-4">
           <Label className="text-md font-medium">Interested Properties</Label>
           <DataTable
-            columns={PropertiesColumn()}
-            // columns={[]}
+            // columns={LeadsLogCol()}
+            columns={[]}
             // rows={data?.data?.data || []}
             rows={[]}
             isLoading={false}
@@ -35,4 +35,4 @@ const Details: React.FC = () => {
   );
 };
 
-export default Details;
+export default Overview;

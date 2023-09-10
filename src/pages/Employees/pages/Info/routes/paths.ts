@@ -1,5 +1,6 @@
 export const ROUTES = {
-  DETAILS: "",
-  UPDATE: "/update",
+  OVERVIEW: "",
+  PAYROLL: "/payroll",
+  ATTENDANCE: "/attendance",
   NOTFOUND: "*",
 };

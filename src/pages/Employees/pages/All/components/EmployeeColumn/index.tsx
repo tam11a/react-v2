@@ -8,8 +8,7 @@ import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import useAreYouSure from "@/hooks/useAreYouSure";
 
-const EmployeeColumn = (): GridColumns<IDataTable> => {
-  const navigate = useNavigate();
+const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
   const { mutateAsync: deleteEmployee } = useDeleteEmployee();
 
   const onDelete = async (id: any) => {
@@ -36,6 +35,35 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
     cancelText: "Cancel",
     color: "error",
   });
+  return (
+    <>
+      {delContextHolder}
+      <IconButton
+        sx={{ fontSize: "large" }}
+        color="error"
+        onClick={() => {
+          delOpen(
+            () => onDelete(id),
+            <>
+              You are deleting a employee.
+              <br />
+              <br />
+              Deleting a employee means the employee will move to trash folder.
+              After deleting, this work can't be undone. You'll have to restore
+              the employee to use again
+            </>
+          );
+        }}
+        // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
+      >
+        <Icon icon="bxs:trash" />
+      </IconButton>
+    </>
+  );
+};
+
+const EmployeeColumn = (): GridColumns<IDataTable> => {
+  const navigate = useNavigate();
 
   return [
     {
@@ -111,7 +139,6 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       align: "center",
       renderCell: (data: any) => (
         <>
-          {delContextHolder}
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
@@ -120,26 +147,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           >
             <Icon icon="icon-park-solid:info" />
           </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            onClick={() => {
-              delOpen(
-                () => onDelete(data?.row?.id),
-                <>
-                  You are deleting a employee.
-                  <br />
-                  <br />
-                  Deleting a employee means the employee will move to trash
-                  folder. After deleting, this work can't be undone. You'll have
-                  to restore the employee to use again
-                </>
-              );
-            }}
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-          >
-            <Icon icon="bxs:trash" />
-          </IconButton>
+          <DeleteButton id={data?.row?.id} />
         </>
       ),
     },
