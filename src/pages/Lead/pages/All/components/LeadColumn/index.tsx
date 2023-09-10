@@ -8,20 +8,33 @@ import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 
-const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
+const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
+  id,
+  permanent = false,
+}) => {
   const { mutateAsync: deleteLead } = useDeleteLead();
 
   const onDelete = async (id: any) => {
     message.open({
       type: "loading",
-      content: "Deleting Lead..",
+      content: permanent ? "Deleting Lead Permanently.." : "Deleting Lead..",
       duration: 0,
     });
-    const res = await handleResponse(() => deleteLead({ id }));
+    const res = await handleResponse(() =>
+      deleteLead({
+        id,
+        params: {
+          permanent: permanent || null,
+        },
+      })
+    );
 
     message.destroy();
+
     if (res.status) {
-      message.success("Lead deleted successfully!");
+      message.success(
+        permanent ? "Lead deleted permanently!" : "Lead deleted successfully!"
+      );
       return true;
     } else {
       message.error(res.message);
@@ -30,11 +43,12 @@ const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
   };
 
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: "Delete Lead?",
+    title: permanent ? "Delete Lead Permenently?" : "Delete Lead?",
     okText: "Delete",
     cancelText: "Cancel",
     color: "error",
   });
+
   return (
     <>
       {delContextHolder}
@@ -160,7 +174,14 @@ const LeadColumn = (): GridColumns<IDataTable> => {
           >
             <Icon icon="icon-park-solid:info" />
           </IconButton>
-          <DeleteButton id={data?.row?.id} />
+          {data?.row?.deleted_at ? (
+            <>
+              {/* Restore Button Here */}
+              <DeleteButton id={data?.row?.id} permanent={true} />
+            </>
+          ) : (
+            <DeleteButton id={data?.row?.id} />
+          )}
         </>
       ),
     },

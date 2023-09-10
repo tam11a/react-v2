@@ -2,17 +2,23 @@ import { useGetLeads } from "@/queries/leads";
 import React from "react";
 import LeadColumn from "./components/LeadColumn";
 import DataTable from "@components/Datatable";
-import { usePaginate } from "@tam11a/react-use-hooks";
-import { Button, Upload, Input, Select } from "antd";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
+import { Button, Upload, Input, Select, Switch } from "antd";
 import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Icon, InlineIcon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 const Leads: React.FC = () => {
+  const { state: showTrash, toggleState: toggleTrash } = useToggle(false);
   const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
 
-  const { data, isLoading } = useGetLeads(getQueryParams());
+  const { data, isLoading } = useGetLeads({
+    ...getQueryParams(),
+    trash: showTrash,
+  });
   const { search, setSearch } = useSearchParamsPaginate();
+
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
@@ -52,7 +58,18 @@ const Leads: React.FC = () => {
               { value: "created_at", label: "Oldest" },
             ]}
           />
+          <Switch
+            size="default"
+            style={{ background: showTrash ? "#475569" : "#aeaeae" }}
+            checkedChildren={<AiOutlineCheck />}
+            unCheckedChildren={<AiOutlineClose />}
+            checked={showTrash}
+            onChange={toggleTrash}
+            className="ml-2.5"
+          />
+          <p className="font-semibold text-sm mx-2">Show deleted leads</p>
         </div>
+
         <Input
           allowClear
           size="large"
