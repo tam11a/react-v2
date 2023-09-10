@@ -63,7 +63,7 @@ const PersonalInfo: React.FC = () => {
                 className="text-lg text-text-light"
               />
               <p className="text-md font-bold text-text-light">
-                (+880) {leadInfo?.phone}
+                (+88) {leadInfo?.phone}
               </p>
             </div>
           </div>
