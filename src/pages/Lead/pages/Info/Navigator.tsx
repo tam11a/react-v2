@@ -1,10 +1,14 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Button, Menu, Dropdown } from "antd";
+import { Button, Menu, Dropdown, Select } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const onMenuClick: MenuProps["onClick"] = (e) => {
   console.log("click", e);
+};
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
 };
 
 const Navigator: React.FC = () => {
@@ -33,15 +37,19 @@ const Navigator: React.FC = () => {
   const statusItems = [
     {
       key: "1",
-      label: "1st item",
+      label: "New",
     },
     {
       key: "2",
-      label: "2nd item",
+      label: "In-progress",
     },
     {
       key: "3",
-      label: "3rd item",
+      label: "Completed",
+    },
+    {
+      key: "4",
+      label: "Rejected",
     },
   ];
 
@@ -54,19 +62,30 @@ const Navigator: React.FC = () => {
           <Dropdown.Button
             type="primary"
             size="large"
-            menu={{ items: statusItems, onClick: onMenuClick }}
+            menu={{
+              selectable: true,
+              items: statusItems,
+              onClick: onMenuClick,
+            }}
             className="bg-sky-400 rounded "
           >
             New
           </Dropdown.Button>
-          <Button
-            type="primary"
+          <Select
             size="large"
-            className="bg-[#E7F5FC] text-text-light"
-            block
-          >
-            Highest
-          </Button>
+            defaultValue="Highest"
+            style={{ width: 150 }}
+            bordered={false}
+            onChange={handleChange}
+            options={[
+              { value: "Highest", label: "Highest" },
+              { value: "High", label: "High" },
+              { value: "Medium", label: "Medium" },
+              { value: "Low", label: "Low" },
+              { value: "Lowest", label: "Lowest" },
+            ]}
+            className="bg-[#E7F5FC]  text-text-light"
+          />
           <Button
             type="primary"
             size="large"
