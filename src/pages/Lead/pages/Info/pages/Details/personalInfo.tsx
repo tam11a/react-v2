@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, InlineIcon } from "@iconify/react";
+import { InlineIcon } from "@iconify/react";
 import { Tag } from "antd";
 import { useGetLeadsById } from "@/queries/leads";
 import { useParams } from "react-router-dom";
