@@ -1,23 +1,21 @@
-import useEmployee from "@/hooks/useEmployee";
-// import useEmployeeStatus from "@/hooks/useEmployeeStatus";
-import useMedia from "@/hooks/useMedia";
 import useRole from "@/hooks/useRole";
 import { useCreateEmployee } from "@/queries/employees";
 import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
-import { Icon } from "@iconify/react";
+import Iconify from "@components/iconify";
 import { Button } from "@mui/material";
-import { Input, Segmented, Select } from "antd";
+import { DatePicker, Input, Segmented, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 const Create: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { mutateAsync: createEmployee, isLoading: employeeCreating } =
     useCreateEmployee();
-  // const { role, isRoleLoading, searchRole } = useRole();
+  const { role, isRoleLoading, searchRole } = useRole();
   const { handleSubmit, control, reset } = useForm({
     // resolver: joiResolver(loginResolver),
   });
@@ -99,7 +97,6 @@ const Create: React.FC = () => {
             )}
           />
         </Input.Group>
-
         <Label className="my-1">Email</Label>
         <Controller
           control={control}
@@ -144,14 +141,47 @@ const Create: React.FC = () => {
             />
           )}
         />
+        <Controller
+          control={control}
+          name={"password"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <>
+              <Label isRequired className="flex flex-row items-center gap-1">
+                New Password
+                {/* {error ? (
+                    <ErrorSuffix error={error} />
+                  ) : (
+                    <Tooltip
+                      title={"Password should be atleast 6 characters long."}
+                       placement="topLeft"
+                    >
+                       <Icon color={"action"} className="text-base mb-1">
+                        <AiFillInfoCircle />
+                      </Icon> 
+                    </Tooltip>
+                  )}  */}
+              </Label>
+              <Input.Password
+                placeholder="Enter Password"
+                size="large"
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                status={error ? "error" : ""}
+              />
+            </>
+          )}
+        />
 
-        <Label isRequired className="my-1">
-          Gender
-        </Label>
+        <Label className="my-1">Gender</Label>
         <Controller
           control={control}
           name={"gender"}
-          rules={{ required: true }}
+          rules={{ required: false }}
           defaultValue={"Non Binary"}
           render={({
             field: { onChange, onBlur, value },
@@ -179,52 +209,49 @@ const Create: React.FC = () => {
           )}
         />
 
-        <Label isRequired className="my-1">
-          Company
-        </Label>
         <Controller
           control={control}
-          name={"company"}
+          name={"role_id"}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Input
-              placeholder={"Enter Company..."}
-              size={"large"}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
-            />
+            <>
+              <Label
+                isRequired
+                className="flex flex-row items-center gap-1 mt-2 my-1 "
+              >
+                Role
+                {/* {error ? (
+                  <ErrorSuffix error={error} />
+                ) : (
+                  <Tooltip
+                    title={"Password should be atleast 6 characters long."}
+                     placement="topLeft"
+                  >
+                     <Icon color={"action"} className="text-base mb-1">
+                      <AiFillInfoCircle />
+                    </Icon> 
+                  </Tooltip>
+                )}  */}
+              </Label>
+              <Select
+                value={value}
+                size="large"
+                showSearch
+                className="w-full"
+                placeholder={"Select a Role..."}
+                suffixIcon={<Iconify icon={"mingcute:search-3-line"} />}
+                onChange={onChange}
+                options={role}
+                onSearch={searchRole}
+                loading={isRoleLoading}
+                status={error ? "error" : ""}
+              />
+            </>
           )}
         />
-
-        <Label isRequired className="my-1">
-          Designation
-        </Label>
-        <Controller
-          control={control}
-          name={"designation"}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input
-              placeholder={"Enter Designation..."}
-              size={"large"}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
-            />
-          )}
-        />
-
         <Label isRequired className="my-1">
           Address
         </Label>
@@ -236,7 +263,7 @@ const Create: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Input
+            <Input.TextArea
               placeholder={"Enter Address..."}
               size={"large"}
               onChange={onChange}
@@ -248,185 +275,108 @@ const Create: React.FC = () => {
           )}
         />
 
-        <Label isRequired className="my-1">
-          Status
-        </Label>
-        {/* <Controller
-          control={control}
-          name={"status_id"}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Select
-              size="large"
-              placeholder="Search Status..."
-              allowClear={false}
-              value={value || undefined}
-              showSearch
-              options={employeeStatus}
-              onSearch={searchEmployeeStatus}
-              loading={isEmployeeStatusLoading}
-              onChange={onChange}
-              onBlur={onBlur}
-              className="w-full"
-              status={error ? "error" : ""}
-              suffixIcon={
-                <Icon
-                  className="text-xl text-text"
-                  icon={"mingcute:search-3-line"}
-                />
-              }
-              //   disabled={isLoading}
-            />
-          )}
-        /> */}
-        {/* <Label isRequired className="my-1">
-          Media Source
+        <Label isRequired className="mt-2 mb-1">
+          Date of Birth
         </Label>
         <Controller
           control={control}
-          name={"media_id"}
+          name={"dob"}
+          defaultValue={dayjs()}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Select
+            <DatePicker
               size="large"
-              placeholder="Search media..."
-              allowClear={false}
-              value={value || undefined}
-              showSearch
-              options={media}
-              onSearch={searchMedia}
-              loading={isMediaLoading}
+              className={"w-full"}
+              placeholder="Date of Birth"
               onChange={onChange}
               onBlur={onBlur}
-              className="w-full"
-              status={error ? "error" : ""}
-              suffixIcon={
-                <Icon
-                  className="text-xl text-text"
-                  icon={"mingcute:search-3-line"}
-                />
-              }
-              //   disabled={isLoading}
+              value={dayjs(value)}
             />
           )}
-        /> */}
-
-        <Label isRequired className="my-1">
-          Media Commission
-        </Label>
+        />
+        <Label className="my-1">Curriculum Vitae</Label>
         <Controller
           control={control}
           name={"media_commision"}
-          rules={{ required: true }}
+          rules={{ required: false }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <Input
               className="w-full"
-              placeholder={"Commision"}
+              placeholder={"Attach a file"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
               value={value}
               status={error ? "error" : ""}
-              suffix={
-                <Icon
-                  icon={"mdi:percent-box"}
-                  className="text-text-light text-lg"
-                />
-              }
+              prefix={<Iconify icon={"ph:link"} />}
               //   suffix={<ErrorSuffix error={error} />}
             />
           )}
         />
 
-        <Label isRequired className="my-1">
-          Priority
+        <Label className="my-1">NID Number</Label>
+        <Controller
+          control={control}
+          name={"nid"}
+          rules={{ required: false }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              // disabled
+              placeholder={"Enter 13 digits..."}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label isRequired className="mt-2 mb-1">
+          Hired Date
         </Label>
         <Controller
           control={control}
-          name={"priority"}
+          name={"hired_date"}
+          defaultValue={dayjs()}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Select
+            <DatePicker
               size="large"
-              placeholder="Priority..."
-              allowClear={false}
-              value={value || undefined}
-              options={[
-                { value: "HIGHEST", label: "Highest" },
-                { value: "HIGH", label: "High" },
-                { value: "MEDIUM", label: "Medium" },
-                { value: "LOW", label: "Low" },
-                { value: "LOWEST ", label: "Lowest" },
-              ]}
+              className={"w-full"}
+              placeholder="Hired Date"
               onChange={onChange}
               onBlur={onBlur}
-              className="w-full"
-              status={error ? "error" : ""}
-              //   disabled={isLoading}
+              value={dayjs(value)}
             />
           )}
         />
 
-        {/* <Label isRequired className="my-1">
-          Assigned To
+        <Label isRequired className="mt-2 mb-1">
+          Maximum Device
         </Label>
         <Controller
           control={control}
-          name={"assigned_to"}
+          name={"max_session"}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Select
-              size="large"
-              placeholder="Search Employee..."
-              allowClear={false}
-              value={value || undefined}
-              showSearch
-              options={employee}
-              onSearch={searchEmployee}
-              loading={isEmployeeLoading}
-              onChange={onChange}
-              onBlur={onBlur}
-              className="w-full"
-              status={error ? "error" : ""}
-              suffixIcon={
-                <Icon
-                  className="text-xl text-text-dark"
-                  icon={"clarity:employee-solid"}
-                />
-              }
-              //   disabled={isLoading}
-            />
-          )}
-        /> */}
-
-        <Label isRequired className="my-1">
-          Address Line 1
-        </Label>
-        <Controller
-          control={control}
-          name={"address_line1"}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input.TextArea
-              placeholder={"Enter Address Line 1..."}
+            <Input
+              placeholder={"2"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
@@ -436,19 +386,19 @@ const Create: React.FC = () => {
             />
           )}
         />
-        <Label isRequired className="my-1">
-          Address Line 2
-        </Label>
+        <p className="text-lg font-semibold my-3">Payroll Information</p>
+
+        <Label className="mt-2 mb-1">Work Hours</Label>
         <Controller
           control={control}
-          name={"address_line2"}
-          rules={{ required: true }}
+          name={"work_hour"}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Input.TextArea
-              placeholder={"Enter Address Line 2..."}
+            <Input
+              prefix={<Iconify icon={"iconamoon:clock-duotone"} />}
+              placeholder={"8"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
@@ -458,7 +408,27 @@ const Create: React.FC = () => {
             />
           )}
         />
-
+        <Label className="mt-2 mb-1">Salary</Label>
+        <Controller
+          control={control}
+          name={"salary"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              placeholder={"Enter Salary"}
+              addonAfter={<Iconify icon={"tabler:currency-taka"} />}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
         <Button
           variant="contained"
           size="large"
