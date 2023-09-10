@@ -8,9 +8,7 @@ import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 
-const LeadColumn = (): GridColumns<IDataTable> => {
-  const navigate = useNavigate();
-
+const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
   const { mutateAsync: deleteLead } = useDeleteLead();
 
   const onDelete = async (id: any) => {
@@ -19,8 +17,8 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       content: "Deleting Lead..",
       duration: 0,
     });
-
     const res = await handleResponse(() => deleteLead({ id }));
+
     message.destroy();
     if (res.status) {
       message.success("Lead deleted successfully!");
@@ -30,6 +28,42 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       return false;
     }
   };
+
+  const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
+    title: "Delete Lead?",
+    okText: "Delete",
+    cancelText: "Cancel",
+    color: "error",
+  });
+  return (
+    <>
+      {delContextHolder}
+      <IconButton
+        sx={{ fontSize: "large" }}
+        color="error"
+        onClick={() => {
+          delOpen(
+            () => onDelete(id),
+            <>
+              You are deleting a lead.
+              <br />
+              <br />
+              Deleting a lead means the lead will move to trash folder. After
+              deleting, this work can't be undone. You'll have to restore the
+              lead to use again
+            </>
+          );
+        }}
+        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+      >
+        <Icon icon="bxs:trash" />
+      </IconButton>
+    </>
+  );
+};
+
+const LeadColumn = (): GridColumns<IDataTable> => {
+  const navigate = useNavigate();
 
   return [
     {
@@ -116,37 +150,19 @@ const LeadColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (data: any) => {
-        const { contextHolder: delContextHolder, open: delOpen } =
-          useAreYouSure({
-            title: "Delete Lead?",
-            okText: "Delete",
-            cancelText: "Cancel",
-            color: "error",
-          });
-
-        return (
-          <>
-            <IconButton
-              sx={{ fontSize: "large" }}
-              color="primary"
-              onClick={() => navigate(`/app/leads/details/${data.row?.id}`)}
-              // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-            >
-              <Icon icon="icon-park-solid:info" />
-            </IconButton>
-            {delContextHolder}
-            <IconButton
-              sx={{ fontSize: "large" }}
-              color="error"
-              onClick={() => onDelete(data?.row.id)}
-              // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-            >
-              <Icon icon="mi:delete" />
-            </IconButton>
-          </>
-        );
-      },
+      renderCell: (data: any) => (
+        <>
+          <IconButton
+            sx={{ fontSize: "large" }}
+            color="primary"
+            onClick={() => navigate(`/app/leads/details/${data.row?.id}`)}
+            // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+          >
+            <Icon icon="icon-park-solid:info" />
+          </IconButton>
+          <DeleteButton id={data?.row?.id} />
+        </>
+      ),
     },
   ];
 };
