@@ -33,7 +33,6 @@ const Update: React.FC = () => {
     if (!data) return;
     setEmployeeInfo(data?.data?.data);
   }, [data]);
-  console.log(employeeInfo);
 
   React.useEffect(() => {
     if (!employeeInfo || isDirty) return;

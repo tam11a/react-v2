@@ -12,7 +12,6 @@ const PersonalInfo: React.FC = () => {
   const { data } = useGetEmployeesById(params.id);
 
   const employeeInfo = data?.data?.data;
-  console.log(employeeInfo);
 
   return (
     <>
