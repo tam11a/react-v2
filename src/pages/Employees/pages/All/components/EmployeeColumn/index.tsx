@@ -168,7 +168,14 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           >
             <Icon icon="icon-park-solid:info" />
           </IconButton>
-          <DeleteButton id={data?.row?.id} />
+          {data?.row?.deleted_at ? (
+            <>
+              {/* Restore Button Here */}
+              <DeleteButton id={data?.row?.id} permanent={true} />
+            </>
+          ) : (
+            <DeleteButton id={data?.row?.id} />
+          )}
         </>
       ),
     },

@@ -43,7 +43,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   };
 
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: permanent ? "Delete Lead Permenently?" : "Delete Lead?",
+    title: permanent ? "Delete Lead Permanently?" : "Delete Lead?",
     okText: "Delete",
     cancelText: "Cancel",
     color: "error",

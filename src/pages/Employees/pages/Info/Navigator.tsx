@@ -11,6 +11,7 @@ import { useDeleteEmployee, useGetEmployeesById } from "@/queries/employees";
 
 const Navigator: React.FC = () => {
   const { id } = useParams();
+
   //trash alart
   const { data } = useGetEmployeesById(id);
   const employeeInfo = data?.data?.data;
