@@ -10,5 +10,6 @@ export const PRIVATE_ROUTES = {
   EMPLOYEES: "employees/*",
   PROPERTIES: "properties/*",
   MEDIA: "media/*",
+  ROLES: "roles/*",
   SETTINGS: "settings/*",
 };
