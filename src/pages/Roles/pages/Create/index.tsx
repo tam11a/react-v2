@@ -72,7 +72,9 @@ const Create: React.FC = () => {
           )}
         />
 
-        <Label className="my-1">Prefix</Label>
+        <Label isRequired className="my-1">
+          Prefix
+        </Label>
         <Controller
           control={control}
           name={"prefix"}
