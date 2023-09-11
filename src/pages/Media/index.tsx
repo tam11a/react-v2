@@ -4,7 +4,6 @@ import MediaRoutes from "./routes";
 const Media: React.FC = () => {
   return (
     <>
-      Media
       <MediaRoutes />
     </>
   );
