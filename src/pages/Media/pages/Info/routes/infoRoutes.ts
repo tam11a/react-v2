@@ -4,7 +4,7 @@ import { ROUTES } from "./paths";
 export const routes = [
   {
     path: ROUTES.DETAILS,
-    Component: lazy(() => import("../pages/Details")),
+    Component: lazy(() => import("../pages/Overview")),
   },
   // {
   //   path: ROUTES.PAYROLL,
