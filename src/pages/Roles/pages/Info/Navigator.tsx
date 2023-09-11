@@ -55,10 +55,10 @@ const Navigator: React.FC = () => {
     //   disabled: true,
     //   icon: <Icon icon="mdi:performance" className="text-xl" />,
     // },
-    {
-      label: "Update",
-      key: `/app/roles/details/${id}/update`,
-    },
+    // {
+    //   label: "Update",
+    //   key: `/app/roles/details/${id}/update`,
+    // },
     {
       label: "View All Roles",
       key: `/app/roles`,
@@ -89,7 +89,7 @@ const Navigator: React.FC = () => {
       </div>
       {roleInfo?.deleted_at && (
         <Alert
-          message={`This employee was deleted at 
+          message={`This role was deleted at 
           ${moment(roleInfo?.deleted_at).calendar()}.`}
           banner
           action={

@@ -89,7 +89,7 @@ const Navigator: React.FC = () => {
       </div>
       {mediaInfo?.deleted_at && (
         <Alert
-          message={`This employee was deleted at 
+          message={`This media was deleted at 
           ${moment(mediaInfo?.deleted_at).calendar()}.`}
           banner
           action={
