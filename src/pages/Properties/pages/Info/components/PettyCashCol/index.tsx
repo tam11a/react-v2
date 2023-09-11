@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import { Icon } from "@iconify/react";
 
-const LeadsLogCol = (): GridColumns<IDataTable> => {
+const PettyCashCol = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
   return [
     {
@@ -74,4 +74,4 @@ const LeadsLogCol = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default LeadsLogCol;
+export default PettyCashCol;

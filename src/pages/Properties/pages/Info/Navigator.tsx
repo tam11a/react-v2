@@ -15,6 +15,7 @@ const Navigator: React.FC = () => {
   //trash alart
   const { data } = useGetPropertiesById(id);
   const propertyInfo = data?.data?.data;
+  console.log(propertyInfo);
 
   const { mutateAsync: deleteProperty } = useDeleteProperty();
 
@@ -43,7 +44,7 @@ const Navigator: React.FC = () => {
     }
   };
 
-  const items: MenuProps["items"] = [
+  const items1: MenuProps["items"] = [
     {
       label: "Overview",
       key: ROUTES.OVERVIEW,
@@ -51,7 +52,22 @@ const Navigator: React.FC = () => {
     },
     {
       label: "Update",
-      key: `/app/properties/details/${id}/update`,
+      key: `/app/properties/details/${id}/update-flat`,
+    },
+    {
+      label: "View All Properties",
+      key: `/app/properties`,
+    },
+  ];
+  const items2: MenuProps["items"] = [
+    {
+      label: "Overview",
+      key: ROUTES.OVERVIEW,
+      icon: <Icon icon="ph:book-open-duotone" className="text-xl" />,
+    },
+    {
+      label: "Update",
+      key: `/app/properties/details/${id}/update-land`,
     },
     {
       label: "View All Properties",
@@ -77,7 +93,7 @@ const Navigator: React.FC = () => {
           onClick={onClick}
           selectedKeys={[location.pathname?.split?.("/")[3] || ""]}
           mode="horizontal"
-          items={items}
+          items={propertyInfo?.type === "FLAT" ? items1 : items2}
           className={"border-b-0 w-full max-w-[450px]"}
         />
       </div>

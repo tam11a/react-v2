@@ -1,6 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ICreateProperty } from "./types";
+import { ICreateProperty, IUpdateProperty } from "./types";
 
 const getProperties = (params: any) => {
   return instance.get(`/assets`, {
@@ -34,6 +34,28 @@ export const useCreateProperty = () => {
   const queryClient = useQueryClient();
   return useMutation(createProperty, {
     onSuccess: () => queryClient.invalidateQueries(["get-all-properties"]),
+  });
+};
+
+const updatePropertyById = ({
+  id,
+  data,
+}: {
+  id?: string;
+  data: IUpdateProperty | any;
+}) => {
+  return instance.patch(`/assets/${id}`, {
+    ...data,
+  });
+};
+
+export const useUpdatePropertyById = () => {
+  const query = useQueryClient();
+  return useMutation(updatePropertyById, {
+    onSuccess: () => {
+      query.invalidateQueries(["get-all-properties"]);
+      query.invalidateQueries(["get-properties-by-id"]);
+    },
   });
 };
 
