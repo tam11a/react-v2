@@ -45,7 +45,19 @@ const Properties: React.FC = () => {
             component={"a"}
             href="/app/properties/create-land"
           >
-            Create New
+            Create New Land
+          </Button>
+          <Button
+            variant="contained"
+            className="bg-[#FDE4BF] text-text"
+            endIcon={
+              <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+            }
+            disableElevation
+            component={"a"}
+            href="/app/properties/create-flat"
+          >
+            Create New Flat
           </Button>
 
           <Upload>
