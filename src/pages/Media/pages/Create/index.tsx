@@ -42,7 +42,7 @@ const Create: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">Create New Employee</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">Create New Media</h1>
 
         <Link to="/app/media">
           <p className="font-semibold text-text-light underline">
