@@ -9,5 +9,6 @@ export const PRIVATE_ROUTES = {
   LEADS: "leads/*",
   EMPLOYEES: "employees/*",
   PROPERTIES: "properties/*",
+  MEDIA: "media/*",
   SETTINGS: "settings/*",
 };
