@@ -18,11 +18,25 @@ const Properties: React.FC = () => {
     trash: showTrash,
   });
   const { search, setSearch } = useSearchParamsPaginate();
+
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">All Properties</h1>
-
+        <div className="flex flex-row items-baseline gap-1">
+          <p className="text-2xl md:text-3xl font-bold">All Properties</p>
+          /
+          <Select
+            defaultValue={"ALL"}
+            bordered={false}
+            showArrow={true}
+            dropdownMatchSelectWidth={false}
+            options={[
+              { value: "FLAT", label: "Flat" },
+              { value: "LAND", label: "Land" },
+              { value: "ALL", label: "All" },
+            ]}
+          />
+        </div>
         <div className="flex flex-row gap-2 items-center  justify-center ">
           {/* <Link to="/app/properties/create">
             <Button
