@@ -25,7 +25,7 @@ const getRoleById = (id?: string) => {
   return instance.get(`/roles/${id}`);
 };
 
-export const useGetgetRoleById = (id?: string) => {
+export const useGetRoleById = (id?: string) => {
   return useQuery(["get-all-roles-by-id", id], () => getRoleById(id), {
     enabled: !!id,
   });
