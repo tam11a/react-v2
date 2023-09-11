@@ -62,9 +62,10 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
               You are deleting a lead.
               <br />
               <br />
-              Deleting a lead means the lead will move to trash folder. After
-              deleting, this work can't be undone. You'll have to restore the
-              lead to use again
+              Deleting a lead means the lead will
+              {permanent ? " deleted forever" : " move to trash folder"} . After
+              deleting, this work can't be undone.{" "}
+              {permanent ? "" : " You'll have to restore the lead to use again"}
             </>
           );
         }}

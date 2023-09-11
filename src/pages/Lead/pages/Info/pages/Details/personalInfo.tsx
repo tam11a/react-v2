@@ -10,7 +10,7 @@ const PersonalInfo: React.FC = () => {
   const { data } = useGetLeadsById(params.id);
 
   const leadInfo = data?.data?.data;
-  console.log(leadInfo);
+  // console.log(leadInfo);
 
   return (
     <>

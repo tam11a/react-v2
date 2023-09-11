@@ -6,13 +6,12 @@ import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { Upload, Input, Select, Switch } from "antd";
 import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Icon, InlineIcon } from "@iconify/react";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+// import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { Button } from "@mui/material";
 
 const Leads: React.FC = () => {
   const { state: showTrash, toggleState: toggleTrash } = useToggle(false);
   const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
-
   const { data, isLoading } = useGetLeads({
     ...getQueryParams(),
     trash: showTrash,
@@ -70,8 +69,8 @@ const Leads: React.FC = () => {
           <Switch
             size="default"
             style={{ background: showTrash ? "#475569" : "#aeaeae" }}
-            checkedChildren={<AiOutlineCheck />}
-            unCheckedChildren={<AiOutlineClose />}
+            // checkedChildren={<AiOutlineCheck />}
+            // unCheckedChildren={<AiOutlineClose />}
             checked={showTrash}
             onChange={toggleTrash}
             className="ml-2.5"

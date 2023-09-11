@@ -3,25 +3,42 @@ import { IDataTable } from "@/types";
 import { IconButton } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
-import { useDeleteEmployee } from "@/queries/employees";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import useAreYouSure from "@/hooks/useAreYouSure";
+import { useDeleteEmployee } from "@/queries/employees";
 
-const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
+const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
+  id,
+  permanent = false,
+}) => {
   const { mutateAsync: deleteEmployee } = useDeleteEmployee();
 
   const onDelete = async (id: any) => {
     message.open({
       type: "loading",
-      content: "Deleting Employee..",
+      content: permanent
+        ? "Deleting Employee Permanently.."
+        : "Deleting Employee..",
       duration: 0,
     });
-    const res = await handleResponse(() => deleteEmployee({ id }));
+    const res = await handleResponse(() =>
+      deleteEmployee({
+        id,
+        params: {
+          permanent: permanent || null,
+        },
+      })
+    );
 
     message.destroy();
+
     if (res.status) {
-      message.success("Employee deleted successfully!");
+      message.success(
+        permanent
+          ? "Employee deleted permanently!"
+          : "Employee deleted successfully!"
+      );
       return true;
     } else {
       message.error(res.message);
@@ -30,11 +47,12 @@ const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
   };
 
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: "Delete Employee?",
+    title: permanent ? "Delete Employee Permenently?" : "Delete Employee?",
     okText: "Delete",
     cancelText: "Cancel",
     color: "error",
   });
+
   return (
     <>
       {delContextHolder}
@@ -48,13 +66,16 @@ const DeleteButton: React.FC<{ id: number | string }> = ({ id }) => {
               You are deleting a employee.
               <br />
               <br />
-              Deleting a employee means the employee will move to trash folder.
-              After deleting, this work can't be undone. You'll have to restore
-              the employee to use again
+              Deleting a employee means the employee will
+              {permanent ? " deleted forever" : " move to trash folder"} . After
+              deleting, this work can't be undone.{" "}
+              {permanent
+                ? ""
+                : " You'll have to restore the employee to use again"}
             </>
           );
         }}
-        // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
+        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
       >
         <Icon icon="bxs:trash" />
       </IconButton>
