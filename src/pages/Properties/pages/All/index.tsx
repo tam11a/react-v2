@@ -1,6 +1,6 @@
-import { useGetEmployees } from "@/queries/employees";
+import { useGetProperties } from "@/queries/properties";
 import React from "react";
-import EmployeeColumn from "./components/EmployeeColumn";
+import PropertiesColumn from "./components/PropertiesColumn";
 import DataTable from "@components/Datatable";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { Upload, Input, Select, Switch } from "antd";
@@ -8,12 +8,12 @@ import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Icon, InlineIcon } from "@iconify/react";
 import { Button } from "@mui/material";
 
-const Employees: React.FC = () => {
+const Properties: React.FC = () => {
   const { state: showTrash, toggleState: toggleTrash } = useToggle(false);
 
   const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
 
-  const { data, isLoading } = useGetEmployees({
+  const { data, isLoading } = useGetProperties({
     ...getQueryParams(),
     trash: showTrash,
   });
@@ -21,10 +21,10 @@ const Employees: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">All Employees</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">All Properties</h1>
 
         <div className="flex flex-row gap-2 items-center  justify-center ">
-          {/* <Link to="/app/employees/create">
+          {/* <Link to="/app/properties/create">
             <Button
               type="primary"
               size="large"
@@ -43,7 +43,7 @@ const Employees: React.FC = () => {
             }
             disableElevation
             component={"a"}
-            href="/app/employees/create"
+            href="/app/properties/create-land"
           >
             Create New
           </Button>
@@ -86,7 +86,7 @@ const Employees: React.FC = () => {
             onChange={toggleTrash}
             className="ml-2.5"
           />
-          <p className="font-semibold text-sm mx-2">Show deleted employees</p>
+          <p className="font-semibold text-sm mx-2">Show deleted properties</p>
         </div>
         <Input
           allowClear
@@ -108,13 +108,14 @@ const Employees: React.FC = () => {
       </div>
       <div className="w-full">
         <DataTable
-          columns={EmployeeColumn()}
+          columns={PropertiesColumn()}
           // columns={[]}
           rows={data?.data?.data || []}
           // rows={[]}
           isLoading={isLoading}
           // getRowId={(r: any) => r?._id}
           // ss pagination
+          checkboxSelection
           rowCount={data?.data?.total || 0}
           paginationMode={"server"}
           page={page}
@@ -127,4 +128,4 @@ const Employees: React.FC = () => {
   );
 };
 
-export default Employees;
+export default Properties;

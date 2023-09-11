@@ -6,24 +6,24 @@ import { useNavigate } from "react-router-dom";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import useAreYouSure from "@/hooks/useAreYouSure";
-import { useDeleteEmployee } from "@/queries/employees";
+import { useDeleteProperty } from "@/queries/properties";
 
 const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   id,
   permanent = false,
 }) => {
-  const { mutateAsync: deleteEmployee } = useDeleteEmployee();
+  const { mutateAsync: deleteProperty } = useDeleteProperty();
 
   const onDelete = async (id: any) => {
     message.open({
       type: "loading",
       content: permanent
-        ? "Deleting Employee Permanently.."
-        : "Deleting Employee..",
+        ? "Deleting Property Permanently.."
+        : "Deleting Property..",
       duration: 0,
     });
     const res = await handleResponse(() =>
-      deleteEmployee({
+      deleteProperty({
         id,
         params: {
           permanent: permanent || null,
@@ -36,8 +36,8 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
     if (res.status) {
       message.success(
         permanent
-          ? "Employee deleted permanently!"
-          : "Employee deleted successfully!"
+          ? "Property deleted permanently!"
+          : "Property deleted successfully!"
       );
       return true;
     } else {
@@ -47,7 +47,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   };
 
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: permanent ? "Delete Employee Permenently?" : "Delete Employee?",
+    title: permanent ? "Delete Property Permanently?" : "Delete Property?",
     okText: "Delete",
     cancelText: "Cancel",
     color: "error",
@@ -63,15 +63,15 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
           delOpen(
             () => onDelete(id),
             <>
-              You are deleting a employee.
+              You are deleting a property.
               <br />
               <br />
-              Deleting a employee means the employee will
+              Deleting a property means the property will
               {permanent ? " deleted forever" : " move to trash folder"} . After
               deleting, this work can't be undone.{" "}
               {permanent
                 ? ""
-                : " You'll have to restore the employee to use again"}
+                : " You'll have to restore the property to use again"}
             </>
           );
         }}
@@ -83,7 +83,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   );
 };
 
-const EmployeeColumn = (): GridColumns<IDataTable> => {
+const PropertiesColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
 
   return [
@@ -98,55 +98,73 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       // hide: true,
     },
     {
-      headerName: "Employee Title",
+      headerName: "Area",
       headerAlign: "center",
-      field: "firstName",
+      field: "area",
       align: "center",
       width: 250,
       minWidth: 200,
       flex: 1,
-      renderCell: (data: any) => `${data.row.first_name} ${data.row.last_name}`,
+      renderCell: (data: any) => `${data?.row?.["address.area"]}`,
     },
     {
-      headerName: "Designation",
+      headerName: "Block/Sec",
       headerAlign: "center",
-      field: "assignee",
+      field: "block",
       align: "center",
       width: 250,
       minWidth: 200,
       flex: 1,
-      renderCell: (data: any) =>
-        `${
-          data.row.role?.name ? data.row.role?.name : "No Designation Assigned"
-        } 
-        ${data?.row.role?.prefix ? ` - ${data.row?.role?.prefix}` : ""}`,
+      renderCell: (data: any) => `${data?.row?.["address.block"]}`,
     },
 
     {
-      headerName: "Phone",
+      headerName: "Road",
       headerAlign: "center",
-      field: "phone",
+      field: "road",
       align: "center",
       flex: 1,
       width: 160,
       minWidth: 150,
+      renderCell: (data: any) => `${data?.row?.["address.plot"]}`,
     },
     {
-      headerName: "Email",
+      headerName: "Size",
       headerAlign: "center",
-      field: "email",
+      field: "size",
       width: 250,
       minWidth: 200,
       flex: 1,
       align: "center",
+      renderCell: (data: any) => `${data?.row?.size} ${data?.row?.size_unit}`,
     },
     {
-      headerName: "Gender",
+      headerName: "Price",
       headerAlign: "center",
-      field: "gender",
+      field: "price",
       minWidth: 100,
       flex: 1,
       align: "center",
+    },
+    {
+      headerName: "Media",
+      headerAlign: "center",
+      field: "media_id",
+      minWidth: 100,
+      flex: 1,
+      align: "center",
+      renderCell: (data: any) => data?.row?.media?.name,
+    },
+    {
+      headerName: "Status",
+      headerAlign: "center",
+      field: "status",
+      minWidth: 100,
+      flex: 1,
+      align: "center",
+      renderCell: (data: any) => {
+        data?.row?.status ? data?.row?.status : "-";
+      },
     },
 
     {
@@ -163,8 +181,8 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employees/details/${data.row?.id}`)}
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
+            onClick={() => navigate(`/app/properties/details/${data.row?.id}`)}
+            // disabled={!checkAccess(defaultPermissions.PROPERTYS.FULL)}
           >
             <Icon icon="icon-park-solid:info" />
           </IconButton>
@@ -182,4 +200,4 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default EmployeeColumn;
+export default PropertiesColumn;

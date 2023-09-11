@@ -4,29 +4,29 @@ import { Alert, Button, Menu } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { ROUTES } from "./routes/paths";
-import moment from "moment";
-import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
-import { useDeleteEmployee, useGetEmployeesById } from "@/queries/employees";
+import { useDeleteProperty, useGetPropertiesById } from "@/queries/properties";
+import { message } from "@components/antd/message";
+import moment from "moment";
 
 const Navigator: React.FC = () => {
   const { id } = useParams();
 
   //trash alart
-  const { data } = useGetEmployeesById(id);
-  const employeeInfo = data?.data?.data;
+  const { data } = useGetPropertiesById(id);
+  const propertyInfo = data?.data?.data;
 
-  const { mutateAsync: deleteEmployee } = useDeleteEmployee();
+  const { mutateAsync: deleteProperty } = useDeleteProperty();
 
   const onRestore = async (id: any) => {
     message.open({
       type: "loading",
-      content: "Restoring Employee..",
+      content: "Restoring Property..",
       duration: 0,
     });
 
     const res = await handleResponse(() =>
-      deleteEmployee({
+      deleteProperty({
         id,
         params: {
           restore: true,
@@ -35,7 +35,7 @@ const Navigator: React.FC = () => {
     );
     message.destroy();
     if (res.status) {
-      message.success("Employee restored successfully!");
+      message.success("Property restored successfully!");
       return true;
     } else {
       message.error(res.message);
@@ -50,24 +50,12 @@ const Navigator: React.FC = () => {
       icon: <Icon icon="ph:book-open-duotone" className="text-xl" />,
     },
     {
-      label: "Payroll",
-      key: ROUTES.PAYROLL,
-      disabled: true,
-      icon: <Icon icon="mdi:performance" className="text-xl" />,
-    },
-    {
-      label: "Attendance",
-      key: ROUTES.ATTENDANCE,
-      disabled: true,
-      icon: <Icon icon="ic:round-show-chart" className="text-xl" />,
-    },
-    {
       label: "Update",
-      key: `/app/employees/details/${id}/update`,
+      key: `/app/properties/details/${id}/update`,
     },
     {
-      label: "View All Employees",
-      key: `/app/employees`,
+      label: "View All Properties",
+      key: `/app/properties`,
     },
   ];
   // To get the current location pathname
@@ -83,7 +71,7 @@ const Navigator: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 px-2 text-text border-b">
-        <p className="text-md font-bold">employees / {id}</p>
+        <p className="text-md font-bold">properties / {id}</p>
 
         <Menu
           onClick={onClick}
@@ -93,10 +81,10 @@ const Navigator: React.FC = () => {
           className={"border-b-0 w-full max-w-[450px]"}
         />
       </div>
-      {employeeInfo?.deleted_at && (
+      {propertyInfo?.deleted_at && (
         <Alert
-          message={`This employee was deleted at 
-          ${moment(employeeInfo?.deleted_at).calendar()}.`}
+          message={`This property was deleted at 
+          ${moment(propertyInfo?.deleted_at).calendar()}.`}
           banner
           action={
             <Button size="small" type="text" onClick={() => onRestore(id)}>

@@ -8,5 +8,6 @@ export const PRIVATE_ROUTES = {
   NOTFOUND: "*",
   LEADS: "leads/*",
   EMPLOYEES: "employees/*",
+  PROPERTIES: "properties/*",
   SETTINGS: "settings/*",
 };

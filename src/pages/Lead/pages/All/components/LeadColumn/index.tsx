@@ -43,7 +43,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   };
 
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: permanent ? "Delete Lead Permenently?" : "Delete Lead?",
+    title: permanent ? "Delete Lead Permanently?" : "Delete Lead?",
     okText: "Delete",
     cancelText: "Cancel",
     color: "error",
@@ -62,9 +62,10 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
               You are deleting a lead.
               <br />
               <br />
-              Deleting a lead means the lead will move to trash folder. After
-              deleting, this work can't be undone. You'll have to restore the
-              lead to use again
+              Deleting a lead means the lead will
+              {permanent ? " deleted forever" : " move to trash folder"} . After
+              deleting, this work can't be undone.{" "}
+              {permanent ? "" : " You'll have to restore the lead to use again"}
             </>
           );
         }}
