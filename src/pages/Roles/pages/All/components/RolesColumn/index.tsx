@@ -6,6 +6,7 @@ import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
 import { IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
+import { Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
@@ -143,6 +144,13 @@ const RolesColumn = (): GridColumns<IDataTable> => {
       minWidth: 100,
       flex: 1,
       align: "center",
+      renderCell: (data: any) => (
+        <>
+          <Tag color={`${data?.is_active ? "#36b336" : "#b1160d"}`}>
+            {data?.is_active ? "Active" : "Inactive"}
+          </Tag>
+        </>
+      ),
     },
     {
       headerName: "Action",
