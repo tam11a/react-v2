@@ -3,5 +3,6 @@ export const ROUTES = {
   PAYROLL: "/payroll",
   ATTENDANCE: "/attendance",
   UPDATELAND: "/update-land",
+  UPDATEFLAT: "/update-flat",
   NOTFOUND: "*",
 };

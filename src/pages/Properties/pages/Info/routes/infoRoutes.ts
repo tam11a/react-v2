@@ -15,6 +15,10 @@ export const routes = [
     Component: lazy(() => import("../pages/UpdateLand")),
   },
   {
+    path: ROUTES.UPDATEFLAT,
+    Component: lazy(() => import("../pages/UpdateFlat")),
+  },
+  {
     path: ROUTES.NOTFOUND,
     Component: lazy(() => import("@pages/NotFound")),
   },
