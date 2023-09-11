@@ -1,10 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Button, Container } from "@mui/material";
+import { Avatar, Container } from "@mui/material";
 import { stringAvatar } from "@/utilities/stringAvatar";
-import { Icon } from "@iconify/react";
-import previewAttachment from "@/utilities/s3Attachment";
-import moment from "moment";
 import { useGetMediaById } from "@/queries/media";
 
 const PersonalInfo: React.FC = () => {
@@ -12,7 +9,6 @@ const PersonalInfo: React.FC = () => {
   const { data } = useGetMediaById(params.id);
 
   const mediaInfo = data?.data?.data;
-  console.log(mediaInfo);
 
   return (
     <>
