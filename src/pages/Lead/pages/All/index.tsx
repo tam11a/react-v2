@@ -3,11 +3,11 @@ import React from "react";
 import LeadColumn from "./components/LeadColumn";
 import DataTable from "@components/Datatable";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import { Button, Upload, Input, Select, Switch } from "antd";
+import { Upload, Input, Select, Switch } from "antd";
 import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Icon, InlineIcon } from "@iconify/react";
-import { Link } from "react-router-dom";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import { Button } from "@mui/material";
 
 const Leads: React.FC = () => {
   const { state: showTrash, toggleState: toggleTrash } = useToggle(false);
@@ -25,19 +25,28 @@ const Leads: React.FC = () => {
         <h1 className="text-2xl md:text-3xl font-bold">All Leads</h1>
 
         <div className="flex flex-row gap-2 items-center  justify-center ">
-          <Link to="/app/leads/create">
-            <Button
-              type="primary"
-              size="large"
-              className="bg-[#FDE4BF] text-text-light"
-              block
-            >
-              Create New
-            </Button>
-          </Link>
+          <Button
+            variant="contained"
+            className="bg-[#FDE4BF] text-text"
+            endIcon={
+              <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+            }
+            disableElevation
+            component={"a"}
+            href="/app/leads/create"
+          >
+            Create New
+          </Button>
 
           <Upload>
-            <Button size="large">Click to Upload</Button>
+            <Button
+              variant="outlined"
+              className="border-[#FDE4BF] border-2 text-text"
+              endIcon={<Icon className="text-xl mr-1 " icon="uil:upload" />}
+              disableElevation
+            >
+              Upload
+            </Button>
           </Upload>
         </div>
       </div>
