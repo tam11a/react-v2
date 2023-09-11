@@ -3,12 +3,13 @@ import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Button } from "@mui/material";
-import { Checkbox, Input, Select } from "antd";
+import { Checkbox, DatePicker, Input, Radio, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useMedia from "@/hooks/useMedia";
 import { Icon } from "@iconify/react";
+import dayjs from "dayjs";
 
 const CreateFlat: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -54,91 +55,37 @@ const CreateFlat: React.FC = () => {
       </div>
       {contextHolder}
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mt-4 mx-auto">
-        <div>
-          <Label className="my-1 mt-4">Bedrooms</Label>
-          <Controller
-            control={control}
-            name={"flat__num_bedroom"}
-            // rules={{ required: true }}
-            render={({
-              field: { onChange, onBlur, value },
-              fieldState: { error },
-            }) => (
-              <Input
-                placeholder={"Whats the size of the property?"}
-                size={"large"}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-                status={error ? "error" : ""}
-                //   suffix={<ErrorSuffix error={error} />}
-              />
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          <span className="col-span-2">
-            <Label className="my-1 mt-4">Flat Size</Label>
-            <Controller
-              control={control}
-              name={"size"}
-              // rules={{ required: true }}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-              }) => (
-                <Input
-                  placeholder={"Whats the size of the property?"}
-                  size={"large"}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  status={error ? "error" : ""}
-                  //   suffix={<ErrorSuffix error={error} />}
-                />
-              )}
-            />
-          </span>
-          <span className="col-span-1">
-            <Label className="my-1 mt-4">Unit</Label>
-            <Controller
-              control={control}
-              name={"size_unit"}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-              }) => (
-                <Select
-                  placeholder={"Choose Unit"}
-                  size={"large"}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  options={[
-                    { value: "KATHA", label: "katha" },
-                    { value: "BIGHA", label: "bigha" },
-                    { value: "ACRES", label: "acres" },
-                    { value: "SHOTOK", label: "shotok" },
-                    { value: "DECIMAL", label: "decimal" },
-                  ]}
-                  value={value}
-                  status={error ? "error" : ""}
-                  //   suffix={<ErrorSuffix error={error} />}
-                />
-              )}
-            />
-          </span>
-        </div>
-        <Label className="my-1 mt-4">Address</Label>
+        <Label className="my-1 mt-4">Bedrooms</Label>
         <Controller
           control={control}
-          name={"address__line1"}
-          rules={{ required: true }}
+          name={"flat__num_bedroom"}
+          // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <Input
-              placeholder={"Enter Address Line 1"}
+              placeholder={"Number of Bedrooms"}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label className="my-1 mt-4">Bathrooms</Label>
+        <Controller
+          control={control}
+          name={"flat__num_bathroom"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              placeholder={"Number of Bathrooms"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
@@ -149,18 +96,16 @@ const CreateFlat: React.FC = () => {
           )}
         />
 
-        <Label className="my-1 mt-4">Block</Label>
+        <Label className="my-1 mt-4">Size (sqft)</Label>
         <Controller
           control={control}
-          name={"address__block"}
-          // rules={{ required: true }}
+          name={"size"}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <Input
-              // disabled
-              placeholder={"Enter Block Name"}
+              placeholder={"Enter the size of the flat"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
@@ -170,6 +115,85 @@ const CreateFlat: React.FC = () => {
             />
           )}
         />
+        <Label className="my-1 mt-4">Facing</Label>
+        <Controller
+          control={control}
+          name={"flat__facing_side"}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Select
+              placeholder={"Direction of the flat"}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              options={[
+                { value: "SOUTH", label: "South Facing" },
+                { value: "EAST", label: "East Facing" },
+                { value: "WEST", label: "West Facing" },
+                { value: "NORTH", label: "North Facing" },
+              ]}
+              className="w-full"
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label className="my-1 mt-4">Completion Status</Label>
+        <Controller
+          control={control}
+          name={"completion_status"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Radio.Group
+              defaultValue={""}
+              className="grid grid-cols-2"
+              onChange={onChange}
+            >
+              <span>
+                <Radio className="rounded-3xl" value="ready">
+                  Ready
+                </Radio>
+              </span>
+              <span>
+                <Radio value="upcoming">Upcoming</Radio>
+              </span>
+              <span>
+                <Radio value="ongoing">Ongoing</Radio>
+              </span>
+              <span>
+                <Radio value="used">Used</Radio>
+              </span>
+            </Radio.Group>
+          )}
+        />
+        <Label className="my-1 mt-4">Handover Date</Label>
+        <Controller
+          control={control}
+          name={"flat__handovered_at"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <DatePicker
+              size="large"
+              className={"w-full"}
+              placeholder="Date of Birth"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={dayjs(value)}
+            />
+          )}
+        />
+        <Label className="flex flex-row items-center gap-1 my-1 mt-4">
+          Address
+        </Label>
         <Controller
           control={control}
           name={"address__road"}
@@ -178,39 +202,50 @@ const CreateFlat: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <>
-              <Label className="flex flex-row items-center gap-1">Road</Label>
-              <Input
-                placeholder="Enter Road Number"
-                size="large"
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-                status={error ? "error" : ""}
-              />
-            </>
+            <Input.TextArea
+              placeholder="Enter the street, road, house no...."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
           )}
         />
-
-        <Label className="my-1 mt-4">Plot</Label>
+        <Label className="flex flex-row items-center gap-1 my-1 mt-4">
+          Description
+        </Label>
         <Controller
           control={control}
-          name={"address__plot"}
+          name={"description"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Input
-              // disabled
-              placeholder={"Enter plot Name"}
-              size={"large"}
+            <Input.TextArea
+              placeholder="Add aa description..."
+              size="large"
               onChange={onChange}
               onBlur={onBlur}
               value={value}
               status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
             />
+          )}
+        />
+
+        <Label className="my-1 mt-4">Apartment Type (optional)</Label>
+        <Controller
+          control={control}
+          name={"flat__type"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Checkbox onChange={onChange} value={"shared_land"}>
+              Land Share Apartment
+            </Checkbox>
           )}
         />
         <Label className="my-1 mt-4">Price Public</Label>
@@ -255,7 +290,7 @@ const CreateFlat: React.FC = () => {
             />
           )}
         />
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-4 gap-3">
           <span className="col-span-2">
             <Label className="my-1 mt-4">Media</Label>
             <Controller
@@ -290,7 +325,7 @@ const CreateFlat: React.FC = () => {
               )}
             />
           </span>
-          <span className="col-span-1">
+          <span className="col-span-2">
             <Label className="my-1 mt-4">Commision</Label>
             <Controller
               control={control}
@@ -306,6 +341,7 @@ const CreateFlat: React.FC = () => {
                   onChange={onChange}
                   onBlur={onBlur}
                   value={value}
+                  className="w-fit"
                   status={error ? "error" : ""}
                   //   suffix={<ErrorSuffix error={error} />}
                 />
@@ -313,27 +349,6 @@ const CreateFlat: React.FC = () => {
             />
           </span>
         </div>
-        <Label className="my-1 mt-4">Description</Label>
-        <Controller
-          control={control}
-          name={"media_commision"}
-          rules={{ required: false }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input.TextArea
-              className="w-full"
-              placeholder={"Add a description"}
-              size={"large"}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
-            />
-          )}
-        />
 
         {/* Add image section here */}
 
