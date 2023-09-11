@@ -1,23 +1,25 @@
 import { usePaginate } from "@tam11a/react-use-hooks";
 import React from "react";
-import PersonalInfo from "./personalInfo";
 import Label from "@components/Label";
 import DataTable from "@components/Datatable";
-import LeadsLogCol from "../../components/LeadsLogCol";
+import PettyCashCol from "../../components/PettyCashCol";
+import PropertyInfo from "./PropertyInfo";
+import { Container } from "@mui/material";
 
 const Overview: React.FC = () => {
   const { page, setPage, limit, setLimit } = usePaginate();
   return (
     <>
       {/* details */}
-      <PersonalInfo />
-      <>
-        <div className="m-4">
-          <Label className="text-base font-semibold my-3 text-text-light">
-            Leads Log
+      <Container>
+        <PropertyInfo />
+
+        <div className="my-4">
+          <Label className="text-base font-semibold text-text-light">
+            Petty Cash
           </Label>
           <DataTable
-            columns={LeadsLogCol()}
+            columns={PettyCashCol()}
             // columns={[]}
             // rows={data?.data?.data || []}
             rows={[]}
@@ -33,7 +35,7 @@ const Overview: React.FC = () => {
             onPageSizeChange={setLimit}
           />
         </div>
-      </>
+      </Container>
     </>
   );
 };

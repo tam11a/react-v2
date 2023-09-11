@@ -28,7 +28,6 @@ const Update: React.FC = () => {
     if (!data) return;
     setMediaInfo(data?.data?.data);
   }, [data]);
-  console.log(mediaInfo);
 
   React.useEffect(() => {
     if (!mediaInfo || isDirty) return;

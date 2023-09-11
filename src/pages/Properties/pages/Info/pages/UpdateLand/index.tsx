@@ -1,34 +1,67 @@
-import { useCreateProperty } from "@/queries/properties";
+import useMedia from "@/hooks/useMedia";
+import {
+  useGetPropertiesById,
+  useUpdatePropertyById,
+} from "@/queries/properties";
 import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
-import { Button } from "@mui/material";
-import { Checkbox, Input, Select } from "antd";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import useMedia from "@/hooks/useMedia";
 import { Icon } from "@iconify/react";
+import { Button } from "@mui/material";
+import { Select, Input, Checkbox } from "antd";
+import React from "react";
+import { Controller, FieldValues, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
-const CreateLand: React.FC = () => {
+const UpdateLand: React.FC = () => {
+  const params = useParams();
   const [messageApi, contextHolder] = message.useMessage();
+  const {
+    reset,
+    handleSubmit,
+    control,
+    formState: { isDirty },
+  } = useForm({});
+  const { data } = useGetPropertiesById(params.id);
+  const [propertyInfo, setPropertyInfo] = React.useState<any>([]);
+  const { mutateAsync: updateProperty, isLoading: isSubmitting } =
+    useUpdatePropertyById();
   const { media, isMediaLoading, searchMedia } = useMedia();
 
-  const { mutateAsync: createProperty, isLoading: propertyCreating } =
-    useCreateProperty();
-  const { handleSubmit, control, reset } = useForm({
-    // resolver: joiResolver(loginResolver),
-  });
-  const onSubmit = async (data: any) => {
+  React.useEffect(() => {
+    if (!data) return;
+    setPropertyInfo(data?.data?.data);
+  }, [data]);
+  console.log(propertyInfo);
+
+  React.useEffect(() => {
+    if (!propertyInfo || isDirty) return;
+    reset({
+      size: propertyInfo?.size,
+      size_unit: propertyInfo?.size_unit,
+      description: propertyInfo?.description,
+      address__line1: propertyInfo?.["address.line1"],
+      address__area: propertyInfo?.["address.area"],
+      address__block: propertyInfo?.["address.block"],
+      address__road: propertyInfo?.["address.road"],
+      address__plot: propertyInfo?.["address.plot"],
+      price: propertyInfo?.price,
+      // private_price: propertyInfo?.private_price,
+      media: propertyInfo?.media,
+      media_commision: propertyInfo?.media_commision,
+    });
+  }, [propertyInfo]);
+
+  const onValid = async (d: FieldValues) => {
     messageApi.open({
       type: "loading",
-      content: "Creating Land..",
+      content: `Updating information...`,
       duration: 0,
     });
-    const formattedData = Object.keys(data)
+    const formattedData = Object.keys(d)
       .map((key) => {
         let name = key.replace("__", ".");
-        return { [name]: data[key] };
+        return { [name]: d[key] };
       })
       .reduce((prev, cur) => {
         prev[Object.keys(cur)[0]] = Object.values(cur)[0];
@@ -36,34 +69,21 @@ const CreateLand: React.FC = () => {
       }, {});
     const res = await handleResponse(
       () =>
-        createProperty({
-          ...formattedData,
-          type: "LAND",
+        updateProperty({
+          id: params?.id,
+          data: formattedData,
         }),
-      [201]
+      [200]
     );
     messageApi.destroy();
-    if (res.status) {
-      reset();
-      messageApi.success("Land created successfully!");
-    } else {
-      messageApi.error(res.message);
-    }
+    if (res.status) messageApi.success("Information updated successfully!");
+    else messageApi.error(res.message);
   };
 
   return (
     <>
-      <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">Create New Land</h1>
-
-        <Link to="/app/properties">
-          <p className="font-semibold text-text-light underline">
-            View All Properties
-          </p>
-        </Link>
-      </div>
       {contextHolder}
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mt-4 mx-auto">
+      <form onSubmit={handleSubmit(onValid)} className="max-w-md mt-4 mx-auto">
         <div>
           <Label className="my-1 mt-4">Land Type</Label>
           <Controller
@@ -199,7 +219,7 @@ const CreateLand: React.FC = () => {
           }) => (
             <Input
               // disabled
-              placeholder={"Enter area Name"}
+              placeholder={"Enter Area Name"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
@@ -393,13 +413,13 @@ const CreateLand: React.FC = () => {
           size="large"
           type={"submit"}
           className="w-full mt-5 bg-slate-600"
-          disabled={propertyCreating}
+          disabled={isSubmitting}
         >
-          Submit
+          Update
         </Button>
       </form>
     </>
   );
 };
 
-export default CreateLand;
+export default UpdateLand;

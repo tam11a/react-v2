@@ -126,7 +126,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       width: 160,
       minWidth: 150,
-      renderCell: (data: any) => `${data?.row?.["address.plot"]}`,
+      renderCell: (data: any) => `${data?.row?.["address.road"]}`,
     },
     {
       headerName: "Size",
@@ -139,7 +139,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => `${data?.row?.size} ${data?.row?.size_unit}`,
     },
     {
-      headerName: "Price",
+      headerName: "Price (BDT)",
       headerAlign: "center",
       field: "price",
       minWidth: 100,
@@ -150,7 +150,8 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       headerName: "Media",
       headerAlign: "center",
       field: "media_id",
-      minWidth: 100,
+      width: 200,
+      minWidth: 180,
       flex: 1,
       align: "center",
       renderCell: (data: any) => data?.row?.media?.name,
@@ -162,11 +163,8 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       minWidth: 100,
       flex: 1,
       align: "center",
-      renderCell: (data: any) => {
-        data?.row?.status ? data?.row?.status : "-";
-      },
+      renderCell: (data: any) => (data?.row?.status ? data?.row?.status : "-"),
     },
-
     {
       headerName: "Action",
       field: "action",

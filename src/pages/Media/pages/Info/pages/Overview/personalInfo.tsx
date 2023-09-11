@@ -9,7 +9,6 @@ const PersonalInfo: React.FC = () => {
   const { data } = useGetMediaById(params.id);
 
   const mediaInfo = data?.data?.data;
-  // console.log(mediaInfo);
 
   return (
     <>
