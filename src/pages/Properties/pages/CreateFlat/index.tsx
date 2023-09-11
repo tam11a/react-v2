@@ -26,10 +26,20 @@ const CreateFlat: React.FC = () => {
       content: "Creating Property..",
       duration: 0,
     });
+    const formattedData = Object.keys(data)
+      .map((key) => {
+        let name = key.replace("__", ".");
+        return { [name]: data[key] };
+      })
+      .reduce((prev, cur) => {
+        prev[Object.keys(cur)[0]] = Object.values(cur)[0];
+        return prev;
+      }, {});
     const res = await handleResponse(
       () =>
         createProperty({
-          ...data,
+          ...formattedData,
+          type: "FLAT",
         }),
       [201]
     );
@@ -191,13 +201,16 @@ const CreateFlat: React.FC = () => {
             />
           )}
         />
-        <Label className="flex flex-row items-center gap-1 my-1 mt-4">
+        <Label
+          isRequired
+          className="flex flex-row items-center gap-1 my-1 mt-4"
+        >
           Address
         </Label>
         <Controller
           control={control}
-          name={"address__road"}
-          // rules={{ required: true }}
+          name={"address__line1"}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -251,7 +264,7 @@ const CreateFlat: React.FC = () => {
         <Label className="my-1 mt-4">Price Public</Label>
         <Controller
           control={control}
-          name={"public_price"}
+          name={"price"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
@@ -272,7 +285,7 @@ const CreateFlat: React.FC = () => {
         <Label className="my-1 mt-4">Price Private</Label>
         <Controller
           control={control}
-          name={"public_price"}
+          name={"private_price"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
