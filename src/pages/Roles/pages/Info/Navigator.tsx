@@ -7,26 +7,26 @@ import { ROUTES } from "./routes/paths";
 import moment from "moment";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
-import { useDeleteMedia, useGetMediaById } from "@/queries/media";
+import { useDeleteRole, useGetRoleById } from "@/queries/roles";
 
 const Navigator: React.FC = () => {
   const { id } = useParams();
 
   //trash alart
-  const { data } = useGetMediaById(id);
-  const mediaInfo = data?.data?.data;
+  const { data } = useGetRoleById(id);
+  const roleInfo = data?.data?.data;
 
-  const { mutateAsync: deleteMedia } = useDeleteMedia();
+  const { mutateAsync: deleteRole } = useDeleteRole();
 
   const onRestore = async (id: any) => {
     message.open({
       type: "loading",
-      content: "Restoring Media..",
+      content: "Restoring Role..",
       duration: 0,
     });
 
     const res = await handleResponse(() =>
-      deleteMedia({
+      deleteRole({
         id,
         params: {
           restore: true,
@@ -35,7 +35,7 @@ const Navigator: React.FC = () => {
     );
     message.destroy();
     if (res.status) {
-      message.success("Media restored successfully!");
+      message.success("Role restored successfully!");
       return true;
     } else {
       message.error(res.message);
@@ -55,13 +55,13 @@ const Navigator: React.FC = () => {
     //   disabled: true,
     //   icon: <Icon icon="mdi:performance" className="text-xl" />,
     // },
+    // {
+    //   label: "Update",
+    //   key: `/app/roles/details/${id}/update`,
+    // },
     {
-      label: "Update",
-      key: `/app/media/details/${id}/update`,
-    },
-    {
-      label: "View All Media",
-      key: `/app/media`,
+      label: "View All Roles",
+      key: `/app/roles`,
     },
   ];
   // To get the current location pathname
@@ -77,7 +77,7 @@ const Navigator: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 px-2 text-text border-b">
-        <p className="text-md font-bold">Media / {id}</p>
+        <p className="text-md font-bold">Roles / {id}</p>
 
         <Menu
           onClick={onClick}
@@ -87,10 +87,10 @@ const Navigator: React.FC = () => {
           className={"border-b-0 w-full max-w-[450px]"}
         />
       </div>
-      {mediaInfo?.deleted_at && (
+      {roleInfo?.deleted_at && (
         <Alert
-          message={`This media was deleted at 
-          ${moment(mediaInfo?.deleted_at).calendar()}.`}
+          message={`This role was deleted at 
+          ${moment(roleInfo?.deleted_at).calendar()}.`}
           banner
           action={
             <Button size="small" type="text" onClick={() => onRestore(id)}>
