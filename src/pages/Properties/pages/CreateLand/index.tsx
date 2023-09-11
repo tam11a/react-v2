@@ -22,20 +22,30 @@ const CreateLand: React.FC = () => {
   const onSubmit = async (data: any) => {
     messageApi.open({
       type: "loading",
-      content: "Creating Property..",
+      content: "Creating Land..",
       duration: 0,
     });
+    const formattedData = Object.keys(data)
+      .map((key) => {
+        let name = key.replace("__", ".");
+        return { [name]: data[key] };
+      })
+      .reduce((prev, cur) => {
+        prev[Object.keys(cur)[0]] = Object.values(cur)[0];
+        return prev;
+      }, {});
     const res = await handleResponse(
       () =>
         createProperty({
-          ...data,
+          ...formattedData,
+          type: "LAND",
         }),
       [201]
     );
     messageApi.destroy();
     if (res.status) {
       reset();
-      messageApi.success("Property created successfully!");
+      messageApi.success("Land created successfully!");
     } else {
       messageApi.error(res.message);
     }
@@ -135,6 +145,27 @@ const CreateLand: React.FC = () => {
             />
           </span>
         </div>
+        <Label className="my-1 mt-4">Description</Label>
+        <Controller
+          control={control}
+          name={"description"}
+          rules={{ required: false }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input.TextArea
+              className="w-full"
+              placeholder={"Add a description"}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
         <Label className="my-1 mt-4">Address</Label>
         <Controller
           control={control}
@@ -144,7 +175,7 @@ const CreateLand: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Input
+            <Input.TextArea
               placeholder={"Enter Address Line 1"}
               size={"large"}
               onChange={onChange}
@@ -155,12 +186,13 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
-
-        <Label className="my-1 mt-4">Block</Label>
+        <Label isRequired className="my-1 mt-4">
+          Area
+        </Label>
         <Controller
           control={control}
           name={"address__block"}
-          // rules={{ required: true }}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -177,16 +209,44 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
+        <Label isRequired className="my-1 mt-4">
+          Block
+        </Label>
+        <Controller
+          control={control}
+          name={"address__block"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              // disabled
+              placeholder={"Enter Block Name"}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+        <Label
+          isRequired
+          className="flex flex-row items-center gap-1 my-1 mt-4"
+        >
+          Road
+        </Label>
         <Controller
           control={control}
           name={"address__road"}
-          // rules={{ required: true }}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <>
-              <Label className="flex flex-row items-center gap-1">Road</Label>
               <Input
                 placeholder="Enter Road Number"
                 size="large"
@@ -199,11 +259,13 @@ const CreateLand: React.FC = () => {
           )}
         />
 
-        <Label className="my-1 mt-4">Plot</Label>
+        <Label isRequired className="my-1 mt-4">
+          Plot
+        </Label>
         <Controller
           control={control}
           name={"address__plot"}
-          // rules={{ required: true }}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -220,11 +282,13 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
-        <Label className="my-1 mt-4">Price Public</Label>
+        <Label isRequired className="my-1 mt-4">
+          Price Public
+        </Label>
         <Controller
           control={control}
-          name={"public_price"}
-          // rules={{ required: true }}
+          name={"price"}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -244,7 +308,7 @@ const CreateLand: React.FC = () => {
         <Label className="my-1 mt-4">Price Private</Label>
         <Controller
           control={control}
-          name={"public_price"}
+          name={"private_price"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
@@ -262,7 +326,7 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-4 gap-3">
           <span className="col-span-2">
             <Label className="my-1 mt-4">Media</Label>
             <Controller
@@ -297,7 +361,7 @@ const CreateLand: React.FC = () => {
               )}
             />
           </span>
-          <span className="col-span-1">
+          <span className="col-span-2">
             <Label className="my-1 mt-4">Commision</Label>
             <Controller
               control={control}
@@ -314,33 +378,13 @@ const CreateLand: React.FC = () => {
                   onBlur={onBlur}
                   value={value}
                   status={error ? "error" : ""}
+                  className="w-full"
                   //   suffix={<ErrorSuffix error={error} />}
                 />
               )}
             />
           </span>
         </div>
-        <Label className="my-1 mt-4">Description</Label>
-        <Controller
-          control={control}
-          name={"media_commision"}
-          rules={{ required: false }}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input.TextArea
-              className="w-full"
-              placeholder={"Add a description"}
-              size={"large"}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              status={error ? "error" : ""}
-              //   suffix={<ErrorSuffix error={error} />}
-            />
-          )}
-        />
 
         {/* Add image section here */}
 

@@ -23,7 +23,7 @@ const CreateFlat: React.FC = () => {
   const onSubmit = async (data: any) => {
     messageApi.open({
       type: "loading",
-      content: "Creating Property..",
+      content: "Creating Flat..",
       duration: 0,
     });
     const formattedData = Object.keys(data)
@@ -46,7 +46,7 @@ const CreateFlat: React.FC = () => {
     messageApi.destroy();
     if (res.status) {
       reset();
-      messageApi.success("Property created successfully!");
+      messageApi.success("Flat created successfully!");
     } else {
       messageApi.error(res.message);
     }
@@ -225,6 +225,78 @@ const CreateFlat: React.FC = () => {
             />
           )}
         />
+        <Label
+          isRequired
+          className="flex flex-row items-center gap-1 my-1 mt-4"
+        >
+          Area
+        </Label>
+        <Controller
+          control={control}
+          name={"address__area"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              placeholder="Enter the area..."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
+          )}
+        />
+        <Label
+          isRequired
+          className="flex flex-row items-center gap-1 my-1 mt-4"
+        >
+          Block
+        </Label>
+        <Controller
+          control={control}
+          name={"address__block"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              placeholder="Enter Block Name..."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
+          )}
+        />
+        <Label
+          isRequired
+          className="flex flex-row items-center gap-1 my-1 mt-4"
+        >
+          Road
+        </Label>
+        <Controller
+          control={control}
+          name={"address__road"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              placeholder="Enter the road no..."
+              size="large"
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+            />
+          )}
+        />
         <Label className="flex flex-row items-center gap-1 my-1 mt-4">
           Description
         </Label>
@@ -261,11 +333,13 @@ const CreateFlat: React.FC = () => {
             </Checkbox>
           )}
         />
-        <Label className="my-1 mt-4">Price Public</Label>
+        <Label isRequired className="my-1 mt-4">
+          Price Public
+        </Label>
         <Controller
           control={control}
           name={"price"}
-          // rules={{ required: true }}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
