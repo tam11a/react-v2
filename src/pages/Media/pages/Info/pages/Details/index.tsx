@@ -1,5 +1,5 @@
-import PersonalInfo from "@pages/Lead/pages/Info/pages/Details/personalInfo";
 import React from "react";
+import PersonalInfo from "./personalInfo";
 
 const Details: React.FC = () => {
   return (
