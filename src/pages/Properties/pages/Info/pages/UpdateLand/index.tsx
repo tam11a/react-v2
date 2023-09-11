@@ -37,21 +37,18 @@ const UpdateLand: React.FC = () => {
   React.useEffect(() => {
     if (!propertyInfo || isDirty) return;
     reset({
-      first_name: propertyInfo?.first_name,
-      last_name: propertyInfo?.last_name,
-      email: propertyInfo?.email,
-      gender: propertyInfo?.gender,
-      role_id: propertyInfo?.role_id,
-      display_picture: propertyInfo?.display_picture,
-      dob: propertyInfo?.dob,
-      max_session: propertyInfo?.max_session,
-      hired_date: propertyInfo?.hired_date,
-      work_hour: propertyInfo?.work_hour,
-      salary: propertyInfo?.salary,
-      bank: propertyInfo?.bank,
-      address: propertyInfo?.address,
-      address2: propertyInfo?.address2,
-      cv: propertyInfo?.cv,
+      size: propertyInfo?.size,
+      size_unit: propertyInfo?.size_unit,
+      description: propertyInfo?.description,
+      address__line1: propertyInfo?.["address.line1"],
+      address__area: propertyInfo?.["address.area"],
+      address__block: propertyInfo?.["address.block"],
+      address__road: propertyInfo?.["address.road"],
+      address__plot: propertyInfo?.["address.plot"],
+      price: propertyInfo?.price,
+      // private_price: propertyInfo?.private_price,
+      media: propertyInfo?.media,
+      media_commision: propertyInfo?.media_commision,
     });
   }, [propertyInfo]);
 
@@ -214,7 +211,7 @@ const UpdateLand: React.FC = () => {
         </Label>
         <Controller
           control={control}
-          name={"address__block"}
+          name={"address__area"}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
@@ -222,7 +219,7 @@ const UpdateLand: React.FC = () => {
           }) => (
             <Input
               // disabled
-              placeholder={"Enter Block Name"}
+              placeholder={"Enter Area Name"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}

@@ -191,7 +191,7 @@ const CreateLand: React.FC = () => {
         </Label>
         <Controller
           control={control}
-          name={"address__block"}
+          name={"address__area"}
           rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
@@ -199,7 +199,7 @@ const CreateLand: React.FC = () => {
           }) => (
             <Input
               // disabled
-              placeholder={"Enter Block Name"}
+              placeholder={"Enter area Name"}
               size={"large"}
               onChange={onChange}
               onBlur={onBlur}
