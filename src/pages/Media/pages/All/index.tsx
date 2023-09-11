@@ -44,7 +44,7 @@ const Media: React.FC = () => {
             }
             disableElevation
             component={"a"}
-            href="/app/employees/create"
+            href="/app/media/create"
           >
             Create New
           </Button>
