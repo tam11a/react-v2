@@ -1,6 +1,7 @@
 export const PROPERTY_ROUTES = {
   ROOT: "",
   INFO: "/details/:id/*",
-  CREATE: "/create",
+  CREATELAND: "/create-land",
+  CREATEFLAT: "/create-flat",
   NOTFOUND: "*",
 };

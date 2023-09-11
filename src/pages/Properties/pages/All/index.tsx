@@ -43,7 +43,7 @@ const Properties: React.FC = () => {
             }
             disableElevation
             component={"a"}
-            href="/app/properties/create"
+            href="/app/properties/create-land"
           >
             Create New
           </Button>

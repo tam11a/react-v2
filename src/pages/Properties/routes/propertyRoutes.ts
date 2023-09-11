@@ -7,8 +7,8 @@ export const propertyRoutes = [
     Component: lazy(() => import("../pages/All")),
   },
   {
-    path: PROPERTY_ROUTES.CREATE,
-    Component: lazy(() => import("../pages/Create")),
+    path: PROPERTY_ROUTES.CREATELAND,
+    Component: lazy(() => import("../pages/CreateLand")),
   },
   {
     path: PROPERTY_ROUTES.INFO,
