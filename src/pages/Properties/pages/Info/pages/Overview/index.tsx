@@ -5,6 +5,7 @@ import DataTable from "@components/Datatable";
 import PettyCashCol from "../../components/PettyCashCol";
 import PropertyInfo from "./PropertyInfo";
 import { Container } from "@mui/material";
+import { Button } from "antd";
 
 const Overview: React.FC = () => {
   const { page, setPage, limit, setLimit } = usePaginate();
@@ -14,10 +15,13 @@ const Overview: React.FC = () => {
       <Container>
         <PropertyInfo />
 
-        <div className="my-4">
-          <Label className="text-base font-semibold text-text-light">
-            Petty Cash
-          </Label>
+        <div className="my-8">
+          <div className="flex flex-row items-center justify-between">
+            <Label className="text-base font-semibold text-text-light">
+              Petty Cash
+            </Label>
+            <Button>Add New</Button>
+          </div>
           <DataTable
             columns={PettyCashCol()}
             // columns={[]}

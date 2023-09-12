@@ -8,9 +8,9 @@ const PettyCashCol = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
   return [
     {
-      headerName: "Lead Title",
+      headerName: "Date",
       headerAlign: "center",
-      field: "name",
+      field: "date",
       align: "center",
       // width: 200,
       flex: 1,
@@ -18,15 +18,15 @@ const PettyCashCol = (): GridColumns<IDataTable> => {
       // hide: true,
     },
     {
-      headerName: "Assign Person",
+      headerName: "Lead Id",
       headerAlign: "center",
-      field: "assigned_to",
+      field: "lead_id",
       minWidth: 100,
       flex: 1,
       align: "center",
     },
     {
-      headerName: "Status",
+      headerName: "Expanse Purpose",
       headerAlign: "center",
       field: "status",
       minWidth: 100,
@@ -34,42 +34,12 @@ const PettyCashCol = (): GridColumns<IDataTable> => {
       align: "center",
     },
     {
-      headerName: "Followup Date",
+      headerName: "Amount",
       headerAlign: "center",
-      field: "followup_date",
+      field: "amount",
       minWidth: 100,
       flex: 1,
       align: "center",
-    },
-    {
-      headerName: "Source",
-      headerAlign: "center",
-      field: "media",
-      minWidth: 100,
-      flex: 1,
-      align: "center",
-    },
-    {
-      headerName: "Action",
-      field: "action",
-      width: 100,
-      minWidth: 80,
-      // flex: 1,
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (data: any) => (
-        <>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="primary"
-            onClick={() => navigate(`/app/leads/details/${data.row?.id}`)}
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-          >
-            <Icon icon="icon-park-solid:info" />
-          </IconButton>
-        </>
-      ),
     },
   ];
 };

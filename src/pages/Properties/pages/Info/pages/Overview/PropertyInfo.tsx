@@ -90,6 +90,7 @@ const PropertyInfo: React.FC = () => {
                   fieldState: { error },
                 }) => ( */}
           <Input
+            disabled
             size="large"
             className={"w-full"}
             prefix={<Iconify icon={"ph:link"} />}
@@ -234,7 +235,7 @@ const PropertyInfo: React.FC = () => {
           </div>
           <div className="mx-4">
             <Label className="mt-2 text-text-light font-semibold">
-              Commision
+              Commission
             </Label>
             {/* <Controller
               control={control}
