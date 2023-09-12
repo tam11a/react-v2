@@ -1,6 +1,6 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Button, Menu, Dropdown, Select, Alert } from "antd";
+import { Button, Menu, Select, Alert } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteLead,

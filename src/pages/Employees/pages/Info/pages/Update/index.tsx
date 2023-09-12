@@ -8,7 +8,7 @@ import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
 import { Button } from "@mui/material";
-import { Select, DatePicker, Input } from "antd";
+import { Select, DatePicker, Input, Cascader } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
@@ -239,7 +239,7 @@ const Update: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Select
+            <Cascader
               value={value}
               size="large"
               showSearch
@@ -365,6 +365,7 @@ const Update: React.FC = () => {
             fieldState: { error },
           }) => (
             <Input
+              disabled
               className=" font-medium text-sm my-1"
               placeholder="cv"
               size={"large"}

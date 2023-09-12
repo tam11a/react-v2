@@ -304,6 +304,7 @@ const Create: React.FC = () => {
             fieldState: { error },
           }) => (
             <Input
+              disabled
               className="w-full"
               placeholder={"Attach a file"}
               size={"large"}

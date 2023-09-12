@@ -7,7 +7,7 @@ import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Icon } from "@iconify/react";
 import { Button } from "@mui/material";
-import { Cascader, Input, Segmented, Select } from "antd";
+import { Cascader, Input, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
