@@ -1,8 +1,6 @@
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@components/Datatable/types";
 import { useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
-import { Icon } from "@iconify/react";
 
 const PettyCashCol = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();

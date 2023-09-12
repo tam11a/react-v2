@@ -55,10 +55,10 @@ const Navigator: React.FC = () => {
     //   disabled: true,
     //   icon: <Icon icon="mdi:performance" className="text-xl" />,
     // },
-    // {
-    //   label: "Update",
-    //   key: `/app/roles/details/${id}/update`,
-    // },
+    {
+      label: "Update",
+      key: `/app/roles/details/${id}/update`,
+    },
     {
       label: "View All Roles",
       key: `/app/roles`,
