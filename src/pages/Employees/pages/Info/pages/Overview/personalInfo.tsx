@@ -82,25 +82,31 @@ const PersonalInfo: React.FC = () => {
             {employeeInfo?.work_hour}
           </p>{" "}
           <p className="text-base font-bold text-text-light">NID Number :</p>
-          {employeeInfo?.nid ? (
+          {employeeInfo?.nid_number ? (
             <p className="text-base font-medium text-text-light">
-              {employeeInfo?.nid}
+              {employeeInfo?.nid_number}
             </p>
           ) : (
             "-"
           )}{" "}
           <p className="text-base font-bold text-text-light">CV :</p>
           <div>
-            <Button
-              variant="text"
-              className="underline p-0"
-              endIcon={<Icon className="text-lg" icon="iconoir:import" />}
-              component="a"
-              href={previewAttachment(employeeInfo?.cv)}
-              download={true}
-            >
-              Download
-            </Button>
+            {employeeInfo?.cv ? (
+              <>
+                <Button
+                  variant="text"
+                  className="underline p-0"
+                  endIcon={<Icon className="text-lg" icon="iconoir:import" />}
+                  component="a"
+                  href={previewAttachment(employeeInfo?.cv)}
+                  download={true}
+                >
+                  Download
+                </Button>
+              </>
+            ) : (
+              "-"
+            )}
           </div>
         </div>
       </Container>
