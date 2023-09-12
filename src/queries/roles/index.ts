@@ -1,6 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ICreateRole } from "./types";
+import { ICreateRole, IUpdateRole } from "./types";
 
 const getRoles = (params: any) => {
   return instance.get(`/roles`, { params });
@@ -28,6 +28,28 @@ const getRoleById = (id?: string) => {
 export const useGetRoleById = (id?: string) => {
   return useQuery(["get-all-roles-by-id", id], () => getRoleById(id), {
     enabled: !!id,
+  });
+};
+
+const updateRoleById = ({
+  id,
+  data,
+}: {
+  id?: string;
+  data: IUpdateRole | any;
+}) => {
+  return instance.patch(`/roles/${id}`, {
+    ...data,
+  });
+};
+
+export const useUpdateRoleById = () => {
+  const query = useQueryClient();
+  return useMutation(updateRoleById, {
+    onSuccess: () => {
+      query.invalidateQueries(["get-all-roles"]);
+      query.invalidateQueries(["get-role-by-id"]);
+    },
   });
 };
 
