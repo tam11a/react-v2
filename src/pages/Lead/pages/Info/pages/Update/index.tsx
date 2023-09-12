@@ -7,11 +7,11 @@ import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
 import { Button } from "@mui/material";
-import { Input, Segmented, Select, DatePicker, Cascader } from "antd";
+import { Input, Select, DatePicker, Cascader } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Update: React.FC = () => {
   const params = useParams();
