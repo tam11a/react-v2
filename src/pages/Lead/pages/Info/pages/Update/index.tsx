@@ -1,14 +1,13 @@
+import useEmployee from "@/hooks/useEmployee";
 import useLeadStatus from "@/hooks/useLeadStatus";
+import useMedia from "@/hooks/useMedia";
 import { useGetLeadsById, useUpdateLeadsById } from "@/queries/leads";
-import { useGetMediaById } from "@/queries/media";
 import handleResponse from "@/utilities/handleResponse";
-import { stringAvatar } from "@/utilities/stringAvatar";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import Iconify from "@components/iconify";
-import { Icon } from "@iconify/react";
-import { Avatar, Button } from "@mui/material";
-import { Input, Segmented, Select, DatePicker } from "antd";
+import { Button } from "@mui/material";
+import { Input, Segmented, Select, DatePicker, Cascader } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
@@ -25,9 +24,10 @@ const Update: React.FC = () => {
   } = useForm({});
   const { data } = useGetLeadsById(params.id);
   const [leadInfo, setLeadInfo] = React.useState<any>([]);
-  const { data: mediaData } = useGetMediaById(leadInfo?.media_id);
+  const { media, isMediaLoading, searchMedia } = useMedia();
   const { mutateAsync: updateLead, isLoading: isSubmitting } =
     useUpdateLeadsById();
+  const { employee, isEmployeeLoading, searchEmployee } = useEmployee();
   const { leadStatus, isLeadStatusLoading, searchLeadStatus } = useLeadStatus();
 
   React.useEffect(() => {
@@ -38,8 +38,8 @@ const Update: React.FC = () => {
   React.useEffect(() => {
     if (!leadInfo || isDirty) return;
     reset({
-      first_name: leadInfo?.firstName,
-      last_name: leadInfo?.lastName,
+      first_name: leadInfo?.first_name,
+      last_name: leadInfo?.last_name,
       phone: leadInfo?.phone,
       email: leadInfo?.email,
       gender: leadInfo?.gender,
@@ -47,9 +47,11 @@ const Update: React.FC = () => {
       designation: leadInfo?.designation,
       created_at: leadInfo?.dob,
       status_id: leadInfo?.status_id,
+      media_id: leadInfo?.media_id,
       priority: leadInfo?.priority,
       address_line1: leadInfo?.address_line1,
       display_picture: leadInfo?.assignee?.display_picture,
+      assigned_to: leadInfo?.assigned_to,
     });
   }, [leadInfo]);
 
@@ -360,52 +362,79 @@ const Update: React.FC = () => {
           )}
         />
 
-        <Label className="my-1">
-          Assignee &bull;{" "}
-          <Link to="#" className="text-sm ml-1 underline">
-            Change Assignee
-          </Link>
+        <Label isRequired className="my-1">
+          Assigned To
         </Label>
-        <div className=" flex flex-row gap-2 items-center border border-[#d9d9d9] rounded my-2 p-2">
-          <Avatar
-            variant="rounded"
-            src={leadInfo?.display_picture}
-            {...stringAvatar(`${leadInfo?.first_name} ${leadInfo?.last_name}`)}
-            className="text-sm w-[25px] h-[25px] border"
-          />
-          <p className="text-sm font-bold text-text">
-            {leadInfo?.assignee?.first_name} {leadInfo?.assignee?.last_name}
-          </p>
-        </div>
+        <Controller
+          control={control}
+          name={"assigned_to"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Cascader
+              size="large"
+              placeholder="Search Employee..."
+              allowClear={false}
+              value={value || undefined}
+              showSearch
+              options={employee}
+              onSearch={searchEmployee}
+              loading={isEmployeeLoading}
+              onChange={onChange}
+              onBlur={onBlur}
+              className="w-full"
+              status={error ? "error" : ""}
+              suffixIcon={
+                <Iconify
+                  className="text-xl text-text-dark"
+                  icon={"clarity:employee-solid"}
+                />
+              }
+              //   disabled={isLoading}
+            />
+          )}
+        />
 
         <h1 className="text-xl font-bold text-text-light my-5">
           Medial Information
         </h1>
 
-        <div className="flex flex-row items-center">
-          <Link to={`/app/info/media/${mediaData?.data?.data?.id}`}>
-            <Avatar
-              variant="rounded"
-              src={leadInfo?.media?.display_picture}
-              {...stringAvatar(
-                `${leadInfo?.media?.first_name} ${leadInfo?.media?.last_name}`
-              )}
-              className="md:w-[75px] md:h-[75px] w-[60px] h-[60px] rounded-2xl mt-1"
+        <Label isRequired className="my-1">
+          Media Source
+        </Label>
+        <Controller
+          control={control}
+          name={"media_id"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Cascader
+              size="large"
+              placeholder="Search media..."
+              allowClear={false}
+              value={value || undefined}
+              showSearch
+              options={media}
+              onSearch={searchMedia}
+              loading={isMediaLoading}
+              onChange={onChange}
+              onBlur={onBlur}
+              className="w-full"
+              status={error ? "error" : ""}
+              suffixIcon={
+                <Iconify
+                  className="text-xl text-text"
+                  icon={"mingcute:search-3-line"}
+                />
+              }
+              //   disabled={isLoading}
             />
-          </Link>
-          <span className="flex flex-col px-2">
-            <Link to={`/app/info/media/${leadInfo?.media?.id}`}>
-              <p className="text-lg font-bold text-text-light">{`${leadInfo?.media?.first_name} ${mediaData?.data?.data?.last_name}`}</p>
-            </Link>
-            <p className="text-sm font-medium text-text-light">
-              {leadInfo?.media?.gender}
-            </p>
-            <p className="text-sm font-medium text-text-light">
-              <b>ID No:</b> {leadInfo?.media?.id}
-              {leadInfo?.media?.first_name?.[0]}
-            </p>
-          </span>
-        </div>
+          )}
+        />
         <Label className="mt-4">Commision</Label>
         {/* <Controller
               control={control}

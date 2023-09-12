@@ -80,3 +80,39 @@ export const useDeleteLead = () => {
     },
   });
 };
+
+const interestedProperties = (id?: string) => {
+  return instance.get(`/leads/${id}/interested-properties`);
+};
+
+export const useGetInterestedProperties = (id?: string) => {
+  return useQuery(["get-lead-interested-properties", id], () =>
+    interestedProperties(id)
+  );
+};
+
+const postInterest = ({
+  lead_id,
+  property_id,
+}: {
+  lead_id: number | string;
+  property_id: number | string;
+}) => {
+  return instance.post(
+    `/leads/${lead_id}/interested-properties`,
+    {},
+    {
+      params: {
+        property_id,
+      },
+    }
+  );
+};
+
+export const usePostInterest = () => {
+  const queryClient = useQueryClient();
+  return useMutation(postInterest, {
+    onSuccess: () =>
+      queryClient.invalidateQueries(["get-lead-interested-properties"]),
+  });
+};

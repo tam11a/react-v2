@@ -23,10 +23,9 @@ const Navigator: React.FC = () => {
   const { data } = useGetLeadsById(id);
   const leadInfo = data?.data?.data;
 
-  const { mutateAsync: updateLead, isLoading: isSubmitting } =
-    useUpdateLeadsById();
+  const { mutateAsync: updateLead } = useUpdateLeadsById();
 
-  const { leadStatus, isLeadStatusLoading, searchLeadStatus } = useLeadStatus();
+  const { leadStatus } = useLeadStatus();
 
   const { mutateAsync: deleteLead } = useDeleteLead();
 
