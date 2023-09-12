@@ -66,7 +66,7 @@ const PropertyInfo: React.FC = () => {
           <span>
             {propertyInfo?.description ? (
               <p className="text-sm font-medium text-text-light text-justify pt-3">
-                propertyInfo?.description
+                {propertyInfo?.description}
               </p>
             ) : (
               <p className="text-sm font-medium text-text-light text-justify pt-3">

@@ -76,40 +76,104 @@ const Update: React.FC = () => {
     <>
       {contextHolder}
       <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-xl my-5">
-        <div className="flex flex-col gap-1 items-start my-2">
-          <p className="text-2xl font-bold text-text-light">
-            {`${leadInfo?.first_name} ${leadInfo?.last_name}`}
-          </p>
-          <div className="flex flex-row gap-2">
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="ic:twotone-person-pin"
-                className="text-md text-text-light"
+        <Label isRequired>Full Name</Label>
+        <Input.Group compact>
+          <Controller
+            control={control}
+            name={"first_name"}
+            rules={{ required: true }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                className="w-1/2"
+                placeholder={"Enter First Name"}
+                size={"large"}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                status={error ? "error" : ""}
+                //   suffix={<ErrorSuffix error={error} />}
               />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.designation}
-              </p>
-            </div>
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="fluent:building-20-filled"
-                className="text-md text-text-light"
+            )}
+          />
+          <Controller
+            control={control}
+            name={"last_name"}
+            // rules={{ required: true }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                className="w-1/2"
+                placeholder={"last name"}
+                size={"large"}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                status={error ? "error" : ""}
+                //   suffix={<ErrorSuffix error={error} />}
               />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.company}
-              </p>
-            </div>
-            <div className="flex flex-row gap-1">
-              <Icon
-                icon="octicon:location-24"
-                className="text-md text-text-light"
-              />
-              <p className="text-sm font-bold text-text-light">
-                {leadInfo?.address_line1}
-              </p>
-            </div>
-          </div>
-        </div>
+            )}
+          />
+        </Input.Group>
+        <Label className="my-1">Designation</Label>
+        <Controller
+          control={control}
+          name={"designation"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className="font-medium text-sm my-1"
+              placeholder={"Designation"}
+              prefix={
+                <Iconify
+                  icon={"ic:twotone-person-pin"}
+                  className="text-text-light text-lg"
+                />
+              }
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
+
+        <Label className=" my-1 ">Company</Label>
+        <Controller
+          control={control}
+          name={"company"}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input
+              className="font-medium text-sm my-1"
+              placeholder={"Company"}
+              prefix={
+                <Iconify
+                  icon={"fluent:building-20-filled"}
+                  className="text-text-light text-lg"
+                />
+              }
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
 
         <Label className=" my-1 ">Address</Label>
         <Controller
