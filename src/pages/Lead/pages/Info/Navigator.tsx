@@ -2,18 +2,15 @@ import React from "react";
 import type { MenuProps } from "antd";
 import { Button, Menu, Dropdown, Select, Alert } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useDeleteLead, useGetLeadsById } from "@/queries/leads";
+import {
+  useDeleteLead,
+  useGetLeadsById,
+  useUpdateLeadsById,
+} from "@/queries/leads";
 import moment from "moment";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
-
-const onMenuClick: MenuProps["onClick"] = (e) => {
-  console.log("click", e);
-};
-
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
+import useLeadStatus from "@/hooks/useLeadStatus";
 
 const Navigator: React.FC = () => {
   // To get the current location pathname
@@ -25,6 +22,10 @@ const Navigator: React.FC = () => {
   const { id } = useParams();
   const { data } = useGetLeadsById(id);
   const leadInfo = data?.data?.data;
+
+  const { mutateAsync: updateLead } = useUpdateLeadsById();
+
+  const { leadStatus } = useLeadStatus();
 
   const { mutateAsync: deleteLead } = useDeleteLead();
 
@@ -68,24 +69,24 @@ const Navigator: React.FC = () => {
     navigate(e.key);
   };
 
-  const statusItems = [
-    {
-      key: "1",
-      label: "New",
-    },
-    {
-      key: "2",
-      label: "In-progress",
-    },
-    {
-      key: "3",
-      label: "Completed",
-    },
-    {
-      key: "4",
-      label: "Rejected",
-    },
-  ];
+  const onValid = async (d: any) => {
+    message.open({
+      type: "loading",
+      content: `Updating information...`,
+      duration: 0,
+    });
+    const res = await handleResponse(
+      () =>
+        updateLead({
+          id,
+          data: d,
+        }),
+      [200]
+    );
+    message.destroy();
+    if (res.status) message.success("Information updated successfully!");
+    else message.error(res.message);
+  };
 
   return (
     <>
@@ -93,24 +94,21 @@ const Navigator: React.FC = () => {
         <h1 className="text-2xl md:text-3xl font-bold">Lead Details</h1>
 
         <div className="flex flex-row gap-2 md:items-center  justify-end ">
-          <Dropdown.Button
-            type="primary"
-            size="large"
-            menu={{
-              selectable: true,
-              items: statusItems,
-              onClick: onMenuClick,
-            }}
-            className="bg-sky-400 rounded "
-          >
-            New
-          </Dropdown.Button>
           <Select
             dropdownMatchSelectWidth={false}
             bordered={false}
             size="large"
-            defaultValue="Highest"
-            onChange={handleChange}
+            value={leadInfo?.status.label}
+            onChange={(value) => onValid({ status_id: value })}
+            options={leadStatus}
+            className="bg-[#E7F5FC]  text-text-light"
+          />
+          <Select
+            dropdownMatchSelectWidth={false}
+            bordered={false}
+            size="large"
+            value={leadInfo?.priority}
+            onChange={(value) => onValid({ priority: value })}
             options={[
               { value: "Highest", label: "Highest" },
               { value: "High", label: "High" },

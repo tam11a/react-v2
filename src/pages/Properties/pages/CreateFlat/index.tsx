@@ -3,7 +3,7 @@ import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Button } from "@mui/material";
-import { Checkbox, DatePicker, Input, Radio, Select } from "antd";
+import { Checkbox, DatePicker, Input, Radio, Select, Cascader } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -14,6 +14,8 @@ import dayjs from "dayjs";
 const CreateFlat: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { media, isMediaLoading, searchMedia } = useMedia();
+
+  console.log(media);
 
   const { mutateAsync: createProperty, isLoading: propertyCreating } =
     useCreateProperty();
@@ -388,7 +390,7 @@ const CreateFlat: React.FC = () => {
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
-                <Select
+                <Cascader
                   size="large"
                   placeholder="Search media..."
                   allowClear={false}
@@ -413,7 +415,7 @@ const CreateFlat: React.FC = () => {
             />
           </span>
           <span className="col-span-2">
-            <Label className="my-1 mt-4">Commision</Label>
+            <Label className="my-1 mt-4">Commission</Label>
             <Controller
               control={control}
               name={"media_commision"}

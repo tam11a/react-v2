@@ -146,8 +146,8 @@ const RolesColumn = (): GridColumns<IDataTable> => {
       align: "center",
       renderCell: (data: any) => (
         <>
-          <Tag color={`${data?.is_active ? "#36b336" : "#b1160d"}`}>
-            {data?.is_active ? "Active" : "Inactive"}
+          <Tag color={`${data?.row?.is_active ? "#36b336" : "#b1160d"}`}>
+            {data?.row?.is_active ? "Active" : "Inactive"}
           </Tag>
         </>
       ),

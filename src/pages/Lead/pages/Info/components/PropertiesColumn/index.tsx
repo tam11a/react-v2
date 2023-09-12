@@ -28,7 +28,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Location",
       headerAlign: "center",
-      field: "location",
+      field: "address.area",
       minWidth: 100,
       flex: 1,
       align: "center",
@@ -47,7 +47,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/leads/details/${data.row?.id}`)}
+            onClick={() => navigate(`/app/properties/details/${data.row?.id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <Icon icon="icon-park-solid:info" />
