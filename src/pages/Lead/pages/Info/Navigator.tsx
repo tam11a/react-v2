@@ -58,12 +58,12 @@ const Navigator: React.FC = () => {
 
 	const items: MenuProps["items"] = [
 		{
-			label: "View",
-			key: `/app/leads/details/${id}`,
-		},
-		{
 			label: "Update",
 			key: `/app/leads/details/${id}/update`,
+		},
+		{
+			label: "View",
+			key: `/app/leads/details/${id}`,
 		},
 	];
 
@@ -145,7 +145,7 @@ const Navigator: React.FC = () => {
 						selectedKeys={[location.pathname?.split?.("/")[3] || ""]}
 						mode="horizontal"
 						items={items}
-						className={"border-b-0 max-w-[40px]"}
+						className={"border-b-0 min-w-[130px] max-w-[40px]"}
 					/>
 				</div>
 			</div>
@@ -160,7 +160,7 @@ const Navigator: React.FC = () => {
 							type="text"
 							onClick={() => onRestore(id)}
 						>
-							UNDO
+							RESTORE
 						</Button>
 					}
 				/>
