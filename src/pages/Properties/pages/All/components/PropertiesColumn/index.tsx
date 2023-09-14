@@ -180,6 +180,16 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
 			renderCell: (data: any) => (data?.row?.status ? data?.row?.status : "-"),
 		},
 		{
+			headerName: "Completion Status",
+			headerAlign: "center",
+			field: "completion_status",
+			minWidth: 200,
+			flex: 1,
+			align: "center",
+			renderCell: (data: any) =>
+				data?.row?.completion_status ? data?.row?.completion_status : "-",
+		},
+		{
 			headerName: "Handovered At",
 			headerAlign: "center",
 			field: "flat.handovered_at",

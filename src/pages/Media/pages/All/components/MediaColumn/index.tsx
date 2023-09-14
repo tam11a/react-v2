@@ -130,7 +130,7 @@ const MediaColumn = (): GridColumns<IDataTable> => {
 			align: "center",
 		},
 		{
-			headerName: "Address Line 1",
+			headerName: "Address Line",
 			headerAlign: "center",
 			field: "address_line1",
 			minWidth: 400,

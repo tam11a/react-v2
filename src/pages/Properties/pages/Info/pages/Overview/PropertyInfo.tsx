@@ -7,7 +7,7 @@ import {
 	Tag,
 	//  Input, Segmented,  DatePicker
 } from "antd";
-import { Avatar } from "@mui/material";
+import { Avatar, Chip } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
 
@@ -48,17 +48,34 @@ const PropertyInfo: React.FC = () => {
 							className="text-8xl text-slate-50"
 						/>
 					</Avatar>
+					{propertyInfo.title && (
+						<p className="text-text font-bold text-xl mt-3 flex flex-row items-center">
+							{propertyInfo.title || ""}
+							<Chip
+								size="small"
+								label={propertyInfo?.status}
+								className="ml-2"
+								color={
+									propertyInfo?.status === "New"
+										? "error"
+										: propertyInfo?.status === "Sold"
+										? "success"
+										: "warning"
+								}
+							/>
+						</p>
+					)}
 					<span className="flex flex-row items-center gap-1">
-						<span className="flex flex-row items-end gap-3">
-							<p className="text-lg font-bold text-text-light pt-3"> BDT </p>
-							<p className="text-3xl font-bold text-text-light pt-3">
-								{propertyInfo?.price}
+						<span className="flex flex-row items-end gap-1">
+							<p className="text-base font-bold text-text-light pt-3"> BDT </p>
+							<p className="text-base font-bold text-text-light pt-3">
+								{propertyInfo?.private_price} - {propertyInfo?.price}
 							</p>
 						</span>
-						<Icon
+						{/* <Icon
 							className="text-xl text-text"
 							icon={"tabler:currency-taka"}
-						/>
+						/> */}
 					</span>
 					<span className="flex flex-row items-center gap-1 flex-wrap mt-2">
 						<Icon
@@ -66,7 +83,15 @@ const PropertyInfo: React.FC = () => {
 							icon="entypo:address"
 						/>
 						<p className="text-sm font-semibold text-text">
-							{`${propertyInfo?.["address.road"]}${propertyInfo?.["address.block"]}, ${propertyInfo?.["address.area"]}, ${propertyInfo?.["address.city"]}`}
+							{propertyInfo?.["address.area"]}{" "}
+							<span className="ml-2 text-text-light">
+								{Array.from(
+									new Set([
+										propertyInfo?.["address.road"],
+										propertyInfo?.["address.block"],
+									])
+								).join(", ")}
+							</span>
 						</p>
 					</span>
 					<span>
@@ -75,8 +100,8 @@ const PropertyInfo: React.FC = () => {
 								{propertyInfo?.description}
 							</p>
 						) : (
-							<p className="text-sm font-medium text-text-light text-justify pt-3">
-								No description.
+							<p className="text-sm font-medium text-text-light text-opacity-40 text-justify pt-3">
+								No Description Added
 							</p>
 						)}
 					</span>
@@ -159,44 +184,53 @@ const PropertyInfo: React.FC = () => {
 								</span>
 							</div>
 							<div className="flex flex-row pt-3 gap-3 ">
-								<span className="flex flex-row items-center gap-1">
-									<Icon
-										className="text-2xl text-text-light"
-										icon={"tabler:address-book"}
-									/>
-									<p className="text-sm font-bold text-text-light">
-										{`${mediaData?.data?.data?.first_name} ${mediaData?.data?.data?.last_name}`}
-									</p>
-								</span>
-								<span className="flex flex-row items-center gap-1">
-									<Icon
-										icon="mingcute:bed-fill"
-										className="text-xl text-text-light"
-									/>
-									<p className="text-sm font-semibold text-text-light">
-										{propertyInfo?.["flat.num_bedroom"]}
-									</p>
-								</span>
-								<span className="flex flex-row items-center gap-1">
-									<Icon
-										icon="fa:bath"
-										className="text-sm text-text-light"
-									/>
-									<p className="text-md font-semibold text-text-light">
-										{propertyInfo?.["flat.num_bathroom"]}
-									</p>
-								</span>
+								{mediaData && (
+									<span className="flex flex-row items-center gap-1">
+										<Icon
+											className="text-2xl text-text-light"
+											icon={"tabler:address-book"}
+										/>
+										<p className="text-sm font-bold text-text-light">
+											{`${mediaData?.data?.data?.first_name} ${mediaData?.data?.data?.last_name}`}
+										</p>
+									</span>
+								)}
+								{propertyInfo?.["flat.num_bedroom"] && (
+									<span className="flex flex-row items-center gap-1">
+										<Icon
+											icon="mingcute:bed-fill"
+											className="text-xl text-text-light"
+										/>
+										<p className="text-sm font-semibold text-text-light">
+											{propertyInfo?.["flat.num_bedroom"]}
+										</p>
+									</span>
+								)}
+
+								{propertyInfo?.["flat.num_bathroom"] && (
+									<span className="flex flex-row items-center gap-1">
+										<Icon
+											icon="fa:bath"
+											className="text-sm text-text-light"
+										/>
+										<p className="text-md font-semibold text-text-light">
+											{propertyInfo?.["flat.num_bathroom"]}
+										</p>
+									</span>
+								)}
 							</div>
 							<div className="flex flex-row pt-3 gap-3 ">
-								<span className="flex flex-row items-center gap-1">
-									<Icon
-										className="text-xl text-text-light"
-										icon="solar:compass-big-bold"
-									/>
-									<p className="text-sm font-semibold text-text-light">
-										{propertyInfo?.["flat.facing_side"]}
-									</p>
-								</span>
+								{propertyInfo?.["flat.facing_side"] && (
+									<span className="flex flex-row items-center gap-1">
+										<Icon
+											className="text-xl text-text-light"
+											icon="solar:compass-big-bold"
+										/>
+										<p className="text-sm font-semibold text-text-light">
+											{propertyInfo?.["flat.facing_side"]}
+										</p>
+									</span>
+								)}
 
 								<span className="flex flex-row items-center gap-1 flex-wrap">
 									<Icon
@@ -204,8 +238,7 @@ const PropertyInfo: React.FC = () => {
 										icon="entypo:address"
 									/>
 									<p className="text-sm font-semibold text-text-light">
-										{propertyInfo?.["address.area"]},{" "}
-										{propertyInfo?.["address.city"]}
+										{propertyInfo?.["address.area"]}
 									</p>
 								</span>
 							</div>
@@ -257,11 +290,11 @@ const PropertyInfo: React.FC = () => {
                 fieldState: { error },
               }) => ( */}
 								<Input
-									disabled
+									readOnly
 									className="font-medium text-sm my-1"
 									prefix={
 										<Iconify
-											icon={"mdi:percent-box"}
+											icon={"tabler:currency-taka"}
 											className="text-text-light text-lg"
 										/>
 									}
@@ -271,7 +304,6 @@ const PropertyInfo: React.FC = () => {
 									// onBlur={onBlur}
 									value={propertyInfo?.media_commision} /*needs to change*/
 									// status={error ? "error" : ""}
-									suffix={"%"}
 								/>
 								{/* )}
             /> */}
