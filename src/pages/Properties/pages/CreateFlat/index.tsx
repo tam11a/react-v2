@@ -3,15 +3,7 @@ import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Button } from "@mui/material";
-import {
-	Checkbox,
-	DatePicker,
-	Input,
-	Radio,
-	Select,
-	Cascader,
-	InputNumber,
-} from "antd";
+import { DatePicker, Input, Radio, Select, Cascader, InputNumber } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

@@ -3,7 +3,7 @@ import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Button } from "@mui/material";
-import { Cascader, Checkbox, Input, Radio, Select } from "antd";
+import { Cascader, Input, Radio, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
