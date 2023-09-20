@@ -1,185 +1,167 @@
-import { Icon } from "@iconify/react";
-import { Card, Tag } from "antd";
+import useUser from "@/hooks/useUser";
+import Iconify from "@components/iconify";
+import { Button } from "@mui/material";
+import { Card, Divider, Statistic } from "antd";
 import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-const data01 = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-const data02 = [
-  { name: "A1", value: 100 },
-  { name: "A2", value: 300 },
-  { name: "B1", value: 100 },
-  { name: "B2", value: 80 },
-  { name: "B3", value: 40 },
-];
+import { Link } from "react-router-dom";
 
 const Overview: React.FC = () => {
+  const user = useUser();
+  console.log(user);
+
   return (
     <>
-      <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-2 mx-8">
-        <Card size="small" className="shadow-md bg-[#B3ECF4]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Total</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">8M</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
+      <div className="my-2 mx-8">
+        <div className="w-fit my-2">
+          <p className="text-xl">
+            Welcome{" "}
+            <b>
+              {user.first_name} {user.last_name}.
+            </b>
+          </p>
+          {user.role ? (
+            <p className="text-base">
+              You are currently designated as <b>{user.role.name}</b>
+            </p>
+          ) : (
+            <p className="text-base">
+              You currently don't have any role assigned to you.
+            </p>
+          )}
+        </div>
+        <Divider orientation="center">Leads Overview</Divider>
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
+          <Card bordered={true} className="bg-lime-100   font-semibold">
+            <Statistic
+              title="Raw Leads"
+              value={115}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-cyan-100 font-semibold">
+            <Statistic
+              title="Assigned Leads"
+              value={30}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="  font-semibold bg-indigo-100">
+            <Statistic
+              title="Todays Followup"
+              value={20}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-emerald-100 font-semibold">
+            <Statistic
+              title="Completed Leads"
+              value={30}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+        </div>
+        {/* <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4"></div> */}
+        <Divider orientation="center">Properties Overview</Divider>
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
+          <Card bordered={true} className="bg-sky-100   font-semibold">
+            <Statistic
+              title="Available properties"
+              value={35}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-fuchsia-100   font-semibold">
+            <Statistic
+              title="Booked Properties"
+              value={22}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-emerald-100   font-semibold">
+            <Statistic
+              title="Sold properties"
+              value={10}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-red-100   font-semibold">
+            <Statistic
+              title="Deleted properties"
+              value={10}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+        </div>
+        <Divider orientation="center">Application Shortcuts</Divider>
+        <div className="grid grid-cols-1 sm:grid-cols-2 [&>a>button]:text-center [&>a>button]:w-full max-w-lg mx-auto mt-6">
+          <Link to="/app/leads">
+            <Button
+              className="text-slate-700"
+              startIcon={<Iconify icon={"iconamoon:funnel-light"} />}
             >
-              +2,5%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md bg-[#A8FFE4]" bordered={false}>
-          <h1 className="font-semibold text-text-light">New</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">2.678K</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
+              Leads List
+            </Button>
+          </Link>
+          <Link to="/app/properties">
+            <Button
+              className="text-slate-700"
+              startIcon={<Iconify icon={"mdi:building"} />}
             >
-              -1,2%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md  bg-[#FEE0A0]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Ongoing</h1>
+              Properties List
+            </Button>
+          </Link>
 
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">2.76M</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
+          <Link to="/app/media">
+            <Button
+              className="text-slate-700"
+              startIcon={
+                <Iconify icon={"material-symbols:person-play-outline"} />
+              }
             >
-              +11%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md  bg-[#E7CFFF]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Cancelled</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">8K</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
+              Medias List
+            </Button>
+          </Link>
+          <Link to="/app/employees">
+            <Button
+              className="text-slate-700"
+              startIcon={<Iconify icon={"clarity:employee-group-line"} />}
             >
-              +2,5%
-            </Tag>
-          </div>
-        </Card>
-      </div>
-      <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-2">
-        <Card className="col-span-2  shadow-xl" title="Target" bordered={false}>
-          <div className="flex md:flex-row flex-col gap-2">
-            <div className="flex flex-row  items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#00C49F"
-                className="text-2xl"
-              />
-              <h1>Achieved</h1>
-            </div>
-            <div className="flex flex-row  items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#0088FE"
-                className="text-2xl"
-              />
-              <h1>Remaining</h1>
-            </div>
-            <div className="flex flex-row items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#FFBB28"
-                className="text-2xl"
-              />
-              <h1>Target</h1>
-            </div>
-            <div className="flex flex-row items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#FF8042"
-                className="text-2xl"
-              />
-              <h1>Rejected</h1>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={data}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </Card>
-        <Card
-          className="col-span-2 shadow-xl"
-          title="Most Active Account Types"
-          bordered={false}
-        >
-          <div className="flex flex-row gap-2">
-            <div className="flex flex-row  items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#82ca9d"
-                className="text-2xl"
-              />
-              <h1>Active</h1>
-            </div>
-            <div className="flex flex-row  items-center">
-              <Icon
-                icon="icon-park-outline:dot"
-                color="#8884d8"
-                className="text-2xl"
-              />
-              <h1>Inactive</h1>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={data01}
-                dataKey="value"
-                outerRadius={60}
-                fill="#8884d8"
-              />
-              <Pie
-                data={data02}
-                dataKey="value"
-                innerRadius={70}
-                outerRadius={90}
-                fill="#82ca9d"
-                label
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </Card>
+              Employees List
+            </Button>
+          </Link>
+          <Link to="/app/settings">
+            <Button
+              className="text-slate-700"
+              startIcon={<Iconify icon={"mdi:user-details"} />}
+            >
+              User Profile
+            </Button>
+          </Link>
+        </div>
       </div>
     </>
   );
