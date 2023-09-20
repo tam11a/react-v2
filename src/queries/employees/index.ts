@@ -51,6 +51,7 @@ export const useUpdateEmployeesById = () => {
     onSuccess: () => {
       query.invalidateQueries(["get-all-employees"]);
       query.invalidateQueries(["get-employees-by-id"]);
+      query.invalidateQueries(["validate"]);
     },
   });
 };
@@ -65,6 +66,7 @@ export const useDeleteEmployee = () => {
     onSuccess: () => {
       query.invalidateQueries(["get-all-employees"]);
       query.invalidateQueries(["get-employees-by-id"]);
+      query.invalidateQueries(["validate"]);
     },
   });
 };

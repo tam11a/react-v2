@@ -78,11 +78,12 @@ const Update: React.FC = () => {
     <>
       {contextHolder}
       <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-lg my-5">
-        <Label>Full Name</Label>
+        <Label isRequired>Full Name</Label>
         <Input.Group compact>
           <Controller
             control={control}
             name={"first_name"}
+            rules={{ required: true }}
             render={({
               field: { onChange, onBlur, value },
               fieldState: { error },
@@ -102,6 +103,7 @@ const Update: React.FC = () => {
           <Controller
             control={control}
             name={"last_name"}
+            rules={{ required: true }}
             render={({
               field: { onChange, onBlur, value },
               fieldState: { error },
@@ -234,7 +236,6 @@ const Update: React.FC = () => {
         <Controller
           control={control}
           name={"role_id"}
-          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
