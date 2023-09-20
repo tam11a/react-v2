@@ -1,65 +1,99 @@
-import { Card, Tag } from "antd";
+import useUser from "@/hooks/useUser";
+import { Card, Divider, Statistic } from "antd";
 import React from "react";
 
 const Overview: React.FC = () => {
+  const user = useUser();
+  console.log(user);
+
   return (
     <>
-      <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">Admin Dashboard</h1>
-      </div>
-      <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-2 mx-8">
-        <Card size="small" className="shadow-md bg-[#B3ECF4]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Total</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">8M</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
-            >
-              +2,5%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md bg-[#A8FFE4]" bordered={false}>
-          <h1 className="font-semibold text-text-light">New</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">2.678K</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
-            >
-              -1,2%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md  bg-[#FEE0A0]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Ongoing</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">2.76M</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
-            >
-              +11%
-            </Tag>
-          </div>
-        </Card>
-        <Card size="small" className="shadow-md  bg-[#E7CFFF]" bordered={false}>
-          <h1 className="font-semibold text-text-light">Cancelled</h1>
-
-          <div className="flex flex-row items-center justify-between">
-            <span className="font-bold text-xl text-text-dark">8K</span>
-            <Tag
-              color="#fff"
-              className="text-text-light font-semibold rounded-xl"
-            >
-              +2,5%
-            </Tag>
-          </div>
-        </Card>
+      <div className="my-2 mx-8">
+        <div className="w-fit my-2">
+          <p className="text-xl">
+            Welcome{" "}
+            <b>
+              {user.first_name} {user.last_name}.
+            </b>
+          </p>
+          {user.role ? (
+            <p className="text-base">
+              You are currently designated as <b>{user.role.name}</b>
+            </p>
+          ) : (
+            <p className="text-base">
+              You currently don't have any role assigned to you.
+            </p>
+          )}
+        </div>
+        <Divider orientation="left">Leads Overview</Divider>
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
+          <Card bordered={true} className="bg-cyan-100   font-semibold">
+            <Statistic
+              title="Leads Pending"
+              value={110}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-lime-100   font-semibold">
+            <Statistic
+              title="No of Row"
+              value={25}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+        </div>
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
+          <Card bordered={true} className="  font-semibold bg-emerald-100">
+            <Statistic
+              title="Todays followup"
+              value={20}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+        </div>
+        <Divider orientation="left">Properties Overview</Divider>
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
+          <Card bordered={true} className="bg-sky-100   font-semibold">
+            <Statistic
+              title="Total properties"
+              value={35}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-indigo-100   font-semibold">
+            <Statistic
+              title="No of Book"
+              value={22}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+          <Card bordered={true} className="bg-fuchsia-100   font-semibold">
+            <Statistic
+              title="Total Sold"
+              value={10}
+              // precision={2}
+              valueStyle={{ color: "black" }}
+              // prefix={<ArrowUpOutlined />}
+              // suffix="%"
+            />
+          </Card>
+        </div>
       </div>
     </>
   );
