@@ -1,7 +1,6 @@
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@/types";
 import { IconButton } from "@mui/material";
-import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
@@ -87,16 +86,13 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
 
 //Restore Function
 
-const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
-  id,
-  permanent = false,
-}) => {
+const RestoreButton: React.FC<{ id: number | string }> = ({ id }) => {
   const { mutateAsync: deleteProperty } = useDeleteProperty();
 
   const onRestore = async (id: any) => {
     message.open({
       type: "loading",
-      content: permanent ? "Deleting Lead Permanently.." : "Deleting Lead..",
+      content: "Restoring property..",
       duration: 0,
     });
     const res = await handleResponse(() =>
@@ -109,7 +105,7 @@ const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
     );
     message.destroy();
     if (res.status) {
-      message.success("Lead restored successfully!");
+      message.success("Property restored successfully!");
       return true;
     } else {
       message.error(res.message);
@@ -117,7 +113,7 @@ const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
     }
   };
   const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
-    title: "Restore Lead?",
+    title: "Restore Property?",
     okText: "Restore",
     cancelText: "Cancel",
     color: "success",
@@ -132,10 +128,10 @@ const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
           delOpen(
             () => onRestore(id),
             <>
-              You are restoring a deleted lead.
+              You are restoring a deleted <b>Property</b>.
               <br />
               <br />
-              After restoring the lead you can see it on the list again.
+              After restoring the property you can see it on the list again.
             </>
           );
         }}
@@ -163,6 +159,17 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       // hide: true,
     },
     {
+      headerName: "Title",
+      headerAlign: "center",
+      field: "title",
+      align: "center",
+      minWidth: 200,
+      flex: 1,
+      sortable: false,
+      // hide: true,
+      renderCell: (data: any) => data?.row?.title || "-",
+    },
+    {
       headerName: "Type",
       headerAlign: "center",
       field: "type",
@@ -183,7 +190,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => `${data?.row?.["address.area"] || "N/A"}`,
     },
     {
-      headerName: "Block/Sec",
+      headerName: "Block",
       headerAlign: "center",
       field: "block",
       align: "center",
@@ -191,6 +198,16 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       minWidth: 200,
       flex: 1,
       renderCell: (data: any) => `${data?.row?.["address.block"] || "N/A"}`,
+    },
+    {
+      headerName: "Sector",
+      headerAlign: "center",
+      field: "sector",
+      align: "center",
+      width: 250,
+      minWidth: 200,
+      flex: 1,
+      renderCell: (data: any) => `${data?.row?.["address.sector"] || "N/A"}`,
     },
 
     {

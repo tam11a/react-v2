@@ -5,7 +5,7 @@ import Iconify from "@components/iconify";
 import { InlineIcon } from "@iconify/react";
 import { Button } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import { Input, Select, Switch, Upload } from "antd";
+import { Input, Select, Switch } from "antd";
 import React from "react";
 import MediaColumn from "./components/MediaColumn";
 
@@ -49,7 +49,7 @@ const Media: React.FC = () => {
             Create New
           </Button>
 
-          <Upload>
+          {/* <Upload>
             <Button
               variant="outlined"
               className="border-[#FDE4BF] border-2 text-text"
@@ -58,7 +58,7 @@ const Media: React.FC = () => {
             >
               Upload
             </Button>
-          </Upload>
+          </Upload> */}
         </div>
       </div>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 mt-2">

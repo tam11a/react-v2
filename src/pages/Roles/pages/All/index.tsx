@@ -5,7 +5,7 @@ import { useGetRoles } from "@/queries/roles";
 import useSearchParamsPaginate from "@/hooks/useSearchParamsPaginate";
 import { Button } from "@mui/material";
 import Iconify from "@components/iconify";
-import { Input, Select, Switch, Upload } from "antd";
+import { Input, Select, Switch } from "antd";
 import { InlineIcon } from "@iconify/react";
 import DataTable from "@components/Datatable";
 
@@ -36,17 +36,6 @@ const Roles: React.FC = () => {
           >
             Create New
           </Button>
-
-          <Upload>
-            <Button
-              variant="outlined"
-              className="border-[#FDE4BF] border-2 text-text"
-              endIcon={<Iconify className="text-xl mr-1 " icon="uil:upload" />}
-              disableElevation
-            >
-              Upload
-            </Button>
-          </Upload>
         </div>
       </div>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 mt-2">
