@@ -61,6 +61,7 @@ export const useUpdateLeadsById = () => {
     onSuccess: () => {
       query.invalidateQueries(["get-all-leads"]);
       query.invalidateQueries(["get-all-leads-by-id"]);
+      query.invalidateQueries(["get-lead-logs"]);
     },
   });
 };
@@ -89,6 +90,7 @@ export const useFollowupLead = () => {
     onSuccess: () => {
       query.invalidateQueries(["get-all-leads"]);
       query.invalidateQueries(["get-all-leads-by-id"]);
+      query.invalidateQueries(["get-lead-logs"]);
     },
   });
 };
@@ -140,7 +142,19 @@ const postInterest = ({
 export const usePostInterest = () => {
   const queryClient = useQueryClient();
   return useMutation(postInterest, {
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries(["get-lead-interested-properties"]),
+        queryClient.invalidateQueries(["get-lead-logs"]);
+    },
   });
+};
+
+const getLeadLog = (params: any) => {
+  return instance.get(`/lead-log`, {
+    params,
+  });
+};
+
+export const useGetLeadLog = (params: any) => {
+  return useQuery(["get-lead-logs", params], () => getLeadLog(params));
 };
