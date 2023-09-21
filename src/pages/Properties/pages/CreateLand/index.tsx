@@ -412,7 +412,9 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
-        <Label className="my-1 mt-4">Address</Label>
+        <Label isRequired className="my-1 mt-4">
+          Address Line 1
+        </Label>
         <Controller
           control={control}
           name={"address__line1"}
@@ -432,17 +434,34 @@ const CreateLand: React.FC = () => {
             />
           )}
         />
+        <Label className="my-1 mt-4">Address Line 2</Label>
+        <Controller
+          control={control}
+          name={"address__line2"}
+          // rules={{ required: true }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Input.TextArea
+              placeholder={"Enter Details Address"}
+              size={"large"}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+              status={error ? "error" : ""}
+              //   suffix={<ErrorSuffix error={error} />}
+            />
+          )}
+        />
 
-        <Label
-          // isRequired
-          className="my-1 mt-4"
-        >
+        <Label isRequired className="my-1 mt-4">
           Public Price
         </Label>
         <Controller
           control={control}
           name={"price"}
-          // rules={{ required: true }}
+          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
