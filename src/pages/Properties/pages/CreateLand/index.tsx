@@ -3,7 +3,7 @@ import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { message } from "@components/antd/message";
 import { Button } from "@mui/material";
-import { Cascader, Input, Radio, Select } from "antd";
+import { Cascader, Checkbox, Input, Radio, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -181,6 +181,28 @@ const CreateLand: React.FC = () => {
                   <Radio value="Used">Used</Radio>
                 </span>
               </Radio.Group>
+            )}
+          />
+        </div>
+        <div>
+          <Label className="my-1 mt-4">Visibility</Label>
+          <Controller
+            control={control}
+            name={"is_land_share"}
+            // rules={{ required: true }}
+            render={({
+              field: { value, onChange },
+              fieldState: { error: _error },
+            }) => (
+              <span>
+                <Checkbox
+                  className="col-span-1"
+                  onChange={onChange}
+                  checked={value}
+                >
+                  Publish on website
+                </Checkbox>
+              </span>
             )}
           />
         </div>
