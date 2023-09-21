@@ -49,7 +49,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
     <>
       {delContextHolder}
       <IconButton
-        sx={{ fontSize: "large" }}
+        // sx={{ fontSize: "large" }}
         color="error"
         className="text-sm"
         onClick={() => {
@@ -86,7 +86,7 @@ const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   const onRestore = async (id: any) => {
     message.open({
       type: "loading",
-      content: permanent ? "Deleting Lead Permanently.." : "Deleting Lead..",
+      content: "Restore Lead?",
       duration: 0,
     });
     const res = await handleResponse(() =>
@@ -221,7 +221,7 @@ const LeadColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Action",
       field: "action",
-      width: 180,
+      width: 200,
       minWidth: 180,
       // flex: 1,
       flex: 1,
@@ -235,7 +235,7 @@ const LeadColumn = (): GridColumns<IDataTable> => {
             className="text-sm"
             // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
           >
-            <p>Show</p>
+            <p>View</p>
           </IconButton>
           {data?.row?.deleted_at ? (
             <>

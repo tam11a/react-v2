@@ -3,7 +3,7 @@ import React from "react";
 import PropertiesColumn from "./components/PropertiesColumn";
 import DataTable from "@components/Datatable";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import { Upload, Input, Select, Switch, Card, Statistic } from "antd";
+import { Input, Select, Switch, Card, Statistic } from "antd";
 import { Icon, InlineIcon } from "@iconify/react";
 import { Button } from "@mui/material";
 
@@ -43,43 +43,62 @@ const Properties: React.FC = () => {
           />
         </div>
         <div className="flex flex-row gap-2 items-center  justify-center ">
-          {/* <Link to="/app/properties/create">
+          {type === "LAND" ? (
             <Button
-              type="primary"
-              size="large"
-              className="bg-[#FDE4BF] text-text-light"
-              block
+              variant="contained"
+              className="bg-[#FDE4BF] text-text"
+              endIcon={
+                <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+              }
+              disableElevation
+              component={"a"}
+              href="/app/properties/create-land"
             >
-              Create New
+              Create New Land
             </Button>
-          </Link> */}
+          ) : type === "FLAT" ? (
+            <Button
+              variant="contained"
+              className="bg-[#FDE4BF] text-text"
+              endIcon={
+                <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+              }
+              disableElevation
+              component={"a"}
+              href="/app/properties/create-flat"
+            >
+              Create New Flat
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant="contained"
+                className="bg-[#FDE4BF] text-text"
+                endIcon={
+                  <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+                }
+                disableElevation
+                component={"a"}
+                href="/app/properties/create-land"
+              >
+                Create New Land
+              </Button>
+              <Button
+                variant="contained"
+                className="bg-[#FDE4BF] text-text"
+                endIcon={
+                  <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
+                }
+                disableElevation
+                component={"a"}
+                href="/app/properties/create-flat"
+              >
+                Create New Flat
+              </Button>
+            </>
+          )}
 
-          <Button
-            variant="contained"
-            className="bg-[#FDE4BF] text-text"
-            endIcon={
-              <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
-            }
-            disableElevation
-            component={"a"}
-            href="/app/properties/create-land"
-          >
-            Create New Land
-          </Button>
-          <Button
-            variant="contained"
-            className="bg-[#FDE4BF] text-text"
-            endIcon={
-              <Icon className="text-2xl mr-1 " icon="basil:add-outline" />
-            }
-            disableElevation
-            component={"a"}
-            href="/app/properties/create-flat"
-          >
-            Create New Flat
-          </Button>
-
-          <Upload>
+          {/* <Upload>
             <Button
               variant="outlined"
               className="border-[#FDE4BF] border-2 text-text"
@@ -88,7 +107,7 @@ const Properties: React.FC = () => {
             >
               Upload
             </Button>
-          </Upload>
+          </Upload> */}
         </div>
       </div>
       <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4 my-4">
