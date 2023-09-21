@@ -6,9 +6,12 @@ import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { Input, Select, Switch, Card, Statistic } from "antd";
 import { Icon, InlineIcon } from "@iconify/react";
 import { Button } from "@mui/material";
+import { useGetDashboardReport } from "@/queries/dashboard";
 
 const Properties: React.FC = () => {
   const { state: showTrash, toggleState: toggleTrash } = useToggle(false);
+  const { data: assestReportData } = useGetDashboardReport();
+  const ReportData = assestReportData?.data;
 
   const { page, setPage, getQueryParams, limit, setLimit, search, setSearch } =
     usePaginate();
@@ -110,11 +113,11 @@ const Properties: React.FC = () => {
           </Upload> */}
         </div>
       </div>
-      <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4 my-4">
+      <div className="grid md:grid-cols-4 grid-cols-2 gap-4 my-4">
         <Card bordered={true} className="bg-sky-100   font-semibold">
           <Statistic
             title="Latest properties"
-            value={35}
+            value={ReportData?.asset?.Latest || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
             // prefix={<ArrowUpOutlined />}
@@ -124,17 +127,17 @@ const Properties: React.FC = () => {
         <Card bordered={true} className="bg-fuchsia-100   font-semibold">
           <Statistic
             title="Booked Properties"
-            value={22}
+            value={ReportData?.asset?.["In Progress"] || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
             // prefix={<ArrowUpOutlined />}
             // suffix="%"
           />
         </Card>
-        <Card bordered={true} className="bg-amber-100   font-semibold">
+        <Card bordered={true} className="bg-fuchsia-100   font-semibold">
           <Statistic
-            title="In progress properties"
-            value={10}
+            title="Booked Properties"
+            value={ReportData?.asset?.Booked || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
             // prefix={<ArrowUpOutlined />}
@@ -144,7 +147,7 @@ const Properties: React.FC = () => {
         <Card bordered={true} className="bg-emerald-100   font-semibold">
           <Statistic
             title="Sold properties"
-            value={10}
+            value={ReportData?.asset?.Sold || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
             // prefix={<ArrowUpOutlined />}
@@ -153,8 +156,8 @@ const Properties: React.FC = () => {
         </Card>
         <Card bordered={true} className="bg-red-100   font-semibold">
           <Statistic
-            title="cancelled properties"
-            value={10}
+            title="Cancelled properties"
+            value={ReportData?.asset?.Cancelled || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
             // prefix={<ArrowUpOutlined />}
