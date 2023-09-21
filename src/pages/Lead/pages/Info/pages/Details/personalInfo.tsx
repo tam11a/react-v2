@@ -121,7 +121,7 @@ const PersonalInfo: React.FC = () => {
               Status:{" "}
               <Tag
                 color={leadInfo?.status?.color || "#3DC5FF"}
-                className="font-medium text-md"
+                className="font-bold text-md text-slate-800"
               >
                 {leadInfo?.status?.label}
               </Tag>
