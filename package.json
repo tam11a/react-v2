@@ -21,6 +21,7 @@
     "antd": "5.1.2",
     "axios": "1.2.2",
     "dayjs": "^1.11.9",
+    "file-saver": "2.0.5",
     "joi": "^17.10.1",
     "join-path": "^1.1.1",
     "moment": "2.29.4",
@@ -28,6 +29,7 @@
     "path.join": "^1.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-dropzone": "14.2.3",
     "react-hook-form": "7.41.5",
     "react-icons": "4.7.1",
     "react-router-dom": "6.4.3",
@@ -36,6 +38,7 @@
     "zod": "3.20.2"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/nprogress": "0.2.0",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
