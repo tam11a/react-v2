@@ -10,7 +10,7 @@ const Overview: React.FC = () => {
   const user = useUser();
   const { data } = useGetDashboardReport();
   const ReportData = data?.data;
-  console.log(ReportData);
+  // console.log(ReportData);
 
   return (
     <>
