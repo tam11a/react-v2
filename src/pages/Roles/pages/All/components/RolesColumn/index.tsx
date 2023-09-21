@@ -3,7 +3,6 @@ import { useDeleteRole } from "@/queries/roles";
 import handleResponse from "@/utilities/handleResponse";
 import { IDataTable } from "@components/Datatable/types";
 import { message } from "@components/antd/message";
-import Iconify from "@components/iconify";
 import { IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { Tag } from "antd";
@@ -13,7 +12,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
   id,
   permanent = false,
 }) => {
-  const { mutateAsync: deleteLead } = useDeleteRole();
+  const { mutateAsync: deleteRole } = useDeleteRole();
 
   const onDelete = async (id: any) => {
     message.open({
@@ -22,7 +21,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
       duration: 0,
     });
     const res = await handleResponse(() =>
-      deleteLead({
+      deleteRole({
         id,
         params: {
           permanent: permanent || null,
@@ -56,23 +55,84 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
       <IconButton
         sx={{ fontSize: "large" }}
         color="error"
+        className="text-sm"
         onClick={() => {
           delOpen(
             () => onDelete(id),
             <>
-              You are deleting a lead.
+              You are deleting a role.
               <br />
               <br />
-              Deleting a lead means the lead will
+              Deleting a role means the role will
               {permanent ? " deleted forever" : " move to trash folder"} . After
               deleting, this work can't be undone.{" "}
-              {permanent ? "" : " You'll have to restore the lead to use again"}
+              {permanent ? "" : " You'll have to restore the role to use again"}
             </>
           );
         }}
         // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
       >
-        <Iconify icon="bxs:trash" />
+        <p>Delete</p>
+      </IconButton>
+    </>
+  );
+};
+
+//Restore Function
+
+const RestoreButton: React.FC<{ id: number | string }> = ({ id }) => {
+  const { mutateAsync: deleteRole } = useDeleteRole();
+
+  const onRestore = async (id: any) => {
+    message.open({
+      type: "loading",
+      content: "Restoring role..",
+      duration: 0,
+    });
+    const res = await handleResponse(() =>
+      deleteRole({
+        id,
+        params: {
+          restore: true,
+        },
+      })
+    );
+    message.destroy();
+    if (res.status) {
+      message.success("Role restored successfully!");
+      return true;
+    } else {
+      message.error(res.message);
+      return false;
+    }
+  };
+  const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
+    title: "Restore Role?",
+    okText: "Restore",
+    cancelText: "Cancel",
+    color: "success",
+  });
+  return (
+    <>
+      {delContextHolder}
+      <IconButton
+        color="success"
+        className="text-sm"
+        onClick={() => {
+          delOpen(
+            () => onRestore(id),
+            <>
+              You are restoring a deleted <b>Role</b>.
+              <br />
+              <br />
+              After restoring the role you can see it on the list again.
+            </>
+          );
+        }}
+        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+      >
+        <p>Restore</p>
+        {/* <Icon icon="bxs:trash" /> */}
       </IconButton>
     </>
   );
@@ -155,8 +215,8 @@ const RolesColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Action",
       field: "action",
-      width: 100,
-      minWidth: 80,
+      width: 200,
+      minWidth: 180,
       // flex: 1,
       flex: 1,
       headerAlign: "center",
@@ -164,16 +224,17 @@ const RolesColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => (
         <>
           <IconButton
-            sx={{ fontSize: "large" }}
+            className="text-sm"
             color="primary"
             onClick={() => navigate(`/app/roles/details/${data.row?.id}`)}
             // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
           >
-            <Iconify icon="icon-park-solid:info" />
+            <p>View</p>
           </IconButton>
           {data?.row?.deleted_at ? (
             <>
               {/* Restore Button Here */}
+              <RestoreButton id={data?.row?.id} />
               <DeleteButton id={data?.row?.id} permanent={true} />
             </>
           ) : (
