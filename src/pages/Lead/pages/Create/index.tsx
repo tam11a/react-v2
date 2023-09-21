@@ -281,7 +281,40 @@ const Create: React.FC = () => {
             />
           )}
         />
-
+        <p className="text-xl font-bold text-text-light my-5">
+          Medial Information
+        </p>
+        <Label className="my-1">Source</Label>
+        <Controller
+          control={control}
+          name={"source"}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <Cascader
+              size="large"
+              placeholder="Select Source..."
+              allowClear={false}
+              value={value || undefined}
+              showSearch
+              options={media}
+              onSearch={searchMedia}
+              loading={isMediaLoading}
+              onChange={onChange}
+              onBlur={onBlur}
+              className="w-full"
+              status={error ? "error" : ""}
+              suffixIcon={
+                <Icon
+                  className="text-xl text-text"
+                  icon={"mingcute:search-3-line"}
+                />
+              }
+              //   disabled={isLoading}
+            />
+          )}
+        />
         <Label className="my-1">Media Source</Label>
         <Controller
           control={control}

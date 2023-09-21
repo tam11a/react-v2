@@ -49,7 +49,7 @@ const PersonalInfo: React.FC = () => {
   return (
     <>
       <div>
-        <div className="flex md:flex-row flex-col justify-between max-w-5xl p-6 gap-4">
+        <div className="flex md:flex-row flex-col justify-between max-w-5xl px-6 pt-6 gap-4">
           <div className="flex flex-col gap-3 items-start">
             <p className="text-4xl font-bold text-text-dark">{`${leadInfo?.first_name} ${leadInfo?.last_name}`}</p>
 
@@ -77,46 +77,24 @@ const PersonalInfo: React.FC = () => {
               </p>
             </div>
 
-            <p className="flex items-center text-sm font-bold text-text-light gap-1">
-              <InlineIcon
-                icon="iconamoon:email-light"
-                className="text-md text-text-light"
-              />
-              {leadInfo?.email || "N/A"}
-            </p>
-            <p className="flex items-center text-sm font-bold text-text-light gap-1">
-              <InlineIcon
-                icon="ic:outline-phone"
-                className="text-lg text-text-light"
-              />
-              +88{leadInfo?.phone}
-              <a
-                href={`tel:+88${leadInfo?.phone}`}
-                className="ml-2 flex flex-row items-center gap-1 border-2 px-2 py-1 bg-slate-200 rounded-full"
-                target="_blank"
-              >
+            <div className="flex flex-row gap-2">
+              <p className="flex items-center text-sm font-bold text-text-light gap-1">
                 <InlineIcon
-                  icon="ic:outline-call"
+                  icon="iconamoon:email-light"
+                  className="text-md text-text-light"
+                />
+                {leadInfo?.email || "N/A"}
+              </p>
+              <p className="flex items-center text-sm font-bold text-text-light gap-1">
+                <InlineIcon
+                  icon="ic:outline-phone"
                   className="text-lg text-text-light"
                 />
-                Call
-                <span className="font-normal">
-                  {leadInfo?.first_name} {leadInfo?.last_name}
-                </span>
-              </a>
-              <a
-                href={`https://wa.me/+88${leadInfo?.phone}`}
-                className="ml-2"
-                target="_blank"
-              >
-                <InlineIcon
-                  icon="ic:baseline-whatsapp"
-                  className="text-lg text-text-light"
-                />
-              </a>
-            </p>
+                +88{leadInfo?.phone}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col gap-2  py-3 text-text-light">
+          <div className="flex flex-col gap-2 py-3 text-text-light">
             <p className="text-md font-bold">
               Status:{" "}
               <Tag
@@ -142,7 +120,39 @@ const PersonalInfo: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="max-w-5xl pl-3">
+        <div className="max-w-5xl mx-5">
+          <p className="flex items-center text-sm font-bold text-text-light gap-1">
+            <a
+              href={`tel:+88${leadInfo?.phone}`}
+              className="ml-2 flex flex-row items-center gap-1 border-2 px-2 py-1 bg-slate-200 rounded-full"
+              target="_blank"
+            >
+              <InlineIcon
+                icon="ic:outline-call"
+                className="text-lg text-text-light"
+              />
+              Call
+              <span className="font-normal">
+                {leadInfo?.first_name} {leadInfo?.last_name}
+              </span>
+            </a>
+            <a
+              href={`https://wa.me/+88${leadInfo?.phone}`}
+              className="ml-2 flex flex-row items-center gap-1 border-2 px-2 py-1 bg-slate-200 rounded-full"
+              target="_blank"
+            >
+              <InlineIcon
+                icon="ic:baseline-whatsapp"
+                className="text-lg text-text-light"
+              />
+              Text
+              <span className="font-normal">
+                {leadInfo?.first_name} {leadInfo?.last_name}
+              </span>
+            </a>
+          </p>
+        </div>
+        <div className="max-w-5xl px-3 mt-6 mx-3">
           <Label className="text-lg font-semibold text-text">
             Interested Properties
           </Label>

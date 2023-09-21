@@ -1,5 +1,4 @@
 import { IDataTable } from "@/types";
-import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -45,12 +44,12 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => (
         <>
           <IconButton
-            sx={{ fontSize: "large" }}
+            className="text-sm"
             color="primary"
             onClick={() => navigate(`/app/properties/details/${data.row?.id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
-            <Icon icon="icon-park-solid:info" />
+            View
           </IconButton>
         </>
       ),
