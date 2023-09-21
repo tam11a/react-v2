@@ -23,7 +23,6 @@ import dayjs from "dayjs";
 import React from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import Upload from "@/components/Upload";
 
 const Update: React.FC = () => {
 	const params = useParams();
@@ -85,8 +84,6 @@ const Update: React.FC = () => {
 		else messageApi.error(res.message);
 	};
 
-	console.log(previewAttachment(employeeInfo?.display_picture));
-
 	return (
 		<>
 			{contextHolder}
@@ -97,12 +94,8 @@ const Update: React.FC = () => {
 				<Label isRequired>Display Image</Label>
 				<Controller
 					control={control}
-					name={"first_name"}
-					rules={{ required: true }}
-					render={({
-						field: { onChange, onBlur, value },
-						fieldState: { error },
-					}) => (
+					name={"display_picture"}
+					render={({ field: { onChange, value }, fieldState: { error } }) => (
 						<AntUpload
 							fileList={
 								value
@@ -111,15 +104,17 @@ const Update: React.FC = () => {
 												uid: value,
 												url: previewAttachment(value),
 												preview: previewAttachment(value),
+												thumbUrl: previewAttachment(value),
 												name: value,
 												fileName: value,
 												status: "done",
-												crossOrigin: "anonymous",
 												error,
 											},
 									  ]
 									: undefined
 							}
+							maxCount={1}
+							listType="picture-card"
 							showUploadList={{
 								showDownloadIcon: true,
 							}}
@@ -142,13 +137,15 @@ const Update: React.FC = () => {
 								}
 							}}
 						>
-							<AntButton
-								className="flex flex-col items-center justify-center text-sm"
-								type="dashed"
-								icon={<Icon icon={"material-symbols:upload"} />}
-							>
-								<span>Upload</span>
-							</AntButton>
+							{value ? null : (
+								<AntButton
+									className="flex flex-col items-center justify-center text-sm"
+									type="dashed"
+									icon={<Icon icon={"material-symbols:upload"} />}
+								>
+									<span>Upload</span>
+								</AntButton>
+							)}
 						</AntUpload>
 					)}
 				/>
@@ -448,15 +445,16 @@ const Update: React.FC = () => {
 												{
 													uid: value,
 													url: previewAttachment(value),
+													preview: previewAttachment(value),
 													name: value,
 													fileName: value,
 													status: "done",
-													crossOrigin: "anonymous",
 													error,
 												},
 										  ]
 										: undefined
 								}
+								listType="picture"
 								showUploadList={{
 									showDownloadIcon: true,
 								}}
