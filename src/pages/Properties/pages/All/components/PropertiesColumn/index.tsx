@@ -163,6 +163,17 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       // hide: true,
     },
     {
+      headerName: "Title",
+      headerAlign: "center",
+      field: "title",
+      align: "center",
+      minWidth: 200,
+      flex: 1,
+      sortable: false,
+      // hide: true,
+      renderCell: (data: any) => data?.row?.title || "-",
+    },
+    {
       headerName: "Type",
       headerAlign: "center",
       field: "type",
@@ -183,7 +194,7 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => `${data?.row?.["address.area"] || "N/A"}`,
     },
     {
-      headerName: "Block/Sec",
+      headerName: "Block",
       headerAlign: "center",
       field: "block",
       align: "center",
@@ -191,6 +202,16 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
       minWidth: 200,
       flex: 1,
       renderCell: (data: any) => `${data?.row?.["address.block"] || "N/A"}`,
+    },
+    {
+      headerName: "Sector",
+      headerAlign: "center",
+      field: "sector",
+      align: "center",
+      width: 250,
+      minWidth: 200,
+      flex: 1,
+      renderCell: (data: any) => `${data?.row?.["address.sector"] || "N/A"}`,
     },
 
     {
