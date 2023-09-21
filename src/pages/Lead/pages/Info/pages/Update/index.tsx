@@ -48,6 +48,7 @@ const Update: React.FC = () => {
       created_at: leadInfo?.dob,
       status_id: leadInfo?.status_id,
       media_id: leadInfo?.media_id,
+      source: leadInfo?.source,
       media_commision: leadInfo?.media_commision,
       priority: leadInfo?.priority,
       address_line1: leadInfo?.address_line1,
@@ -78,7 +79,7 @@ const Update: React.FC = () => {
   return (
     <>
       {contextHolder}
-      <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-xl my-5">
+      <form onSubmit={handleSubmit(onValid)} className=" mx-auto max-w-md my-5">
         <Label isRequired>Full Name</Label>
         <Input.Group compact>
           <Controller
@@ -416,14 +417,14 @@ const Update: React.FC = () => {
           )}
         />
 
-        <h1 className="text-xl font-bold text-text-light my-5">
+        <p className="text-xl font-bold text-text-light my-5">
           Medial Information
-        </h1>
+        </p>
 
         <Label className="my-1">Source</Label>
         <Controller
           control={control}
-          name={"media_source"}
+          name={"source"}
           // rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },

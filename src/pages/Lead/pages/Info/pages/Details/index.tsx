@@ -17,7 +17,7 @@ const Details: React.FC = () => {
       <div className="grid grid-cols-5">
         <div className="col-span-3">
           <PersonalInfo />
-          <div className="p-3">
+          <div className="p-3 mx-3">
             <DataTable
               columns={PropertiesColumn()}
               // columns={[]}
