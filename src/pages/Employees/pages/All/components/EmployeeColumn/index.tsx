@@ -1,7 +1,6 @@
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@/types";
 import { IconButton } from "@mui/material";
-import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
@@ -57,7 +56,7 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
     <>
       {delContextHolder}
       <IconButton
-        sx={{ fontSize: "large" }}
+        className="text-sm"
         color="error"
         onClick={() => {
           delOpen(
@@ -77,7 +76,67 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
         }}
         // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
       >
-        <Icon icon="bxs:trash" />
+        <p>Delete</p>
+      </IconButton>
+    </>
+  );
+};
+
+//Restore Function
+
+const RestoreButton: React.FC<{ id: number | string }> = ({ id }) => {
+  const { mutateAsync: deleteEmployee } = useDeleteEmployee();
+
+  const onRestore = async (id: any) => {
+    message.open({
+      type: "loading",
+      content: "Restoring employee..",
+      duration: 0,
+    });
+    const res = await handleResponse(() =>
+      deleteEmployee({
+        id,
+        params: {
+          restore: true,
+        },
+      })
+    );
+    message.destroy();
+    if (res.status) {
+      message.success("Employee restored successfully!");
+      return true;
+    } else {
+      message.error(res.message);
+      return false;
+    }
+  };
+  const { contextHolder: delContextHolder, open: delOpen } = useAreYouSure({
+    title: "Restore Employee?",
+    okText: "Restore",
+    cancelText: "Cancel",
+    color: "success",
+  });
+  return (
+    <>
+      {delContextHolder}
+      <IconButton
+        color="success"
+        className="text-sm"
+        onClick={() => {
+          delOpen(
+            () => onRestore(id),
+            <>
+              You are restoring a deleted <b>Employee</b>.
+              <br />
+              <br />
+              After restoring the employee you can see it on the list again.
+            </>
+          );
+        }}
+        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+      >
+        <p>Restore</p>
+        {/* <Icon icon="bxs:trash" /> */}
       </IconButton>
     </>
   );
@@ -152,8 +211,8 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Action",
       field: "action",
-      width: 100,
-      minWidth: 80,
+      width: 200,
+      minWidth: 180,
       // flex: 1,
       flex: 1,
       headerAlign: "center",
@@ -161,16 +220,17 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => (
         <>
           <IconButton
-            sx={{ fontSize: "large" }}
+            className="text-sm"
             color="primary"
             onClick={() => navigate(`/app/employees/details/${data.row?.id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
-            <Icon icon="icon-park-solid:info" />
+            <p>view</p>
           </IconButton>
           {data?.row?.deleted_at ? (
             <>
               {/* Restore Button Here */}
+              <RestoreButton id={data?.row?.id} />
               <DeleteButton id={data?.row?.id} permanent={true} />
             </>
           ) : (
