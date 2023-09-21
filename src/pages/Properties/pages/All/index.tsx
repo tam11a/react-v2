@@ -126,7 +126,7 @@ const Properties: React.FC = () => {
         </Card>
         <Card bordered={true} className="bg-fuchsia-100   font-semibold">
           <Statistic
-            title="Booked Properties"
+            title="In Progress Properties"
             value={ReportData?.asset?.["In Progress"] || 0}
             // precision={2}
             valueStyle={{ color: "black" }}
