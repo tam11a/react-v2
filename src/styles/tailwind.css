@@ -24,6 +24,10 @@
 .ant-message {
 	z-index: 1220;
 }
+.ant-picker-dropdown,
+.ant-select-dropdown {
+	z-index: 1400 !important;
+}
 
 input.ant-input {
 	color: #4a6979 !important;
