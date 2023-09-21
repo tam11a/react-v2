@@ -204,7 +204,6 @@ const Update: React.FC = () => {
         <Controller
           control={control}
           name={"address_line2"}
-          rules={{ required: true }}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -421,7 +420,7 @@ const Update: React.FC = () => {
           Medial Information
         </h1>
 
-        <Label className="my-1">Media Source</Label>
+        <Label className="my-1">Source</Label>
         <Controller
           control={control}
           name={"media_source"}
