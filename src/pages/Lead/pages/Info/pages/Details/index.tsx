@@ -37,7 +37,7 @@ const Details: React.FC = () => {
         </div>
 
         <div className="col-span-2 border-dashed border-l-2 p-4">
-          <p className="text-xl font-bold text-text-light pb-4">Lead Log</p>
+          <p className="text-xl font-bold text-text-light pb-4">Customer Log</p>
           <LeadLog />
         </div>
       </div>
