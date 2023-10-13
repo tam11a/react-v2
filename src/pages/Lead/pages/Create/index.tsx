@@ -281,9 +281,6 @@ const Create: React.FC = () => {
             />
           )}
         />
-        <p className="text-xl font-bold text-text-light my-5">
-          Medial Information
-        </p>
         <Label className="my-1">Source</Label>
         <Controller
           control={control}
@@ -315,6 +312,10 @@ const Create: React.FC = () => {
             />
           )}
         />
+        <p className="text-xl font-bold text-text-light my-5">
+          Medial Information
+        </p>
+
         <Label className="my-1">Media Source</Label>
         <Controller
           control={control}
