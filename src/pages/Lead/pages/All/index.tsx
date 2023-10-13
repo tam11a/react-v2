@@ -25,7 +25,7 @@ const Leads: React.FC = () => {
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">All Leads</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">All Customers</h1>
 
         <div className="flex flex-row gap-2 items-center  justify-center ">
           <Button
@@ -87,7 +87,7 @@ const Leads: React.FC = () => {
               checked={showMyLeads}
               onChange={toggleMyLeads}
             />
-            <p className="font-semibold text-sm mx-2">Show My Leads</p>
+            <p className="font-semibold text-sm mx-2">Show My Customers</p>
           </span>
 
           <span className={"flex flex-row items-center gap-1"}>
@@ -97,7 +97,7 @@ const Leads: React.FC = () => {
               checked={showTrash}
               onChange={toggleTrash}
             />
-            <p className="font-semibold text-sm mx-2">Show Deleted Leads</p>
+            <p className="font-semibold text-sm mx-2">Show Deleted Customers</p>
           </span>
         </div>
 

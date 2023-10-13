@@ -26,7 +26,6 @@ const LeadLog: React.FC = () => {
   const [text, setText] = React.useState("");
   const [type, setType] = React.useState("note");
   React.useEffect(() => setType("note"), [leadData]);
-  console.log(type);
 
   const { mutateAsync: mutate } = usePostLeadLog();
 
@@ -107,7 +106,7 @@ const LeadLog: React.FC = () => {
               <></>
             )}
             <p className="font-semibold text-xs text-text-light">
-              {moment(item.created_at).calendar()}
+              {moment(item.created_at).format("l")}
             </p>
           </div>
         );
