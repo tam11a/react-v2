@@ -155,7 +155,9 @@ const Navigator: React.FC = () => {
               open={openFollowup}
               onClose={onCloseFollowup}
               lead_id={id}
+              lead_info={leadInfo}
               followup_date={leadInfo?.followup_date}
+              lead_status={leadStatus}
             />
           </span>
           <Menu
