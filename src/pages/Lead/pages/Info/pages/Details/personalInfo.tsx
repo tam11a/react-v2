@@ -1,50 +1,50 @@
 import React from "react";
 import { InlineIcon } from "@iconify/react";
-import { Cascader, Tag } from "antd";
-import { useGetLeadsById, usePostInterest } from "@/queries/leads";
+import { Tag } from "antd";
+import { useGetLeadsById } from "@/queries/leads";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import Iconify from "@components/iconify";
-import Label from "@components/Label";
-import useProperty from "@/hooks/useProperty";
-import { message } from "@components/antd/message";
-import handleResponse from "@/utilities/handleResponse";
-import { Button } from "@mui/material";
+// import Iconify from "@components/iconify";
+// import Label from "@components/Label";
+// import useProperty from "@/hooks/useProperty";
+// import { message } from "@components/antd/message";
+// import handleResponse from "@/utilities/handleResponse";
+// import { Button } from "@mui/material";
 
 const PersonalInfo: React.FC = () => {
   const params = useParams();
   const { data } = useGetLeadsById(params.id);
-  const { property, isPropertyLoading, searchProperty } = useProperty();
+  // const { property, isPropertyLoading, searchProperty } = useProperty();
 
-  const { mutateAsync: postInterest } = usePostInterest();
+  // const { mutateAsync: postInterest } = usePostInterest();
 
   const leadInfo = data?.data?.data;
 
-  const onValid = async (d: any) => {
-    message.open({
-      type: "loading",
-      content: `Loading information...`,
-      duration: 0,
-    });
-    message.destroy();
-    const res = await handleResponse(
-      () =>
-        postInterest({
-          lead_id: params?.id || "",
-          property_id: d,
-        }),
-      [201]
-    );
-    message.destroy();
-    if (res.status) {
-      message.success("Information updated successfully!");
-      setPropertyValue(undefined);
-    } else message.error(res.message);
-  };
+  // const onValid = async (d: any) => {
+  //   message.open({
+  //     type: "loading",
+  //     content: `Loading information...`,
+  //     duration: 0,
+  //   });
+  //   message.destroy();
+  //   const res = await handleResponse(
+  //     () =>
+  //       postInterest({
+  //         lead_id: params?.id || "",
+  //         property_id: d,
+  //       }),
+  //     [201]
+  //   );
+  //   message.destroy();
+  //   if (res.status) {
+  //     message.success("Information updated successfully!");
+  //     setPropertyValue(undefined);
+  //   } else message.error(res.message);
+  // };
 
-  const [propertyValue, setPropertyValue] = React.useState<any | undefined>(
-    undefined
-  );
+  // const [propertyValue, setPropertyValue] = React.useState<any | undefined>(
+  //   undefined
+  // );
 
   return (
     <>
@@ -151,40 +151,6 @@ const PersonalInfo: React.FC = () => {
               </span>
             </a>
           </p>
-        </div>
-        <div className="max-w-5xl px-3 mt-6 mx-3">
-          <Label className="text-lg font-semibold text-text">
-            Interested Properties
-          </Label>
-
-          <div className="flex flex-row items-center gap-1 mt-2">
-            <Cascader
-              size="large"
-              placeholder="Search properties..."
-              allowClear={false}
-              value={(propertyValue as any) || undefined}
-              showSearch
-              options={property} // properties
-              onSearch={searchProperty}
-              loading={isPropertyLoading}
-              onChange={(value) => setPropertyValue(value)}
-              className="w-full max-w-md"
-              suffixIcon={
-                <Iconify
-                  className="text-xl text-text"
-                  icon={"mingcute:search-3-line"}
-                />
-              }
-              //   disabled={isLoading}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => onValid(propertyValue)}
-            >
-              Add
-            </Button>
-          </div>
         </div>
       </div>
     </>

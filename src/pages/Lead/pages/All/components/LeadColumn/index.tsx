@@ -56,17 +56,19 @@ const DeleteButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
           delOpen(
             () => onDelete(id),
             <>
-              You are deleting a lead.
+              You are deleting a customer.
               <br />
               <br />
-              Deleting a lead means the lead will
+              Deleting a customer means the customer will
               {permanent ? " deleted forever" : " move to trash folder"} . After
               deleting, this work can't be undone.{" "}
-              {permanent ? "" : " You'll have to restore the lead to use again"}
+              {permanent
+                ? ""
+                : " You'll have to restore the customer to use again"}
             </>
           );
         }}
-        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+        // disabled={!checkAccess(defaultPermissions.customerS.FULL)}
       >
         <p>Delete</p>
         {/* <Icon icon="bxs:trash" /> */}
@@ -122,14 +124,14 @@ const RestoreButton: React.FC<{ id: number | string; permanent?: boolean }> = ({
           delOpen(
             () => onRestore(id),
             <>
-              You are restoring a deleted lead.
+              You are restoring a deleted customer.
               <br />
               <br />
-              After restoring the lead you can see it on the list again.
+              After restoring the customer you can see it on the list again.
             </>
           );
         }}
-        // disabled={!checkAccess(defaultPermissions.leadS.FULL)}
+        // disabled={!checkAccess(defaultPermissions.customerS.FULL)}
       >
         <p>Restore</p>
         {/* <Icon icon="bxs:trash" /> */}

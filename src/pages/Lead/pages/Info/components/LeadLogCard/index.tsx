@@ -2,7 +2,7 @@ import { useGetLeadLog, usePostLeadLog } from "@/queries/leads";
 import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import { usePaginate } from "@tam11a/react-use-hooks";
-import { Pagination, Input, Select, Button, Card } from "antd";
+import { Pagination, Input, Button, Card } from "antd";
 import moment from "moment";
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -25,6 +25,7 @@ const LeadLog: React.FC = () => {
 
   const [text, setText] = React.useState("");
   const [type, setType] = React.useState("note");
+  React.useEffect(() => setType("note"), [leadData]);
 
   const { mutateAsync: mutate } = usePostLeadLog();
 
@@ -39,7 +40,7 @@ const LeadLog: React.FC = () => {
         mutate({
           lead_id: params.id,
           type,
-          conversation: type === "conversation" ? text : undefined,
+          // conversation: type === "conversation" ? text : undefined,
           note: type === "note" ? text : undefined,
         }),
       [201]
@@ -71,18 +72,6 @@ const LeadLog: React.FC = () => {
           placeholder="Aa..."
         />
         <div className="flex flex-row items-center justify-end">
-          <Select
-            value={type}
-            onChange={(value) => setType(value)}
-            bordered={false}
-            dropdownMatchSelectWidth={false}
-            size="small"
-            className="w-24 bg-white rounded border border-slate-300"
-            options={[
-              { label: "Note", value: "note" },
-              { label: "Conversation", value: "conversation" },
-            ]}
-          />
           <Button
             type="primary"
             size="small"
@@ -117,7 +106,7 @@ const LeadLog: React.FC = () => {
               <></>
             )}
             <p className="font-semibold text-xs text-text-light">
-              {moment(item.created_at).calendar()}
+              {moment(item.created_at).format("l")}
             </p>
           </div>
         );

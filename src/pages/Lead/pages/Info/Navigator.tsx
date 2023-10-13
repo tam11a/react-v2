@@ -99,7 +99,7 @@ const Navigator: React.FC = () => {
   return (
     <>
       <div className="flex flex-row items-center justify-between gap-2 p-3 text-text border-b">
-        <h1 className="text-2xl md:text-3xl font-bold">Lead Details</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">Customer Details</h1>
 
         <div className="flex flex-row gap-2 items-center justify-end">
           <span className="hidden md:flex flex-row items-center gap-2">
@@ -155,7 +155,9 @@ const Navigator: React.FC = () => {
               open={openFollowup}
               onClose={onCloseFollowup}
               lead_id={id}
+              lead_info={leadInfo}
               followup_date={leadInfo?.followup_date}
+              lead_status={leadStatus}
             />
           </span>
           <Menu

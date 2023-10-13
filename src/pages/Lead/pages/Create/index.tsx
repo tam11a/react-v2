@@ -289,25 +289,22 @@ const Create: React.FC = () => {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <Cascader
+            <Select
               size="large"
               placeholder="Select Source..."
-              allowClear={false}
+              allowClear={true}
               value={value || undefined}
-              showSearch
-              options={media}
-              onSearch={searchMedia}
-              loading={isMediaLoading}
+              options={[
+                { value: "facebook", label: "Facebook" },
+                { value: "instagram", label: "Instagram" },
+                { value: "indeed", label: "Indeed" },
+                { value: "walkin", label: "Walkin" },
+              ]}
               onChange={onChange}
               onBlur={onBlur}
               className="w-full"
               status={error ? "error" : ""}
-              suffixIcon={
-                <Icon
-                  className="text-xl text-text"
-                  icon={"mingcute:search-3-line"}
-                />
-              }
+
               //   disabled={isLoading}
             />
           )}
@@ -327,7 +324,7 @@ const Create: React.FC = () => {
             <Cascader
               size="large"
               placeholder="Search media..."
-              allowClear={false}
+              allowClear={true}
               value={value || undefined}
               showSearch
               options={media}
@@ -339,7 +336,7 @@ const Create: React.FC = () => {
               status={error ? "error" : ""}
               suffixIcon={
                 <Icon
-                  className="text-xl text-text"
+                  className="text-xl text-text mr-4"
                   icon={"mingcute:search-3-line"}
                 />
               }

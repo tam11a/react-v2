@@ -271,6 +271,18 @@ const PropertiesColumn = (): GridColumns<IDataTable> => {
         data?.row?.completion_status ? data?.row?.completion_status : "-",
     },
     {
+      headerName: "Created At",
+      headerAlign: "center",
+      field: "created_at",
+      minWidth: 130,
+      flex: 1,
+      align: "center",
+      renderCell: (data: any) =>
+        data.row?.created_at
+          ? `${moment(data.row?.created_at).format("ll")}`
+          : "-",
+    },
+    {
       headerName: "Handovered At",
       headerAlign: "center",
       field: "flat.handovered_at",
