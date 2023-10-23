@@ -32,8 +32,6 @@ const PropertyInfo: React.FC = () => {
     setPropertyInfo(data?.data?.data);
   }, [data]);
 
-  console.log(mediaData);
-
   return (
     <>
       <div className="grid grid-cols-3 divide-x-2">
@@ -49,6 +47,7 @@ const PropertyInfo: React.FC = () => {
             <p className="text-text font-bold text-xl mt-3 flex flex-row items-center">
               {propertyInfo.title || ""}
               <Chip
+                component={"span"}
                 size="small"
                 label={propertyInfo?.status}
                 className="ml-2"

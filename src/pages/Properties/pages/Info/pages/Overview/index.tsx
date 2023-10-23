@@ -5,9 +5,14 @@ import DataTable from "@components/Datatable";
 import CustomerCol from "../../components/CustomerCol";
 import PropertyInfo from "./PropertyInfo";
 import { Container } from "@mui/material";
+import { useGetInterestedCustomerById } from "@/queries/properties";
+import { useParams } from "react-router-dom";
 
 const Overview: React.FC = () => {
+  const params = useParams();
   const { page, setPage, limit, setLimit } = usePaginate();
+  const { data } = useGetInterestedCustomerById(params.id);
+
   return (
     <>
       {/* details */}
@@ -22,13 +27,12 @@ const Overview: React.FC = () => {
           </div>
           <DataTable
             columns={CustomerCol()}
-            // columns={[]}
-            // rows={data?.data?.data || []}
-            rows={[]}
+            rows={data?.data?.data || []}
+            // rows={[]}
             isLoading={false}
             // getRowId={(r: any) => r?._id}
             // ss pagination
-            // rowCount={data?.data?.total || 0}
+            rowCount={data?.data?.total || 0}
             checkboxSelection
             paginationMode={"server"}
             page={page}

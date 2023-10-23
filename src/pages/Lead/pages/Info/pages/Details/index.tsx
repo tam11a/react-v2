@@ -7,7 +7,7 @@ import { useGetInterestedProperties, usePostInterest } from "@/queries/leads";
 import { useParams } from "react-router-dom";
 import LeadLog from "../../components/LeadLogCard";
 import Label from "@components/Label";
-import { Cascader } from "antd";
+import { Badge, Cascader } from "antd";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import useProperty from "@/hooks/useProperty";
@@ -65,7 +65,7 @@ const Details: React.FC = () => {
               Interested Properties
             </Label>
 
-            <div className="flex flex-row items-center gap-1 mt-2">
+            <div className="flex flex-row items-center gap-3 mt-2">
               <Cascader
                 size="large"
                 placeholder="Search properties..."
@@ -85,13 +85,16 @@ const Details: React.FC = () => {
                 }
                 //   disabled={isLoading}
               />
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => onCloseFilter()}
-              >
-                Filter
-              </Button>
+              <Badge count={1}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => onCloseFilter()}
+                >
+                  Filter
+                </Button>
+              </Badge>
+
               <FilterDialog
                 open={openFilter}
                 onClose={onCloseFilter}
