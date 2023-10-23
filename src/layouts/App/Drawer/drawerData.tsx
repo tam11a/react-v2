@@ -15,13 +15,29 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
     ],
   },
   {
-    title: "Operations",
+    title: "Customers",
     sublist: [
       {
         name: "Customers",
-        icon: <Icon icon="iconamoon:funnel-light" />,
+        icon: <Icon icon="ic:outline-people" />,
         to: "/app/leads",
       },
+      {
+        name: "Flat Customers",
+        icon: <Icon icon="fluent:building-people-20-regular" />,
+        to: "/app/leads?type=flat",
+      },
+      {
+        name: "Land Customers",
+        icon: <Icon icon="lucide:land-plot" />,
+        to: "/app/media",
+      },
+    ],
+  },
+
+  {
+    title: "Operations",
+    sublist: [
       {
         name: "Properties",
         icon: <Icon icon="mdi:building" />,
