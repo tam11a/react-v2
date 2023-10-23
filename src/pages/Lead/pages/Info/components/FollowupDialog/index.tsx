@@ -80,6 +80,7 @@ const FollowupDialog: React.FC<{
     if (res.status) {
     } else message.error(res.message);
   };
+  console.log(lead_status);
 
   return (
     <Dialog
@@ -117,7 +118,13 @@ const FollowupDialog: React.FC<{
             size="large"
             value={status?.status_id}
             onChange={(value) => setStatus({ status_id: value })}
-            options={lead_status}
+            options={Array.from(lead_status, (l: any) => ({
+              ...l,
+              disabled:
+                l?.data?.type === "RAW" &&
+                l?.data?.id < lead_info?.status?.id &&
+                lead_info?.status?.type !== "DONE",
+            }))}
             className=" w-1/2 text-text-light"
           />
         </span>

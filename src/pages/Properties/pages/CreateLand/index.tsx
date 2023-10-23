@@ -106,14 +106,20 @@ const CreateLand: React.FC = () => {
               >
                 <span>
                   <Radio className="col-span-1" value="New">
-                    New
+                    Latest
                   </Radio>
+                </span>
+                <span>
+                  <Radio value="Booked">In Progress</Radio>
                 </span>
                 <span>
                   <Radio value="Booked">Booked</Radio>
                 </span>
                 <span>
                   <Radio value="Sold">Sold</Radio>
+                </span>
+                <span>
+                  <Radio value="Sold">Cancel</Radio>
                 </span>
               </Radio.Group>
             )}
