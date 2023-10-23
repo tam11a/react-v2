@@ -1,11 +1,11 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Button, Menu, Select, Alert } from "antd";
+import { Button, Menu, Alert } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteLead,
   useGetLeadsById,
-  useUpdateLeadsById,
+  // useUpdateLeadsById,
 } from "@/queries/leads";
 import moment from "moment";
 import { message } from "@components/antd/message";
@@ -26,7 +26,7 @@ const Navigator: React.FC = () => {
   const { data } = useGetLeadsById(id);
   const leadInfo = data?.data?.data;
 
-  const { mutateAsync: updateLead } = useUpdateLeadsById();
+  // const { mutateAsync: updateLead } = useUpdateLeadsById();
 
   const { leadStatus } = useLeadStatus();
 
@@ -72,24 +72,24 @@ const Navigator: React.FC = () => {
     navigate(e.key);
   };
 
-  const onValid = async (d: any) => {
-    message.open({
-      type: "loading",
-      content: `Updating information...`,
-      duration: 0,
-    });
-    const res = await handleResponse(
-      () =>
-        updateLead({
-          id,
-          data: d,
-        }),
-      [200]
-    );
-    message.destroy();
-    if (res.status) message.success("Information updated successfully!");
-    else message.error(res.message);
-  };
+  // const onValid = async (d: any) => {
+  //   message.open({
+  //     type: "loading",
+  //     content: `Updating information...`,
+  //     duration: 0,
+  //   });
+  //   const res = await handleResponse(
+  //     () =>
+  //       updateLead({
+  //         id,
+  //         data: d,
+  //       }),
+  //     [200]
+  //   );
+  //   message.destroy();
+  //   if (res.status) message.success("Information updated successfully!");
+  //   else message.error(res.message);
+  // };
 
   const { state: openTransfer, toggleState: onCloseTransfer } =
     useToggle(false);
@@ -103,7 +103,7 @@ const Navigator: React.FC = () => {
 
         <div className="flex flex-row gap-2 items-center justify-end">
           <span className="hidden md:flex flex-row items-center gap-2">
-            <Select
+            {/* <Select
               dropdownMatchSelectWidth={false}
               bordered={false}
               size="large"
@@ -111,7 +111,7 @@ const Navigator: React.FC = () => {
               onChange={(value) => onValid({ status_id: value })}
               options={leadStatus}
               className="bg-[#E7F5FC]  text-text-light"
-            />
+            /> */}
             {/* <Select
 							dropdownMatchSelectWidth={false}
 							bordered={false}

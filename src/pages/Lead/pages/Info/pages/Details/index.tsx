@@ -1,4 +1,4 @@
-import { usePaginate } from "@tam11a/react-use-hooks";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import React from "react";
 import PersonalInfo from "./personalInfo";
 import DataTable from "@components/Datatable";
@@ -13,7 +13,8 @@ import handleResponse from "@/utilities/handleResponse";
 import useProperty from "@/hooks/useProperty";
 import Iconify from "@components/iconify";
 import { Button } from "@mui/material";
-import Requirements from "./requirements";
+// import Requirements from "./requirements";
+import FilterDialog from "../../components/FilterDialog";
 
 const Details: React.FC = () => {
   const params = useParams();
@@ -51,12 +52,14 @@ const Details: React.FC = () => {
     undefined
   );
 
+  const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
+
   return (
     <>
       <div className="grid grid-cols-5">
         <div className="col-span-3">
           <PersonalInfo />
-          <Requirements />
+          {/* <Requirements /> */}
           <div className="max-w-5xl px-3 mt-6 mx-3">
             <Label className="text-lg font-semibold text-text">
               Interested Properties
@@ -81,6 +84,21 @@ const Details: React.FC = () => {
                   />
                 }
                 //   disabled={isLoading}
+              />
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => onCloseFilter()}
+              >
+                Filter
+              </Button>
+              <FilterDialog
+                open={openFilter}
+                onClose={onCloseFilter}
+                // lead_id={id}
+                // lead_info={leadInfo}
+                // followup_date={leadInfo?.followup_date}
+                // lead_status={leadStatus}
               />
               <Button
                 variant="contained"
@@ -108,7 +126,7 @@ const Details: React.FC = () => {
               onPageSizeChange={setLimit}
             />
           </div>
-          <div className="max-w-5xl px-3 mt-6 mx-3">
+          {/* <div className="max-w-5xl px-3 mt-6 mx-3">
             <Label className="text-lg font-semibold text-text">
               Suggested Properties
             </Label>
@@ -129,7 +147,7 @@ const Details: React.FC = () => {
               pageSize={limit}
               onPageSizeChange={setLimit}
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="col-span-2 border-dashed border-l-2 p-4">

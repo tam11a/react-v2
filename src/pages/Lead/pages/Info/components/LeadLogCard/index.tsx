@@ -92,7 +92,11 @@ const LeadLog: React.FC = () => {
               >
                 {[item?.author?.first_name, item?.author?.last_name].join(" ")}
               </Link>{" "}
-              {item?.message}.
+              {item?.type === "status" ? (
+                <span className="text-red-500">{item?.message}.</span>
+              ) : (
+                <span>{item?.message}.</span>
+              )}
             </p>
             {item?.type === "note" ? (
               <div className="font-medium text-sm bg-slate-100 text-text p-3 my-1 max-w-xs whitespace-pre-wrap rounded">
@@ -106,7 +110,7 @@ const LeadLog: React.FC = () => {
               <></>
             )}
             <p className="font-semibold text-xs text-text-light">
-              {moment(item.created_at).format("l")}
+              {moment(item.created_at).format("llll")}
             </p>
           </div>
         );

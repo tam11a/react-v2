@@ -26,11 +26,13 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
         name: "Flat Customers",
         icon: <Icon icon="fluent:building-people-20-regular" />,
         to: "/app/leads?type=flat",
+        disabled: true,
       },
       {
         name: "Land Customers",
         icon: <Icon icon="lucide:land-plot" />,
         to: "/app/media",
+        disabled: true,
       },
     ],
   },
