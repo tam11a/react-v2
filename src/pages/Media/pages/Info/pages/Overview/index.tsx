@@ -3,23 +3,36 @@ import PersonalInfo from "./personalInfo";
 import DataTable from "@components/Datatable";
 import Label from "@components/Label";
 import CustomerCol from "../../components/CustomerCol";
-import {
-  useGetLeadsByMediaId,
-  useGetPropertiesByMediaId,
-} from "@/queries/media";
 import { usePaginate } from "@tam11a/react-use-hooks";
 import { useParams } from "react-router-dom";
 import PropertiesColumn from "../../components/PropertiesColumn";
+import { useGetLeads } from "@/queries/leads";
+import { useGetProperties } from "@/queries/properties";
 
 const Details: React.FC = () => {
   const params = useParams();
-  const { page, setPage, getQueryParams, limit, setLimit } = usePaginate();
-  const { data: customerData } = useGetLeadsByMediaId({
-    ...getQueryParams(),
+  const {
+    page: pageForCustomers,
+    setPage: setPageForCustomers,
+    getQueryParams: getQueryParamsForCustomers,
+    limit: limitForCustomers,
+    setLimit: setLimitForCustomers,
+  } = usePaginate();
+  const {
+    page: pageForProperties,
+    setPage: setPageForProperties,
+    getQueryParams: getQueryParamsForProperties,
+    limit: limitForProperties,
+    setLimit: setLimitForProperties,
+  } = usePaginate();
+
+  const { data: customerData } = useGetLeads({
+    ...getQueryParamsForCustomers(),
     media_id: params.id,
   });
-  const { data: propertiesData } = useGetPropertiesByMediaId({
-    ...getQueryParams(),
+
+  const { data: propertiesData } = useGetProperties({
+    ...getQueryParamsForProperties(),
     media_id: params.id,
   });
 
@@ -42,10 +55,10 @@ const Details: React.FC = () => {
               // ss pagination
               rowCount={customerData?.data?.total || 0}
               paginationMode={"server"}
-              page={page}
-              onPageChange={setPage}
-              pageSize={limit}
-              onPageSizeChange={setLimit}
+              page={pageForCustomers}
+              onPageChange={setPageForCustomers}
+              pageSize={limitForCustomers}
+              onPageSizeChange={setLimitForCustomers}
             />
           </div>
           <div className="my-8  ">
@@ -61,10 +74,10 @@ const Details: React.FC = () => {
               // ss pagination
               rowCount={propertiesData?.data?.total || 0}
               paginationMode={"server"}
-              page={page}
-              onPageChange={setPage}
-              pageSize={limit}
-              onPageSizeChange={setLimit}
+              page={pageForProperties}
+              onPageChange={setPageForProperties}
+              pageSize={limitForProperties}
+              onPageSizeChange={setLimitForProperties}
             />
           </div>
         </div>
