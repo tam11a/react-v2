@@ -70,3 +70,31 @@ export const useDeleteMedia = () => {
     },
   });
 };
+
+const getLeadsByMediaId = (media_id: string | any) => {
+  return instance.get(`/leads`, {
+    params: {
+      media_id,
+    },
+  });
+};
+
+export const useGetLeadsByMediaId = (params: any) => {
+  return useQuery(["get-all-leads-media-by-id", params], () =>
+    getLeadsByMediaId(params)
+  );
+};
+
+const getPropertiesByMediaId = (media_id: string | any) => {
+  return instance.get(`/assets`, {
+    params: {
+      media_id,
+    },
+  });
+};
+
+export const useGetPropertiesByMediaId = (params: any) => {
+  return useQuery(["get-all-properties-media-by-id", params], () =>
+    getPropertiesByMediaId(params)
+  );
+};
